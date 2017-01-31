@@ -1,5 +1,7 @@
 package org.irislang.jiris.core;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
@@ -27,12 +29,21 @@ public class IrisThreadInfo {
 	public static void SetMainThreadID(long id) {
 		sm_mainThreadID = id;
 	}
-	
+
 	private ArrayList<IrisValue> m_parameterList = new ArrayList<IrisValue>();
 	private IrisValue m_record = null;
+
+	private IrisValue m_comparedObj = null;
 	private int m_counter = 0;
 	private Stack<IrisValue> m_loopTimeStack = new Stack<IrisValue>();
-	
+	private Stack<IrisValue> m_comparedObjectStack = new Stack<IrisValue>();
+
+	public void PushComparedObject(IrisValue value) { m_comparedObjectStack.add(value);}
+
+	public void PopCompareadObject() { m_comparedObjectStack.pop(); }
+
+	public IrisValue GetTopComparedObject() { return m_comparedObjectStack.lastElement(); }
+
 	public void PushLoopTime(IrisValue value) {
 		m_loopTimeStack.add(value);
 	}
@@ -40,7 +51,7 @@ public class IrisThreadInfo {
 	public void PopLoopTime() {
 		m_loopTimeStack.pop();
 	}
-	
+
 	public IrisValue GetTopLoopTime() {
 		return m_loopTimeStack.lastElement();
 	}

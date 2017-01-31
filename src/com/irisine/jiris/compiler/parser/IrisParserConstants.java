@@ -257,7 +257,7 @@ public interface IrisParserConstants {
     "\"*/\"",
     "\"\\n\"",
     "<token of kind 10>",
-    "\"fun\"",
+    "\"function\"",
     "\"class\"",
     "\"module\"",
     "\"interface\"",

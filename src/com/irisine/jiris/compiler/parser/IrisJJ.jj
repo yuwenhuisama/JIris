@@ -73,7 +73,7 @@ MORE :
 // Reserved word
 TOKEN :
 {
-  < FUNCTION  : "fun" >
+  < FUNCTION  : "function">
 | < CLASS     : "class" >
 | < MODULE    : "module" >
 | < INTERFACE : "interface" >
@@ -353,6 +353,9 @@ IrisStatement statement() :
  |
    tmpStatement = if_statement()
    { return tmpStatement; }
+ |
+   tmpStatement = switch_statement()
+   { return tmpStatement; } 
 }
 
 IrisStatement function_statement() :

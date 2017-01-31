@@ -8,6 +8,9 @@ import com.irisine.jiris.compiler.expression.IrisExpression;
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
 
+
+
+
 public class IrisNormalStatement extends IrisStatement {
 
 	private IrisExpression m_expression = null;
