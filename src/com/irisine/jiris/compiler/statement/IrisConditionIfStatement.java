@@ -2,6 +2,7 @@ package com.irisine.jiris.compiler.statement;
 
 import java.util.LinkedList;
 
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import org.irislang.jiris.compiler.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
@@ -54,13 +55,15 @@ public class IrisConditionIfStatement extends IrisStatement {
 		
 		visitor.visitJumpInsn(Opcodes.GOTO, endLabel);
 		visitor.visitLabel(nextLabel);
-		if(!currentCompiler.isFirstStackFrameGenerated()) {
-			visitor.visitFrame(Opcodes.F_APPEND,1, new Object[] {"org/irislang/jiris/core/IrisValue"}, 0, null);	
-			currentCompiler.setFirstStackFrameGenerated(true);
-		} else {
-			visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-		}
-		
+//		if(!currentCompiler.isFirstStackFrameGenerated()) {
+//			visitor.visitFrame(Opcodes.F_APPEND,1, new Object[] {"org/irislang/jiris/core/IrisValue"}, 0, null);
+//			currentCompiler.setFirstStackFrameGenerated(true);
+//		} else {
+//			visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+//		}
+
+		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
+
 		if(m_elseIfList != null) {
 			for(IrisElseIf elseIf : m_elseIfList) {
 				if(!elseIf.getCondition().Generate(currentCompiler, currentBuilder, visitor)) {

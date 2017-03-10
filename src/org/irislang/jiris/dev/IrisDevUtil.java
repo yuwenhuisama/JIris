@@ -131,7 +131,7 @@ final public class IrisDevUtil {
 	}
 	
 	public static boolean CheckClass(IrisValue obj,  String className) {
-		return obj.getObject().getObjectClass().getClassName() == className;
+		return obj.getObject().getObjectClass().getClassName().equals(className);
 	}
 	
 	public static IrisClass GetClass(String classPath) {

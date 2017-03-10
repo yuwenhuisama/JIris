@@ -316,9 +316,14 @@ public abstract class IrisNativeJavaClass {
 		return value;
 	}
 	
-	protected static boolean CompareCounterLess(int a, IrisValue target) {
-		int b = IrisDevUtil.GetInt(target);
-		return a < b;
+	protected static boolean CompareCounterLess(IrisValue org, IrisValue tar, IrisThreadInfo threadInfo, IrisContextEnvironment context) throws Throwable {
+//		int b = IrisDevUtil.GetInt(target);
+//		return a < b;
+		//int a = IrisDevUtil.GetInt(org);
+		threadInfo.AddParameter(tar);
+		IrisValue result = CallMethod(org, "<", threadInfo, context, 1);
+		threadInfo.PopParameter(1);
+		return result == IrisDevUtil.True();
 	}
 	
 	protected static void DefineInstanceMethod(Class<?> nativeClass, 

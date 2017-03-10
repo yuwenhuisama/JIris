@@ -1,5 +1,6 @@
 package com.irisine.jiris.compiler.statement;
 
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisWhen;
 import net.bytebuddy.dynamic.Nexus;
 import net.bytebuddy.jar.asm.Label;
@@ -12,6 +13,7 @@ import com.irisine.jiris.compiler.expression.IrisExpression;
 
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
+import sun.security.krb5.internal.CredentialsUtil;
 
 import javax.swing.text.StyledEditorKit;
 import java.util.LinkedList;
@@ -64,10 +66,10 @@ public class IrisSwitchStatement extends IrisStatement {
                 if(!tar.Generate(currentCompiler, currentBuilder, visitor)) {
                     return false;
                 }
-
-                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-                visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
+//                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+//                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
+//                visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
+                IrisGenerateHelper.AddParameter(visitor, currentCompiler);
 
                 visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
                 visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "GetTopComparedObject", "()Lorg/irislang/jiris/core/IrisValue;", false);
@@ -77,10 +79,10 @@ public class IrisSwitchStatement extends IrisStatement {
                 visitor.visitInsn(Opcodes.ICONST_1);
                 visitor.visitMethodInsn(Opcodes.INVOKESTATIC, currentCompiler.getCurrentClassName(), "CallMethod", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;I)Lorg/irislang/jiris/core/IrisValue;", false);
                 visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
-
-                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-                visitor.visitInsn(Opcodes.ICONST_1);
-                visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopParameter", "(I)V", false);
+//                visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+//                visitor.visitInsn(Opcodes.ICONST_1);
+//                visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopParameter", "(I)V", false);
+                IrisGenerateHelper.PopParameter(visitor, currentCompiler, 1);
 
                 visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
                 visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "NotFalseOrNil", "(Lorg/irislang/jiris/core/IrisValue;)Z", false);

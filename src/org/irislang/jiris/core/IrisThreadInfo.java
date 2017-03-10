@@ -1,5 +1,7 @@
 package org.irislang.jiris.core;
 
+import org.irislang.jiris.dev.IrisDevUtil;
+import org.irislang.jiris.irisclass.IrisInteger;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class IrisThreadInfo {
 	private int m_counter = 0;
 	private Stack<IrisValue> m_loopTimeStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_comparedObjectStack = new Stack<IrisValue>();
+	private Stack<IrisValue> m_counterStack = new Stack<IrisValue>();
 
 	public void PushComparedObject(IrisValue value) { m_comparedObjectStack.add(value);}
 
@@ -56,16 +59,21 @@ public class IrisThreadInfo {
 		return m_loopTimeStack.lastElement();
 	}
 	
-	public int getCounter() {
-		return m_counter;
+	public IrisValue getCounter() {
+		return m_counterStack.lastElement();
 	}
 	
-	public void setCounter(int counter) {
-		m_counter = counter;
+	public void pushCounter(IrisValue counter) {
+		m_counterStack.push(counter);
 	}
-	
+
+	public void PopCounter() {
+		m_counterStack.pop();
+	}
+
 	public void increamCounter() {
-		++m_counter;
+		IrisInteger.IrisIntegerTag tag = (IrisInteger.IrisIntegerTag)IrisDevUtil.GetNativeObjectRef(getCounter());
+		tag.setInteger(tag.getInteger() + 1);
 	}
 	
 	public ArrayList<IrisValue> getPartPrameterListOf(int count) {

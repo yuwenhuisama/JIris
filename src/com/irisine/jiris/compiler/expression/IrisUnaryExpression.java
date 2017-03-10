@@ -1,5 +1,6 @@
 package com.irisine.jiris.compiler.expression;
 
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import org.irislang.jiris.compiler.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
@@ -35,30 +36,32 @@ public class IrisUnaryExpression extends IrisExpression {
 		
 		switch (m_type) {
 		case LogicNot:
-			GenerateUnary(currentCompiler, visitor, currentCompiler.getCurrentClassName(), "!");
+			GenerateUnary(currentCompiler, visitor, "!");
 			break;
 		case BitNot:
-			GenerateUnary(currentCompiler, visitor, currentCompiler.getCurrentClassName(), "~");
+			GenerateUnary(currentCompiler, visitor, "~");
 			break;
 		case Minus:
-			GenerateUnary(currentCompiler, visitor, currentCompiler.getCurrentClassName(), "__minus");
+			GenerateUnary(currentCompiler, visitor, "__minus");
 			break;
 		case Plus:
-			GenerateUnary(currentCompiler, visitor, currentCompiler.getCurrentClassName(), "__plus");
+			GenerateUnary(currentCompiler, visitor, "__plus");
 			break;
 		}
 		
 		return true;
 	}
 	
-	private void GenerateUnary(IrisCompiler currentCompiler, MethodVisitor visitor, String className, String op) {
-		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-		visitor.visitLdcInsn(op);
-		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());
-		visitor.visitInsn(Opcodes.ICONST_0);
-		visitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "CallMethod", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;Lorg/irislang/jiris/core/IrisMethod$CallSide;)Lorg/irislang/jiris/core/IrisValue;I", false);
-		visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
+	private void GenerateUnary(IrisCompiler currentCompiler, MethodVisitor visitor, String op) {
+//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
+//		visitor.visitLdcInsn(op);
+//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());
+//		visitor.visitInsn(Opcodes.ICONST_0);
+//		visitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "CallMethod", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;Lorg/irislang/jiris/core/IrisMethod$CallSide;)Lorg/irislang/jiris/core/IrisValue;I", false);
+//		visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
+
+		IrisGenerateHelper.CallMethod(visitor, currentCompiler, op, 0, false);
 	}
 
 }
