@@ -26,8 +26,6 @@ public class IrisParser implements IrisParserConstants {
   final public void translation_unit() throws ParseException {IrisStatement tmpStatement = null;
     label_1:
     while (true) {
-      tmpStatement = statement();
-IrisCompiler.INSTANCE.AddStatement(tmpStatement);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case FUNCTION:
       case IF:
@@ -41,39 +39,52 @@ IrisCompiler.INSTANCE.AddStatement(tmpStatement);
         jj_la1[0] = jj_gen;
         break label_1;
       }
+      tmpStatement = statement();
+IrisCompiler.INSTANCE.AddStatement(tmpStatement);
     }
     jj_consume_token(0);
   }
 
   final public IrisStatement statement() throws ParseException {IrisExpression tmpExpression = null;
   IrisStatement tmpStatement = null;
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case SEMICOLON:{
+    if (jj_2_1(2)) {
       jj_consume_token(SEMICOLON);
       tmpExpression = expression();
 {if ("" != null) return new IrisNormalStatement(tmpExpression);}
-      break;
-      }
-    case FUNCTION:
-    case SELF:{
-      tmpStatement = function_statement();
+    } else if (jj_2_2(2)) {
+      tmpStatement = return_statement();
 {if ("" != null) return tmpStatement;}
-      break;
-      }
-    case IF:{
-      tmpStatement = if_statement();
+    } else if (jj_2_3(2)) {
+      tmpStatement = break_statement();
 {if ("" != null) return tmpStatement;}
-      break;
-      }
-    case SWITCH:{
-      tmpStatement = switch_statement();
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case SEMICOLON:{
+        tmpStatement = continue_statement();
 {if ("" != null) return tmpStatement;}
-      break;
+        break;
+        }
+      case FUNCTION:
+      case SELF:{
+        tmpStatement = function_statement();
+{if ("" != null) return tmpStatement;}
+        break;
+        }
+      case IF:{
+        tmpStatement = if_statement();
+{if ("" != null) return tmpStatement;}
+        break;
+        }
+      case SWITCH:{
+        tmpStatement = switch_statement();
+{if ("" != null) return tmpStatement;}
+        break;
+        }
+      default:
+        jj_la1[1] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-    default:
-      jj_la1[1] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
@@ -103,8 +114,12 @@ IrisCompiler.INSTANCE.AddStatement(tmpStatement);
   final public IrisBlock function_block() throws ParseException {LinkedList<IrisStatement> statements = null;
     jj_consume_token(LC);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case FUNCTION:
+    case IF:
+    case SWITCH:
+    case SELF:
     case SEMICOLON:{
-      statements = function_involve_statement_list();
+      statements = block_statement_list();
       break;
       }
     default:
@@ -116,51 +131,8 @@ IrisCompiler.INSTANCE.AddStatement(tmpStatement);
     throw new Error("Missing return statement in function");
   }
 
-  final public LinkedList<IrisStatement> function_involve_statement_list() throws ParseException {IrisStatement tmpStatement = null;
-  LinkedList<IrisStatement> statements = null;
-statements = new LinkedList<IrisStatement>();
-    label_2:
-    while (true) {
-      tmpStatement = function_involve_statement();
-statements.add(tmpStatement);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case SEMICOLON:{
-        ;
-        break;
-        }
-      default:
-        jj_la1[4] = jj_gen;
-        break label_2;
-      }
-    }
-{if ("" != null) return statements;}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public IrisStatement function_involve_statement() throws ParseException {IrisExpression tmpExpression = null;
-  IrisStatement tmpStatement = null;
-    if (jj_2_1(2)) {
-      jj_consume_token(SEMICOLON);
-      tmpExpression = expression();
-{if ("" != null) return new IrisNormalStatement(tmpExpression);}
-    } else {
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case SEMICOLON:{
-        tmpStatement = return_statement();
-{if ("" != null) return tmpStatement;}
-        break;
-        }
-      default:
-        jj_la1[5] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
-    throw new Error("Missing return statement in function");
-  }
-
   final public IrisBlock with_block() throws ParseException {LinkedList<IrisStatement> statements = null;
-    if (jj_2_2(2)) {
+    if (jj_2_4(2)) {
       jj_consume_token(LC);
       jj_consume_token(RC);
 {if ("" != null) return null;}
@@ -168,45 +140,17 @@ statements.add(tmpStatement);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case LC:{
         jj_consume_token(LC);
-        statements = with_involve_statement_list();
+        statements = block_statement_list();
         jj_consume_token(RC);
 {if ("" != null) return new IrisBlock(statements);}
         break;
         }
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[4] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public LinkedList<IrisStatement> with_involve_statement_list() throws ParseException {IrisStatement tmpStatement = null;
-  LinkedList<IrisStatement> statements = null;
-statements = new LinkedList<IrisStatement>();
-    label_3:
-    while (true) {
-      tmpStatement = with_involve_statement();
-statements.add(tmpStatement);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case SEMICOLON:{
-        ;
-        break;
-        }
-      default:
-        jj_la1[7] = jj_gen;
-        break label_3;
-      }
-    }
-{if ("" != null) return statements;}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public IrisStatement with_involve_statement() throws ParseException {IrisExpression tmpExpression = null;
-    jj_consume_token(SEMICOLON);
-    tmpExpression = expression();
-{if ("" != null) return new IrisNormalStatement(tmpExpression);}
     throw new Error("Missing return statement in function");
   }
 
@@ -222,7 +166,7 @@ isClassMethod = true;
       break;
       }
     default:
-      jj_la1[8] = jj_gen;
+      jj_la1[5] = jj_gen;
       ;
     }
     jj_consume_token(FUNCTION);
@@ -235,7 +179,7 @@ isClassMethod = true;
       break;
       }
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[8] = jj_gen;
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case CONSTANCE:
       case LOCALVARIABLE:
@@ -246,7 +190,7 @@ isClassMethod = true;
         break;
         }
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[6] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -257,7 +201,7 @@ isClassMethod = true;
         break;
         }
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[7] = jj_gen;
         ;
       }
     }
@@ -271,18 +215,32 @@ isClassMethod = true;
 identifiers = new LinkedList<IrisIdentifier>();
     tmpIdentifier = identifier();
 identifiers.add(tmpIdentifier);
-    label_4:
+    label_2:
     while (true) {
-      if (jj_2_3(2)) {
+      if (jj_2_5(2)) {
         ;
       } else {
-        break label_4;
+        break label_2;
       }
       jj_consume_token(COMMA);
       tmpIdentifier = identifier();
 identifiers.add(tmpIdentifier);
     }
 {if ("" != null) return identifiers;}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public IrisStatement break_statement() throws ParseException {
+    jj_consume_token(SEMICOLON);
+    jj_consume_token(BREAK);
+{if ("" != null) return new IrisBreakStatement(null);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public IrisStatement continue_statement() throws ParseException {
+    jj_consume_token(SEMICOLON);
+    jj_consume_token(CONTINUE);
+{if ("" != null) return new IrisContinueStatement(null);}
     throw new Error("Missing return statement in function");
   }
 
@@ -313,7 +271,7 @@ identifiers.add(tmpIdentifier);
       break;
       }
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[9] = jj_gen;
       ;
     }
 {if ("" != null) return new IrisReturnStatement(tmpExpression);}
@@ -321,7 +279,7 @@ identifiers.add(tmpIdentifier);
   }
 
   final public IrisStatement if_statement() throws ParseException {IrisStatement tmpStatement = null;
-    if (jj_2_4(2147483647)) {
+    if (jj_2_6(2147483647)) {
       tmpStatement = condition_if();
 {if ("" != null) return tmpStatement;}
     } else {
@@ -332,7 +290,7 @@ identifiers.add(tmpIdentifier);
         break;
         }
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[10] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -355,7 +313,7 @@ identifiers.add(tmpIdentifier);
       break;
       }
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[11] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -365,7 +323,7 @@ identifiers.add(tmpIdentifier);
       break;
       }
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[12] = jj_gen;
       ;
     }
 {if ("" != null) return new IrisConditionIfStatement(conditionExpr, block, elseIfList, elseBlock);}
@@ -388,7 +346,7 @@ identifiers.add(tmpIdentifier);
       break;
       }
     default:
-      jj_la1[16] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
     jj_consume_token(RP);
@@ -400,7 +358,7 @@ identifiers.add(tmpIdentifier);
   final public LinkedList<IrisElseIf> elseif_list() throws ParseException {LinkedList<IrisElseIf> elseIfList = null;
   IrisElseIf elseIfTmp = null;
 elseIfList = new LinkedList<IrisElseIf>();
-    label_5:
+    label_3:
     while (true) {
       elseIfTmp = elseif();
 elseIfList.add(elseIfTmp);
@@ -410,8 +368,8 @@ elseIfList.add(elseIfTmp);
         break;
         }
       default:
-        jj_la1[17] = jj_gen;
-        break label_5;
+        jj_la1[14] = jj_gen;
+        break label_3;
       }
     }
 {if ("" != null) return elseIfList;}
@@ -442,7 +400,7 @@ elseIfList.add(elseIfTmp);
       break;
       }
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[15] = jj_gen;
       ;
     }
     jj_consume_token(RC);
@@ -453,7 +411,7 @@ elseIfList.add(elseIfTmp);
   final public LinkedList<IrisStatement> block_statement_list() throws ParseException {LinkedList<IrisStatement> statementList = null;
   IrisStatement tmpStatement = null;
 statementList = new LinkedList<IrisStatement>();
-    label_6:
+    label_4:
     while (true) {
       tmpStatement = statement();
 statementList.add(tmpStatement);
@@ -467,8 +425,8 @@ statementList.add(tmpStatement);
         break;
         }
       default:
-        jj_la1[19] = jj_gen;
-        break label_6;
+        jj_la1[16] = jj_gen;
+        break label_4;
       }
     }
 {if ("" != null) return statementList;}
@@ -491,7 +449,7 @@ statementList.add(tmpStatement);
   IrisBlock elseBlock = null;
     jj_consume_token(LC);
 whens = new LinkedList<IrisWhen>();
-    label_7:
+    label_5:
     while (true) {
       tmpWhen = when();
 whens.add(tmpWhen);
@@ -501,8 +459,8 @@ whens.add(tmpWhen);
         break;
         }
       default:
-        jj_la1[20] = jj_gen;
-        break label_7;
+        jj_la1[17] = jj_gen;
+        break label_5;
       }
     }
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -512,7 +470,7 @@ whens.add(tmpWhen);
       break;
       }
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[18] = jj_gen;
       ;
     }
     jj_consume_token(RC);
@@ -535,7 +493,7 @@ whens.add(tmpWhen);
   final public IrisExpression expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
-    if (jj_2_5(2147483647)) {
+    if (jj_2_7(2147483647)) {
       tmpLeftExpression = assign_oper_expression();
 {if ("" != null) return tmpLeftExpression;}
     } else {
@@ -564,7 +522,7 @@ whens.add(tmpWhen);
         break;
         }
       default:
-        jj_la1[22] = jj_gen;
+        jj_la1[19] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -654,7 +612,7 @@ lineNumber = tmpRightExpression.getLineNumber();
       break;
       }
     default:
-      jj_la1[23] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -664,7 +622,7 @@ lineNumber = tmpRightExpression.getLineNumber();
   final public IrisExpression logic_or_expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
     tmpLeftExpression = logic_and_expression();
-    if (jj_2_6(2)) {
+    if (jj_2_8(2)) {
       jj_consume_token(LOGICAL_OR);
       tmpRightExpression = logic_or_expression();
     } else {
@@ -683,7 +641,7 @@ if(tmpRightExpression == null) {
   final public IrisExpression logic_and_expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
     tmpLeftExpression = logic_bit_or_expression();
-    if (jj_2_7(2)) {
+    if (jj_2_9(2)) {
       jj_consume_token(LOGICAL_AND);
       tmpRightExpression = logic_and_expression();
     } else {
@@ -702,7 +660,7 @@ if(tmpRightExpression == null) {
   final public IrisExpression logic_bit_or_expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
     tmpLeftExpression = logic_bit_xor_expression();
-    if (jj_2_8(2)) {
+    if (jj_2_10(2)) {
       jj_consume_token(BIT_OR);
       tmpRightExpression = logic_bit_or_expression();
     } else {
@@ -721,7 +679,7 @@ if(tmpRightExpression == null) {
   final public IrisExpression logic_bit_xor_expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
     tmpLeftExpression = logic_bit_and_expression();
-    if (jj_2_9(2)) {
+    if (jj_2_11(2)) {
       jj_consume_token(BIT_XOR);
       tmpRightExpression = logic_bit_xor_expression();
     } else {
@@ -740,7 +698,7 @@ if(tmpRightExpression == null) {
   final public IrisExpression logic_bit_and_expression() throws ParseException {IrisExpression tmpLeftExpression = null;
   IrisExpression tmpRightExpression = null;
     tmpLeftExpression = logic_equal_compare_expression();
-    if (jj_2_10(2)) {
+    if (jj_2_12(2)) {
       jj_consume_token(BIT_AND);
       tmpRightExpression = logic_bit_and_expression();
     } else {
@@ -760,7 +718,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
     tmpLeftExpression = logic_not_equal_expression();
-    if (jj_2_11(2)) {
+    if (jj_2_13(2)) {
       type = eq_ne();
       tmpRightExpression = logic_equal_compare_expression();
     } else {
@@ -789,7 +747,7 @@ if(tmpRightExpression == null) {
       break;
       }
     default:
-      jj_la1[24] = jj_gen;
+      jj_la1[21] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -800,7 +758,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
     tmpLeftExpression = logic_shift_expression();
-    if (jj_2_12(2)) {
+    if (jj_2_14(2)) {
       type = gt_ge_lt_le();
       tmpRightExpression = logic_not_equal_expression();
     } else {
@@ -839,7 +797,7 @@ if(tmpRightExpression == null) {
       break;
       }
     default:
-      jj_la1[25] = jj_gen;
+      jj_la1[22] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -850,7 +808,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
     tmpLeftExpression = add_sub_expression();
-    if (jj_2_13(2)) {
+    if (jj_2_15(2)) {
       type = bitshr_bitshl_bitsar_bitshl();
       tmpRightExpression = logic_shift_expression();
     } else {
@@ -889,7 +847,7 @@ if(tmpRightExpression == null) {
       break;
       }
     default:
-      jj_la1[26] = jj_gen;
+      jj_la1[23] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -900,7 +858,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
     tmpLeftExpression = mul_div_mod_expression();
-    if (jj_2_14(2)) {
+    if (jj_2_16(2)) {
       type = add_sub();
       tmpRightExpression = add_sub_expression();
     } else {
@@ -929,7 +887,7 @@ if(tmpRightExpression == null) {
       break;
       }
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[24] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -940,7 +898,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   IrisBinaryExpression.BinaryExpressionType type = null;
     tmpLeftExpression = power_expression();
-    if (jj_2_15(2)) {
+    if (jj_2_17(2)) {
       type = mul_div_mod();
       tmpRightExpression = mul_div_mod_expression();
     } else {
@@ -974,7 +932,7 @@ if(tmpRightExpression == null) {
       break;
       }
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -985,7 +943,7 @@ if(tmpRightExpression == null) {
   IrisExpression tmpRightExpression = null;
   int lineNumber = 0;
     tmpLeftExpression = unary_expression();
-    if (jj_2_16(2)) {
+    if (jj_2_18(2)) {
       jj_consume_token(POWER);
       tmpRightExpression = power_expression();
     } else {
@@ -1060,7 +1018,7 @@ lineNumber = tmpExpression.getLineNumber();
       break;
       }
     default:
-      jj_la1[29] = jj_gen;
+      jj_la1[26] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1068,10 +1026,10 @@ lineNumber = tmpExpression.getLineNumber();
   }
 
   final public IrisExpression top_expression() throws ParseException {IrisExpression tmpExpression = null;
-    if (jj_2_17(2147483647)) {
+    if (jj_2_19(2147483647)) {
       tmpExpression = hide_function_call();
 {if ("" != null) return tmpExpression;}
-    } else if (jj_2_18(2147483647)) {
+    } else if (jj_2_20(2147483647)) {
       tmpExpression = index_expression();
 {if ("" != null) return tmpExpression;}
     } else {
@@ -1096,7 +1054,7 @@ lineNumber = tmpExpression.getLineNumber();
         break;
         }
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1133,7 +1091,7 @@ lineNumber = tmpExpression.getLineNumber();
       break;
       }
     default:
-      jj_la1[31] = jj_gen;
+      jj_la1[28] = jj_gen;
       ;
     }
     jj_consume_token(RP);
@@ -1148,12 +1106,12 @@ tmpExpression = new IrisFunctionCallExpression(null, tmpIdentifier, expressions,
 expressions = new LinkedList<IrisExpression>();
     tmpExpression = expression();
 expressions.add(tmpExpression);
-    label_8:
+    label_6:
     while (true) {
-      if (jj_2_19(2)) {
+      if (jj_2_21(2)) {
         ;
       } else {
-        break label_8;
+        break label_6;
       }
       jj_consume_token(COMMA);
       tmpExpression = expression();
@@ -1239,7 +1197,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
       break;
       }
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[29] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1274,7 +1232,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
       break;
       }
     default:
-      jj_la1[33] = jj_gen;
+      jj_la1[30] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1299,7 +1257,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
       break;
       }
     default:
-      jj_la1[34] = jj_gen;
+      jj_la1[31] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1335,13 +1293,13 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
         break;
         }
       default:
-        jj_la1[35] = jj_gen;
+        jj_la1[32] = jj_gen;
         ;
       }
       break;
       }
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[33] = jj_gen;
       ;
     }
     jj_consume_token(RB);
@@ -1501,13 +1459,139 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     finally { jj_save(18, xla); }
   }
 
-  private boolean jj_3R_109()
+  private boolean jj_2_20(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_20(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(19, xla); }
+  }
+
+  private boolean jj_2_21(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_21(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(20, xla); }
+  }
+
+  private boolean jj_3_12()
+ {
+    if (jj_scan_token(BIT_AND)) return true;
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_108()
  {
     if (jj_3R_112()) return true;
-    if (jj_3R_113()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_17()
+ {
+    if (jj_3R_19()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_114()) jj_scanpos = xsp;
+    if (jj_3_12()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_107()
+ {
+    if (jj_3R_111()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_106()
+ {
+    if (jj_3R_110()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_105()
+ {
+    if (jj_3R_109()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_103()
+ {
+    if (jj_3R_84()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(60)) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
+ {
+    if (jj_3R_8()) return true;
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_3R_7()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_104()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_1()) {
+    jj_scanpos = xsp;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3R_105()) {
+    jj_scanpos = xsp;
+    if (jj_3R_106()) {
+    jj_scanpos = xsp;
+    if (jj_3R_107()) {
+    jj_scanpos = xsp;
+    if (jj_3R_108()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_11()
+ {
+    if (jj_scan_token(BIT_XOR)) return true;
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_97()
+ {
+    if (jj_scan_token(LB)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_103()) jj_scanpos = xsp;
+    if (jj_scan_token(RB)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_16()
+ {
+    if (jj_3R_17()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_11()) jj_scanpos = xsp;
     return false;
   }
 
@@ -1543,19 +1627,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_108()
- {
-    if (jj_3R_111()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_107()
- {
-    if (jj_3R_110()) return true;
-    return false;
-  }
-
-  private boolean jj_3_8()
+  private boolean jj_3_10()
  {
     if (jj_scan_token(BIT_OR)) return true;
     if (jj_3R_15()) return true;
@@ -1568,48 +1640,18 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_106()
- {
-    if (jj_3R_109()) return true;
-    return false;
-  }
-
   private boolean jj_3R_15()
  {
     if (jj_3R_16()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_8()) jj_scanpos = xsp;
+    if (jj_3_10()) jj_scanpos = xsp;
     return false;
   }
 
   private boolean jj_3R_36()
  {
     if (jj_scan_token(INSTANCEVARIABLE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_104()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_105()) {
-    jj_scanpos = xsp;
-    if (jj_3R_106()) {
-    jj_scanpos = xsp;
-    if (jj_3R_107()) {
-    jj_scanpos = xsp;
-    if (jj_3R_108()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_105()
- {
-    if (jj_scan_token(SEMICOLON)) return true;
-    if (jj_3R_9()) return true;
     return false;
   }
 
@@ -1651,7 +1693,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_7()
+  private boolean jj_3_9()
  {
     if (jj_scan_token(LOGICAL_AND)) return true;
     if (jj_3R_14()) return true;
@@ -1669,7 +1711,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_15()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_7()) jj_scanpos = xsp;
+    if (jj_3_9()) jj_scanpos = xsp;
     return false;
   }
 
@@ -1685,7 +1727,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_6()
+  private boolean jj_3_8()
  {
     if (jj_scan_token(LOGICAL_OR)) return true;
     if (jj_3R_13()) return true;
@@ -1697,7 +1739,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_14()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_6()) jj_scanpos = xsp;
+    if (jj_3_8()) jj_scanpos = xsp;
     return false;
   }
 
@@ -1808,7 +1850,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
   private boolean jj_3R_85()
  {
     if (jj_scan_token(LP)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(RP)) return true;
     return false;
   }
@@ -1897,25 +1939,25 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
  {
     if (jj_3R_60()) return true;
     if (jj_scan_token(LB)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(RB)) return true;
     return false;
   }
 
-  private boolean jj_3_19()
+  private boolean jj_3_21()
  {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     return false;
   }
 
   private boolean jj_3R_84()
  {
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3_19()) { jj_scanpos = xsp; break; }
+      if (jj_3_21()) { jj_scanpos = xsp; break; }
     }
     return false;
   }
@@ -1924,7 +1966,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
  {
     if (jj_3R_41()) return true;
     if (jj_3R_42()) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     return false;
   }
 
@@ -1934,7 +1976,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_5()
+  private boolean jj_3_7()
  {
     if (jj_3R_12()) return true;
     return false;
@@ -1963,7 +2005,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_9()
+  private boolean jj_3R_7()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -1974,19 +2016,19 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_18()
+  private boolean jj_3_20()
  {
     if (jj_3R_30()) return true;
     return false;
   }
 
-  private boolean jj_3_17()
+  private boolean jj_3_19()
  {
     if (jj_3R_29()) return true;
     return false;
   }
 
-  private boolean jj_3R_131()
+  private boolean jj_3R_132()
  {
     if (jj_scan_token(WHEN)) return true;
     if (jj_scan_token(LP)) return true;
@@ -2028,30 +2070,30 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_125()
+  private boolean jj_3R_127()
  {
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_38()) return true;
     return false;
   }
 
-  private boolean jj_3R_124()
+  private boolean jj_3R_126()
  {
-    if (jj_3R_131()) return true;
+    if (jj_3R_132()) return true;
     return false;
   }
 
-  private boolean jj_3R_117()
+  private boolean jj_3R_119()
  {
     if (jj_scan_token(LC)) return true;
     Token xsp;
-    if (jj_3R_124()) return true;
+    if (jj_3R_126()) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_124()) { jj_scanpos = xsp; break; }
+      if (jj_3R_126()) { jj_scanpos = xsp; break; }
     }
     xsp = jj_scanpos;
-    if (jj_3R_125()) jj_scanpos = xsp;
+    if (jj_3R_127()) jj_scanpos = xsp;
     if (jj_scan_token(RC)) return true;
     return false;
   }
@@ -2070,13 +2112,13 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_111()
+  private boolean jj_3R_112()
  {
     if (jj_scan_token(SWITCH)) return true;
     if (jj_scan_token(LP)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(RP)) return true;
-    if (jj_3R_117()) return true;
+    if (jj_3R_119()) return true;
     return false;
   }
 
@@ -2137,7 +2179,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_16()
+  private boolean jj_3_18()
  {
     if (jj_scan_token(POWER)) return true;
     if (jj_3R_28()) return true;
@@ -2155,7 +2197,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_58()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_16()) jj_scanpos = xsp;
+    if (jj_3_18()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2173,7 +2215,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
  {
     if (jj_scan_token(ELSEIF)) return true;
     if (jj_scan_token(LP)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(RP)) return true;
     if (jj_3R_38()) return true;
     return false;
@@ -2228,7 +2270,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_15()
+  private boolean jj_3_17()
  {
     if (jj_3R_26()) return true;
     if (jj_3R_27()) return true;
@@ -2240,35 +2282,35 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_28()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_15()) jj_scanpos = xsp;
+    if (jj_3_17()) jj_scanpos = xsp;
     return false;
   }
 
-  private boolean jj_3R_130()
+  private boolean jj_3R_131()
  {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_10()) return true;
     return false;
   }
 
-  private boolean jj_3R_123()
+  private boolean jj_3R_125()
  {
     if (jj_scan_token(IF)) return true;
     if (jj_scan_token(LP)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_130()) jj_scanpos = xsp;
+    if (jj_3R_131()) jj_scanpos = xsp;
     if (jj_scan_token(RP)) return true;
     if (jj_3R_38()) return true;
     return false;
   }
 
-  private boolean jj_3R_140()
+  private boolean jj_3R_113()
  {
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     return false;
   }
 
@@ -2308,7 +2350,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_4()
+  private boolean jj_3_6()
  {
     if (jj_3R_11()) return true;
     return false;
@@ -2318,7 +2360,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
  {
     if (jj_scan_token(IF)) return true;
     if (jj_scan_token(LP)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_3R_7()) return true;
     if (jj_scan_token(RP)) return true;
     if (jj_3R_38()) return true;
     Token xsp;
@@ -2329,16 +2371,16 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_14()
+  private boolean jj_3_16()
  {
     if (jj_3R_24()) return true;
     if (jj_3R_25()) return true;
     return false;
   }
 
-  private boolean jj_3R_116()
+  private boolean jj_3R_118()
  {
-    if (jj_3R_123()) return true;
+    if (jj_3R_125()) return true;
     return false;
   }
 
@@ -2347,42 +2389,42 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_27()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_14()) jj_scanpos = xsp;
+    if (jj_3_16()) jj_scanpos = xsp;
     return false;
   }
 
-  private boolean jj_3R_127()
- {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_scan_token(MUL)) return true;
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_110()
+  private boolean jj_3R_111()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_115()) {
+    if (jj_3R_117()) {
     jj_scanpos = xsp;
-    if (jj_3R_116()) return true;
+    if (jj_3R_118()) return true;
     }
     return false;
   }
 
-  private boolean jj_3R_115()
+  private boolean jj_3R_117()
  {
     if (jj_3R_11()) return true;
     return false;
   }
 
-  private boolean jj_3R_139()
+  private boolean jj_3R_8()
  {
     if (jj_scan_token(SEMICOLON)) return true;
     if (jj_scan_token(RETURN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_140()) jj_scanpos = xsp;
+    if (jj_3R_113()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_129()
+ {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_scan_token(MUL)) return true;
+    if (jj_3R_10()) return true;
     return false;
   }
 
@@ -2392,10 +2434,10 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_3()
+  private boolean jj_3R_109()
  {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_10()) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_scan_token(CONTINUE)) return true;
     return false;
   }
 
@@ -2434,21 +2476,24 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_132()
+  private boolean jj_3R_9()
  {
-    if (jj_3R_10()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_3()) { jj_scanpos = xsp; break; }
-    }
+    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_scan_token(BREAK)) return true;
     return false;
   }
 
-  private boolean jj_3_13()
+  private boolean jj_3_15()
  {
     if (jj_3R_22()) return true;
     if (jj_3R_23()) return true;
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_10()) return true;
     return false;
   }
 
@@ -2457,60 +2502,24 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_25()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_13()) jj_scanpos = xsp;
+    if (jj_3_15()) jj_scanpos = xsp;
     return false;
   }
 
-  private boolean jj_3R_126()
+  private boolean jj_3R_133()
  {
-    if (jj_3R_132()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_120()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_126()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_127()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_119()
- {
-    if (jj_scan_token(MUL)) return true;
     if (jj_3R_10()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_118()
- {
-    if (jj_scan_token(SELF)) return true;
-    if (jj_scan_token(DOT)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_5()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
   private boolean jj_3R_48()
  {
     if (jj_scan_token(LE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_112()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_118()) jj_scanpos = xsp;
-    if (jj_scan_token(FUNCTION)) return true;
-    if (jj_3R_10()) return true;
-    if (jj_scan_token(LP)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_119()) {
-    jj_scanpos = xsp;
-    if (jj_3R_120()) return true;
-    }
-    if (jj_scan_token(RP)) return true;
     return false;
   }
 
@@ -2523,6 +2532,22 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
   private boolean jj_3R_46()
  {
     if (jj_scan_token(GE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_128()
+ {
+    if (jj_3R_133()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_122()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_128()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_129()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2549,23 +2574,41 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3R_138()
+  private boolean jj_3R_121()
  {
-    if (jj_scan_token(SEMICOLON)) return true;
-    if (jj_3R_9()) return true;
+    if (jj_scan_token(MUL)) return true;
+    if (jj_3R_10()) return true;
     return false;
   }
 
-  private boolean jj_3_12()
+  private boolean jj_3_14()
  {
     if (jj_3R_20()) return true;
     if (jj_3R_21()) return true;
     return false;
   }
 
-  private boolean jj_3R_136()
+  private boolean jj_3R_120()
  {
-    if (jj_3R_138()) return true;
+    if (jj_scan_token(SELF)) return true;
+    if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_114()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_120()) jj_scanpos = xsp;
+    if (jj_scan_token(FUNCTION)) return true;
+    if (jj_3R_10()) return true;
+    if (jj_scan_token(LP)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_121()) {
+    jj_scanpos = xsp;
+    if (jj_3R_122()) return true;
+    }
+    if (jj_scan_token(RP)) return true;
     return false;
   }
 
@@ -2574,17 +2617,38 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_12()) jj_scanpos = xsp;
+    if (jj_3_14()) jj_scanpos = xsp;
     return false;
   }
 
-  private boolean jj_3R_134()
+  private boolean jj_3R_130()
+ {
+    if (jj_scan_token(LC)) return true;
+    if (jj_3R_94()) return true;
+    if (jj_scan_token(RC)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_123()
+ {
+    if (jj_3R_94()) return true;
+    return false;
+  }
+
+  private boolean jj_3_4()
+ {
+    if (jj_scan_token(LC)) return true;
+    if (jj_scan_token(RC)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_124()
  {
     Token xsp;
-    if (jj_3R_136()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_136()) { jj_scanpos = xsp; break; }
+    xsp = jj_scanpos;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3R_130()) return true;
     }
     return false;
   }
@@ -2592,14 +2656,6 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
   private boolean jj_3R_44()
  {
     if (jj_scan_token(NE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_129()
- {
-    if (jj_scan_token(LC)) return true;
-    if (jj_3R_134()) return true;
-    if (jj_scan_token(RC)) return true;
     return false;
   }
 
@@ -2620,49 +2676,17 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     return false;
   }
 
-  private boolean jj_3_2()
+  private boolean jj_3R_115()
  {
     if (jj_scan_token(LC)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_123()) jj_scanpos = xsp;
     if (jj_scan_token(RC)) return true;
     return false;
   }
 
-  private boolean jj_3R_122()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3R_129()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3R_137()
- {
-    if (jj_3R_139()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_135()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_1()) {
-    jj_scanpos = xsp;
-    if (jj_3R_137()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_1()
- {
-    if (jj_scan_token(SEMICOLON)) return true;
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  private boolean jj_3_11()
+  private boolean jj_3_13()
  {
     if (jj_3R_18()) return true;
     if (jj_3R_19()) return true;
@@ -2674,100 +2698,26 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     if (jj_3R_21()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_11()) jj_scanpos = xsp;
+    if (jj_3_13()) jj_scanpos = xsp;
     return false;
   }
 
-  private boolean jj_3R_133()
- {
-    if (jj_3R_135()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_128()
- {
-    Token xsp;
-    if (jj_3R_133()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_133()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  private boolean jj_3_10()
- {
-    if (jj_scan_token(BIT_AND)) return true;
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_121()
- {
-    if (jj_3R_128()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_17()
- {
-    if (jj_3R_19()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_10()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_113()
- {
-    if (jj_scan_token(LC)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_121()) jj_scanpos = xsp;
-    if (jj_scan_token(RC)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_103()
- {
-    if (jj_3R_84()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(60)) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3_9()
- {
-    if (jj_scan_token(BIT_XOR)) return true;
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_97()
- {
-    if (jj_scan_token(LB)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_103()) jj_scanpos = xsp;
-    if (jj_scan_token(RB)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_114()
+  private boolean jj_3R_116()
  {
     if (jj_scan_token(WITH)) return true;
-    if (jj_3R_122()) return true;
+    if (jj_3R_124()) return true;
     if (jj_scan_token(WITHOUT)) return true;
-    if (jj_3R_113()) return true;
+    if (jj_3R_115()) return true;
     return false;
   }
 
-  private boolean jj_3R_16()
+  private boolean jj_3R_110()
  {
-    if (jj_3R_17()) return true;
+    if (jj_3R_114()) return true;
+    if (jj_3R_115()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_9()) jj_scanpos = xsp;
+    if (jj_3R_116()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2782,7 +2732,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
   private Token jj_scanpos, jj_lastpos;
   private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[37];
+  final private int[] jj_la1 = new int[34];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -2794,18 +2744,18 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
       jj_la1_init_3();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x21000800,0x21000800,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x4000000,0x2000000,0x0,0x4000000,0x21000800,0x21000800,0x40000000,0x2000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x21000800,0x21000800,0x0,0x21000800,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x4000000,0x2000000,0x0,0x4000000,0x21000800,0x21000800,0x40000000,0x2000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x8000040,0x8000040,0x80,0x8000000,0x8000000,0x8000000,0x800000,0x8000000,0x40,0x0,0x10000000,0x0,0x8220e000,0x0,0x0,0x0,0x10000000,0x0,0x8000040,0x8000040,0x0,0x0,0x8220e000,0x0,0x0,0x0,0x0,0x0,0x0,0x8220e000,0x220e000,0x8220e000,0x220e000,0x0,0x0,0x10000000,0x8220e000,};
+      jj_la1_1 = new int[] {0x8000040,0x8000040,0x80,0x8000040,0x800000,0x40,0x0,0x10000000,0x0,0x8220e000,0x0,0x0,0x0,0x10000000,0x0,0x8000040,0x8000040,0x0,0x0,0x8220e000,0x0,0x0,0x0,0x0,0x0,0x0,0x8220e000,0x220e000,0x8220e000,0x220e000,0x0,0x0,0x10000000,0x8220e000,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x10180,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x10180,0xe1fe0001,0x6,0x78,0x1e000000,0x180,0xe00,0x10180,0x0,0x10180,0x0,0x0,0x0,0x0,0x10180,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x10180,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x10180,0xe1fe0001,0x6,0x78,0x1e000000,0x180,0xe00,0x10180,0x0,0x10180,0x0,0x0,0x0,0x0,0x10180,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3e0,0x0,0x0,0x430883e0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x430883e0,0x1,0x0,0x0,0x0,0x0,0x0,0x430883e0,0x430883e0,0x430883e0,0x430883e0,0x3e0,0x43000000,0x0,0x430883e0,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x3e0,0x0,0x0,0x430883e0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x430883e0,0x1,0x0,0x0,0x0,0x0,0x0,0x430883e0,0x430883e0,0x430883e0,0x430883e0,0x3e0,0x43000000,0x0,0x430883e0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[19];
+  final private JJCalls[] jj_2_rtns = new JJCalls[21];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2820,7 +2770,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2835,7 +2785,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2846,7 +2796,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2857,7 +2807,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2867,7 +2817,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2877,7 +2827,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 34; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2995,7 +2945,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 37; i++) {
+    for (int i = 0; i < 34; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -3040,7 +2990,7 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < 21; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -3066,6 +3016,8 @@ tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.Instan
             case 16: jj_3_17(); break;
             case 17: jj_3_18(); break;
             case 18: jj_3_19(); break;
+            case 19: jj_3_20(); break;
+            case 20: jj_3_21(); break;
           }
         }
         p = p.next;

@@ -42,88 +42,108 @@ import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
 
 public enum IrisCompiler {
-	
+
 	INSTANCE;
-	
+
 	public enum CurrentDefineType {
 		Normal,
 		Class,
 		Module,
 		Interface,
 	}
-	
+
 	private String m_currentFile = "";
-	private ByteBuddy m_curretByteBuddy = null; 
+	private ByteBuddy m_curretByteBuddy = null;
 	private String m_currentClassName = "";
-		
+
 	private LinkedList<IrisStatement> m_statements = new LinkedList<IrisStatement>();
 	private Builder<IrisNativeJavaClass> m_currentBuilder = null;
-	
+
 	private LinkedList<String> m_uniqueStrings = new LinkedList<String>();
 	private HashMap<String, Integer> m_uniqueStringHash = new HashMap<String, Integer>();
-	
+
 	private Queue<IrisDeferredBlock> m_deferredStatements = new LinkedList<IrisDeferredBlock>();
 	private HashMap<String, Integer> m_blockNameCount = new HashMap<String ,Integer>();
-	
+
 	private Class<?> m_javaClass = null;
-	
+
 	private CurrentDefineType m_currentDefineType = CurrentDefineType.Normal;
 	private String m_currentDefineName = "";
-	
+
 	private boolean m_staticDefine = false;
-	
+
 	private Label m_currentEndLable = null;
-	
+
+    public Label getCurrentLoopContinueLable() {
+        return m_currentLoopContinueLable;
+    }
+
+    public void setCurrentLoopContinueLable(Label currentLoopContinueLable) {
+        m_currentLoopContinueLable = currentLoopContinueLable;
+    }
+
+    private Label m_currentLoopContinueLable = null;
+
+    public Label getCurrentLoopEndLable() {
+        return m_currentLoopEndLable;
+    }
+
+    public void setCurrentLoopEndLable(Label currentLoopEndLable) {
+        m_currentLoopEndLable = currentLoopEndLable;
+    }
+
+    private Label m_currentLoopEndLable = null;
+
 	private boolean m_firstStackFrameGenerated = false;
-	
+
 	public boolean isFirstStackFrameGenerated() {
 		return m_firstStackFrameGenerated;
 	}
-	
+
 	public void setFirstStackFrameGenerated(boolean firstStackFrameGenerated) {
 		m_firstStackFrameGenerated = firstStackFrameGenerated;
 	}
-	
+
 	public Label getCurrentEndLable() {
 		return m_currentEndLable;
 	}
-	
+
 	private void setCurrentEndLable(Label currentEndLable) {
 		m_currentEndLable = currentEndLable;
 	}
-	
+
 	public void setStaticDefine(boolean staticDefine) {
 		m_staticDefine = staticDefine;
 	}
-	
+
 	public int GetIndexOfContextVar() {
 		return m_staticDefine ? 0 : 1;
 	}
-	
+
 	public int GetIndexOfThreadInfoVar() {
 		return GetIndexOfContextVar() + 1;
 	}
-	
+
 	public int GetIndexOfResultValue() {
 		return GetIndexOfContextVar() + 2;
 	}
-	
+
 	public CurrentDefineType getCurrentDefineType() {
 		return m_currentDefineType;
 	}
-	
+
 	public void setCurrentDefineType(CurrentDefineType currentDefineType) {
 		m_currentDefineType = currentDefineType;
 	}
-	
+
 	public String getCurrentDefineName() {
 		return m_currentDefineName;
 	}
-	
+
 	public void setCurrentDefineName(String currentDefineName) {
 		m_currentDefineName = currentDefineName;
 	}
-	
+
 	public int GetBlockNameCount(String name) {
 		Integer count = m_blockNameCount.get(name);
 		if(count == null) {
@@ -135,52 +155,52 @@ public enum IrisCompiler {
 			return count;
 		}
 	}
-	
+
 	public void PushDeferredStatement(IrisDeferredBlock statement) {
 		m_deferredStatements.add(statement);
 	}
-	
+
 	public IrisDeferredBlock PopDeferredStatement() {
 		return m_deferredStatements.poll();
 	}
-	
+
 	public boolean IsDeferredStatementQueueEmpty() {
 		return m_deferredStatements.isEmpty();
 	}
-		
+
 	public void AddUniqueString(String str) {
 		if(!m_uniqueStringHash.containsKey(str)) {
 			m_uniqueStrings.add(str);
 			m_uniqueStringHash.put(str, m_uniqueStrings.size() - 1);
 		}
 	}
-	
-	public int GetUinqueIndex(String str){ 
+
+	public int GetUinqueIndex(String str){
 		return m_uniqueStringHash.get(str);
 	}
-	
+
 	public void AddStatement(IrisStatement statement) {
 		m_statements.add(statement);
 	}
-	
+
 	public LinkedList<IrisStatement> getStatements() {
 		return m_statements;
 	}
-	
+
 	public Builder<IrisNativeJavaClass> getCurrentBuilder() {
 		return m_currentBuilder;
 	}
-	
+
 	public String getCurrentClassName() {
 		return m_currentClassName;
 	}
-	
+
 	private boolean Generate() {
-		
+
 		int index = m_currentFile.lastIndexOf(".");
 		IrisInterpreter.INSTANCE.InceamJavaClassFileNumber();
 		m_currentClassName = m_currentFile.substring(0, index) + "$" + "ir";
-		
+
 		m_curretByteBuddy = new ByteBuddy();
 		m_currentBuilder = m_curretByteBuddy
 				.subclass(IrisNativeJavaClass.class)
@@ -201,10 +221,10 @@ public enum IrisCompiler {
 				return arg1;
 			}
 		}).name(m_currentClassName);
-		
-		m_currentBuilder = m_currentBuilder.defineField("sm_uniqueStringObjects", 
-				ArrayList.class, 
-				Visibility.PUBLIC, 
+
+		m_currentBuilder = m_currentBuilder.defineField("sm_uniqueStringObjects",
+				ArrayList.class,
+				Visibility.PUBLIC,
 				FieldManifestation.FINAL, 
 				Ownership.STATIC).initializer(new ByteCodeAppender(){
 
@@ -405,14 +425,14 @@ public enum IrisCompiler {
 			Label lableFrom = new Label();
 			Label lableEnd = new Label();
 			m_compiler.setCurrentEndLable(new Label());
-			
+
 			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "Nil", "()Lorg/irislang/jiris/core/IrisValue;", false);
 			mv.visitVarInsn(Opcodes.ASTORE, 2);
-			
+
 			mv.visitLabel(lableFrom);
-			
+
 			m_block.Generate(m_compiler, m_compiler.getCurrentBuilder(), mv);
-			
+
 			mv.visitLabel(m_compiler.getCurrentEndLable());
 			m_compiler.setCurrentEndLable(null);
 			

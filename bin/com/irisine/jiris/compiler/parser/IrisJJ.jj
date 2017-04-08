@@ -335,7 +335,7 @@ void translation_unit() :
 {
   (
     tmpStatement = statement()
-    { IrisCompiler.INSTANCE.AddStatement(tmpStatement); }  )+
+    { IrisCompiler.INSTANCE.AddStatement(tmpStatement); }  )*
   < EOF >
 }
 
@@ -345,8 +345,17 @@ IrisStatement statement() :
   IrisStatement tmpStatement = null;
 }
 {
-   < SEMICOLON > tmpExpression = expression()
+   LOOKAHEAD(2)< SEMICOLON > tmpExpression = expression()
    { return new IrisNormalStatement(tmpExpression); }
+ |
+   LOOKAHEAD(2) tmpStatement = return_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(2) tmpStatement = break_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = continue_statement()
+   { return tmpStatement; }   
  |
    tmpStatement = function_statement()
    { return tmpStatement; }
@@ -355,7 +364,7 @@ IrisStatement statement() :
    { return tmpStatement; }
  |
    tmpStatement = switch_statement()
-   { return tmpStatement; } 
+   { return tmpStatement; }
 }
 
 IrisStatement function_statement() :
@@ -380,34 +389,8 @@ IrisStatement function_statement() :
 IrisBlock function_block() :
 { LinkedList<IrisStatement> statements = null; }
 {
-  < LC > [ statements = function_involve_statement_list() ] < RC >
+  < LC > [ statements = block_statement_list() ] < RC >
   { return new IrisBlock(statements); }
-}
-
-LinkedList<IrisStatement> function_involve_statement_list() :
-{
-  IrisStatement tmpStatement = null;
-  LinkedList<IrisStatement> statements = null;
-}
-{
-  	{ statements = new LinkedList<IrisStatement>(); }
-	(
-	  tmpStatement = function_involve_statement()
-	  { statements.add(tmpStatement); }	)+
-	{ return statements; }
-}
-
-IrisStatement function_involve_statement() :
-{
-  IrisExpression tmpExpression = null;
-  IrisStatement tmpStatement = null;
-}
-{
-	LOOKAHEAD(2) < SEMICOLON > tmpExpression = expression()
-	{ return new IrisNormalStatement(tmpExpression); }
-|
-	tmpStatement = return_statement()
-	{ return tmpStatement; }
 }
 
 IrisBlock with_block() :
@@ -416,29 +399,8 @@ IrisBlock with_block() :
   LOOKAHEAD(2) < LC > <RC > 
   { return null; }
 |
-  < LC > statements = with_involve_statement_list() < RC >
+  < LC > statements = block_statement_list() < RC >
   { return new IrisBlock(statements); }
-}
-
-LinkedList<IrisStatement> with_involve_statement_list() :
-{
-  IrisStatement tmpStatement = null;
-  LinkedList<IrisStatement> statements = null;
-}
-{
-  	{ statements = new LinkedList<IrisStatement>(); } 
-	(
-	  tmpStatement = with_involve_statement()
-	  { statements.add(tmpStatement); }
-	)+
-	{ return statements; }
-}
-
-IrisStatement with_involve_statement() :
-{ IrisExpression tmpExpression = null; }
-{
-	< SEMICOLON > tmpExpression = expression()
-	{ return new IrisNormalStatement(tmpExpression); }
 }
 
 IrisFunctionHeader function_header() :
@@ -475,6 +437,20 @@ LinkedList<IrisIdentifier> identifier_list() :
 	  tmpIdentifier = identifier()
 	  { identifiers.add(tmpIdentifier);  }	)*
 	{ return identifiers; } 
+}
+
+IrisStatement break_statement() :
+{ }
+{
+	< SEMICOLON > < BREAK >
+	{ return new IrisBreakStatement(null); }
+}
+
+IrisStatement continue_statement() :
+{ }
+{
+	< SEMICOLON > < CONTINUE >
+	{ return new IrisContinueStatement(null); }
 }
 
 IrisStatement return_statement() :

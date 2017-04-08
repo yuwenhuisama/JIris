@@ -1,5 +1,6 @@
 package org.irislang.jiris.core;
 
+import jdk.nashorn.internal.runtime.Debug;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisInteger;
 import org.omg.CORBA.PRIVATE_MEMBER;
@@ -74,6 +75,9 @@ public class IrisThreadInfo {
 	public void increamCounter() {
 		IrisInteger.IrisIntegerTag tag = (IrisInteger.IrisIntegerTag)IrisDevUtil.GetNativeObjectRef(getCounter());
 		tag.setInteger(tag.getInteger() + 1);
+//		System.out.print("\ncounter : ");
+//		System.out.print(tag.getInteger());
+//		System.out.print("\n");
 	}
 	
 	public ArrayList<IrisValue> getPartPrameterListOf(int count) {

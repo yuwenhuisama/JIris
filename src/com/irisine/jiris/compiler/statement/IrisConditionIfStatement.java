@@ -46,7 +46,8 @@ public class IrisConditionIfStatement extends IrisStatement {
 		nextLabel = new Label();
 		// if false or nil
 		visitor.visitJumpInsn(Opcodes.IFEQ, nextLabel);
-		
+		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
+
 		if(!m_block.Generate(currentCompiler, currentBuilder, visitor)){
 			return false;
 		}
@@ -75,13 +76,14 @@ public class IrisConditionIfStatement extends IrisStatement {
 				
 				nextLabel = new Label();
 				visitor.visitJumpInsn(Opcodes.IFEQ, nextLabel);
-				
+				IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
+
 				if(!m_block.Generate(currentCompiler, currentBuilder, visitor)) {
 					return false;
 				}
 				visitor.visitJumpInsn(Opcodes.GOTO, endLabel);
 				visitor.visitLabel(nextLabel);
-				visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+				IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 			}
 		}
 		

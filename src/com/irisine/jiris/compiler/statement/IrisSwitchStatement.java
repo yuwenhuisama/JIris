@@ -13,7 +13,6 @@ import com.irisine.jiris.compiler.expression.IrisExpression;
 
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
-import sun.security.krb5.internal.CredentialsUtil;
 
 import javax.swing.text.StyledEditorKit;
 import java.util.LinkedList;
@@ -88,19 +87,10 @@ public class IrisSwitchStatement extends IrisStatement {
                 visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "NotFalseOrNil", "(Lorg/irislang/jiris/core/IrisValue;)Z", false);
                 // last false condition will jump to next block
                 visitor.visitJumpInsn(Opcodes.IFEQ, nextSection);
-
-                if(!stackFrameGenerated) {
-                    if(!currentCompiler.isFirstStackFrameGenerated()){
-                        visitor.visitFrame(Opcodes.F_APPEND,1, new Object[] {"org/irislang/jiris/core/IrisValue"}, 0, null);
-                        currentCompiler.setFirstStackFrameGenerated(true);
-                    } else {
-                        visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
-                    }
-                    stackFrameGenerated = true;
-                }
-
+                IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
                 // if true
                 visitor.visitJumpInsn(Opcodes.GOTO, blockLabel);
+                IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 
             }
 
@@ -110,6 +100,7 @@ public class IrisSwitchStatement extends IrisStatement {
             }
             visitor.visitJumpInsn(Opcodes.GOTO, switchEnd);
             visitor.visitLabel(nextSection);
+            IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
         }
 
 

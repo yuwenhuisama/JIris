@@ -13,7 +13,6 @@ import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import sun.security.krb5.internal.CredentialsUtil;
 
 public class IrisLoopIfStatement extends IrisStatement{
 
@@ -39,6 +38,10 @@ public class IrisLoopIfStatement extends IrisStatement{
 //		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setCounter", "(I)V", false);
 
 		// threadInfo.pushCounter(IrisDevUtil.CreateInt(0))
+
+		Label oldLoopContinueLable = currentCompiler.getCurrentLoopContinueLable();
+		Label oldLoopEndLable = currentCompiler.getCurrentLoopEndLable();
+
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 		visitor.visitInsn(Opcodes.ICONST_0);
 		visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "CreateInt", "(I)Lorg/irislang/jiris/core/IrisValue;", false);
@@ -80,13 +83,13 @@ public class IrisLoopIfStatement extends IrisStatement{
 		Label elseLable = new Label();
 
 		visitor.visitJumpInsn(Opcodes.IF_ACMPNE, unimitedLable);
+		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 
 		if(!GenerateLoopBody(false, currentCompiler, currentBuilder, visitor)){
 			return false;
 		}
 
 		visitor.visitJumpInsn(Opcodes.GOTO, elseLable);
-
 		visitor.visitLabel(unimitedLable);
 //		if(!currentCompiler.isFirstStackFrameGenerated()){
 //			visitor.visitFrame(Opcodes.F_APPEND,1, new Object[] {"org/irislang/jiris/core/IrisValue"}, 0, null);
@@ -94,7 +97,6 @@ public class IrisLoopIfStatement extends IrisStatement{
 //		} else {
 //			visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
 //		}
-
 		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 
 		if(!GenerateLoopBody(true, currentCompiler, currentBuilder, visitor)){
@@ -108,6 +110,10 @@ public class IrisLoopIfStatement extends IrisStatement{
 
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopCounter", "()V", false);
+
+		currentCompiler.setCurrentLoopEndLable(oldLoopEndLable);
+		currentCompiler.setCurrentLoopContinueLable(oldLoopContinueLable);
+
 		return true;
 	}
 	
@@ -125,7 +131,10 @@ public class IrisLoopIfStatement extends IrisStatement{
 
 		Label continueLabel = new Label();
 		Label endLable = new Label();
-		
+
+		currentCompiler.setCurrentLoopContinueLable(continueLabel);
+		currentCompiler.setCurrentLoopEndLable(endLable);
+
 		visitor.visitLabel(continueLabel);
 		if(!m_condition.Generate(currentCompiler, currentBuilder, visitor)) {
 			return false;
@@ -134,17 +143,16 @@ public class IrisLoopIfStatement extends IrisStatement{
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
 		visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "NotFalseOrNil", "(Lorg/irislang/jiris/core/IrisValue;)Z", false);
 		visitor.visitJumpInsn(Opcodes.IFEQ, endLable);
-		
+		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
+
 		if(!unlimitedFlag) {
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "GetTopLoopTime", "()Lorg/irislang/jiris/core/IrisValue;", false);
 			visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
-
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 //			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getCounter", "()I", false);
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
 //			visitor.visitMethodInsn(Opcodes.INVOKESTATIC, currentCompiler.getCurrentClassName(), "CompareCounterLess", "(ILorg/irislang/jiris/core/IrisValue;)Z", false);
-
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getCounter", "()Lorg/irislang/jiris/core/IrisValue;", false);
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
@@ -153,6 +161,7 @@ public class IrisLoopIfStatement extends IrisStatement{
 			visitor.visitMethodInsn(Opcodes.INVOKESTATIC, currentCompiler.getCurrentClassName(), "CompareCounterLess", "(Lorg/irislang/jiris/core/IrisValue;Lorg/irislang/jiris/core/IrisValue;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;)Z", false);
 
 			visitor.visitJumpInsn(Opcodes.IFEQ, endLable);
+			IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 		}
 
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
@@ -177,7 +186,7 @@ public class IrisLoopIfStatement extends IrisStatement{
 		
 		visitor.visitJumpInsn(Opcodes.GOTO, continueLabel);
 		visitor.visitLabel(endLable);
-		visitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+		IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
 		
 		return true;
 	}
