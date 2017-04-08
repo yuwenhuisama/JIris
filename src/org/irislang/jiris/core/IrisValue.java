@@ -8,7 +8,13 @@ public class IrisValue {
 		value.m_object = obj;
 		return value;
 	}
-	
+
+	public static IrisValue CloneValue(IrisValue value) {
+		IrisValue v = new IrisValue();
+		v.m_object = value.getObject();
+		return v;
+	}
+
 	public IrisObject getObject() {
 		return m_object;
 	}

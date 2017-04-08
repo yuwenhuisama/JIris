@@ -365,6 +365,9 @@ IrisStatement statement() :
  |
    tmpStatement = switch_statement()
    { return tmpStatement; }
+ |
+   tmpStatement = for_statement()
+   { return tmpStatement; }
 }
 
 IrisStatement function_statement() :
@@ -437,6 +440,31 @@ LinkedList<IrisIdentifier> identifier_list() :
 	  tmpIdentifier = identifier()
 	  { identifiers.add(tmpIdentifier);  }	)*
 	{ return identifiers; } 
+}
+
+IrisStatement for_statement() :
+{
+  IrisIdentifier tmpIter1 = null;
+  IrisIdentifier tmpIter2 = null;
+  IrisExpression tmpSource = null;
+  IrisBlock tmpBlock = null;
+}
+{
+	< FOR > < LP >
+	(
+		tmpIter1 = identifier()
+	|
+		< LP >
+		tmpIter1 = identifier()
+		< COMMA >
+		tmpIter2 = identifier()
+		< RP >
+	)
+	< IN >
+		tmpSource = expression()
+	< RP >
+	tmpBlock = block()
+	{ return new IrisForStatement(tmpIter1, tmpIter2, tmpSource, tmpBlock); }
 }
 
 IrisStatement break_statement() :
@@ -1068,6 +1096,9 @@ IrisExpression primary_expression() :
 |
    tmpExpression = array_literal()
    { return tmpExpression; }
+|
+   tmpExpression = hash_literal()
+   { return tmpExpression; }
 }
 
 IrisIdentifier identifier() :
@@ -1105,6 +1136,35 @@ IrisNativeObjectExpression string() :
 IrisExpression array_literal() :
 { LinkedList<IrisExpression> expressions = null; }
 {
-  < LB > [ expressions = expression_list() [ <COMMA >] ] < RB >
+  < LB > [ expressions = expression_list() [ <COMMA > ] ] < RB >
   { return new IrisArrayExpression(expressions); }
+}
+
+IrisExpression hash_literal() :
+{ LinkedList<IrisHashPair> hashPairs = null; }
+{
+  < LC > [ hashPairs = hash_pair_list() [ <COMMA> ] ] < RC >
+  { return new IrisHashExpression(hashPairs); }
+}
+
+LinkedList<IrisHashPair> hash_pair_list() :
+{
+  IrisExpression tmpKey = null;
+  IrisExpression tmpValue = null;
+  LinkedList<IrisHashPair> hashPairs = null;
+}
+{
+  { hashPairs = new LinkedList<IrisHashPair>(); }
+  tmpKey = expression()
+  < ITER >
+  tmpValue = expression()
+  { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }  
+  (
+    LOOKAHEAD(2)
+    < COMMA >
+    tmpKey = expression()
+    < ITER >
+    tmpValue = expression()
+    { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }  )*
+  { return hashPairs; }
 }

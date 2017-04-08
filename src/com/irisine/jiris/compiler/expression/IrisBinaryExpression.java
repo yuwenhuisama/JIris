@@ -191,7 +191,7 @@ public class IrisBinaryExpression extends IrisExpression {
 			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
 			IrisGenerateHelper.CallMethod(visitor, currentCompiler, "[]=", 2, false);
-
+			IrisGenerateHelper.PopParameter(visitor, currentCompiler, 2);
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
 //			visitor.visitLdcInsn("[]=");
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());

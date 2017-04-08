@@ -27,6 +27,12 @@ public final class IrisGenerateHelper {
         visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
     }
 
+    public static void CreateHash(MethodVisitor visitor, IrisCompiler currentCompiler) {
+        visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "CreateHash", "" +
+                "(Ljava/util/ArrayList;)Lorg/irislang/jiris/core/IrisValue;", false);
+        visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
+    }
+
     public static void CreateInt(MethodVisitor visitor, IrisCompiler currentCompiler, int value) {
         LoadInteger(visitor, value);
         visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "CreateInt", "(I)Lorg/irislang/jiris/core/IrisValue;", false);

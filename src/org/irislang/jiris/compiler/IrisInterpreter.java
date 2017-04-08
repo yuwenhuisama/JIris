@@ -18,19 +18,8 @@ import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
-import org.irislang.jiris.irisclass.IrisArray;
-import org.irislang.jiris.irisclass.IrisClassBase;
-import org.irislang.jiris.irisclass.IrisFalseClass;
-import org.irislang.jiris.irisclass.IrisFloat;
-import org.irislang.jiris.irisclass.IrisInteger;
-import org.irislang.jiris.irisclass.IrisMethodBase;
-import org.irislang.jiris.irisclass.IrisModuleBase;
+import org.irislang.jiris.irisclass.*;
 import org.irislang.jiris.irisclass.IrisModuleBase.IrisModuleBaseTag;
-import org.irislang.jiris.irisclass.IrisNilClass;
-import org.irislang.jiris.irisclass.IrisObjectBase;
-import org.irislang.jiris.irisclass.IrisString;
-import org.irislang.jiris.irisclass.IrisTrueClass;
-import org.irislang.jiris.irisclass.IrisUniqueString;
 import org.irislang.jiris.irisclass.IrisClassBase.IrisClassBaseTag;
 import org.irislang.jiris.irismodule.IrisKernel;
 
@@ -343,6 +332,9 @@ public class IrisInterpreter {
 		RegistClass(new IrisNilClass());
 		
 		RegistClass(new IrisArray());
+		RegistClass(new IrisArrayIterator());
+		RegistClass(new IrisHash());
+		RegistClass(new IrisHashIterator());
 		
 		m_True = IrisDevUtil.GetClass("TrueClass").CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo());
 		m_False = IrisDevUtil.GetClass("FalseClass").CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo());

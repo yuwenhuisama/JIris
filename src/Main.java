@@ -1,33 +1,51 @@
-import java.util.ArrayList;
-
 import org.irislang.jiris.compiler.IrisInterpreter;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Main {
 	
-	static final boolean TEST = false;
+	static final boolean PARSER_TEST = false;
 	
 	public static void main(String[] argv) throws Throwable {
-				
+
+//		ArrayList<String> list = new ArrayList<String>();
+//		list.add("A");
+//		list.add("B");
+//		list.add("C");
+//		list.add("D");
+//		list.add("E");
+//
+//		Iterator<String> iter1 = list.iterator();
+//		while(iter1.hasNext()) {
+//			String var1 = iter1.next();
+//			Iterator<String> iter2 = list.iterator();
+//			while(iter2.hasNext()) {
+//				String var2 = iter2.next();
+//				System.out.print(var1 + "," + var2 + " ");
+//			}
+//			System.out.print("\n");
+//		}
+
 		if(!IrisInterpreter.INSTANCE.Initialize()) {
 			IrisInterpreter.INSTANCE.ShutDown();
 		}
-		
-		if(TEST) {
-			IrisCompiler.INSTANCE.TestLoad("test.ir");			
+
+		if(PARSER_TEST) {
+			IrisCompiler.INSTANCE.TestLoad("test.ir");
 		} else {
 			if(!IrisCompiler.INSTANCE.LoadScriptFromPath("test.ir")){
 				return;
 			}
-				
+
 			IrisInterpreter.INSTANCE.setCurrentCompiler(IrisCompiler.INSTANCE);
-			
+
 			IrisInterpreter.INSTANCE.Run();
-			
-			IrisInterpreter.INSTANCE.ShutDown();	
+
+			IrisInterpreter.INSTANCE.ShutDown();
 		}
 
 		//VerifyBrace(null);

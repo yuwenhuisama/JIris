@@ -5,17 +5,12 @@ import java.lang.invoke.CallSite;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.irislang.jiris.compiler.IrisInterpreter;
-import org.irislang.jiris.core.IrisClass;
-import org.irislang.jiris.core.IrisContextEnvironment;
-import org.irislang.jiris.core.IrisInterface;
-import org.irislang.jiris.core.IrisModule;
-import org.irislang.jiris.core.IrisObject;
-import org.irislang.jiris.core.IrisThreadInfo;
-import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.*;
 import org.irislang.jiris.irisclass.IrisUniqueString;
 import org.irislang.jiris.irisclass.IrisFloat.IrisFloatTag;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
@@ -37,7 +32,18 @@ final public class IrisDevUtil {
 	public static IrisValue False() {
 		return IrisInterpreter.INSTANCE.False();
 	}
-	
+
+	public static IrisValue CallMethod(IrisValue caller, String methodName, ArrayList<IrisValue> parameterList,
+									   IrisContextEnvironment context, IrisThreadInfo threadInfo) throws Throwable {
+		return caller.getObject().CallInstanceMethod(methodName, parameterList, context, threadInfo, IrisMethod
+				.CallSide.Outeside);
+	}
+
+	public static IrisValue CreateInstance(IrisClass classObj, ArrayList<IrisValue> params, IrisContextEnvironment
+			context, IrisThreadInfo threadInfo) throws Throwable {
+		return classObj.CreateNewInstance(params, context, threadInfo);
+	}
+
 	public static IrisValue CreateInt(int integer) {
 		IrisClass intClass = GetClass("Integer");
 		IrisObject intObject = new IrisObject();
@@ -107,7 +113,18 @@ final public class IrisDevUtil {
 		arrayObject.setNativeObject(values);
 		return IrisValue.WrapObject(arrayObject);
 	}
-	
+
+	public static IrisValue CreateHash(ArrayList<IrisValue> pairs) {
+		IrisClass hashClass = GetClass("Hash");
+		try {
+			IrisValue obj = CreateInstance(hashClass, pairs, null, null);
+			return obj;
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+			return IrisDevUtil.Nil();
+		}
+	}
+
 	public static int GetInt(IrisValue intVar) {
 		IrisIntegerTag integerTag = GetNativeObjectRef(intVar);
 		return integerTag.getInteger();

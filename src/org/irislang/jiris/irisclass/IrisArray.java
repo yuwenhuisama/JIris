@@ -1,5 +1,6 @@
 package org.irislang.jiris.irisclass;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.irislang.jiris.core.IrisClass;
@@ -100,6 +101,18 @@ public class IrisArray extends IrisClassRoot {
 		ArrayList<IrisValue> arrayList = IrisDevUtil.GetNativeObjectRef(self);
 		return IrisDevUtil.CreateInt(arrayList.size());
 	}
+
+	public static IrisValue GetIterator(IrisValue self, ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
+		ArrayList<IrisValue> params = new ArrayList<IrisValue>(1);
+		params.add(0, self);
+		// ** Error **
+		try {
+			return IrisDevUtil.CreateInstance(IrisDevUtil.GetClass("ArrayIterator"), params, context, threadInfo);
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+			return IrisDevUtil.Nil();
+		}
+	}
 	
 	@Override
 	public String NativeClassNameDefine() {
@@ -129,6 +142,8 @@ public class IrisArray extends IrisClassRoot {
 		
 		classObj.AddInstanceMethod(IrisArray.class, "Push", "push", 1, false, IrisMethod.MethodAuthority.Everyone);
 		classObj.AddInstanceMethod(IrisArray.class, "Pop", "pop", 0, false, IrisMethod.MethodAuthority.Everyone);
+		classObj.AddInstanceMethod(IrisArray.class, "GetIterator", "get_iterator", 0, false, IrisMethod
+				.MethodAuthority.Everyone);
 	}
 
 }

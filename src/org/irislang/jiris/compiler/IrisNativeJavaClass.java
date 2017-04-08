@@ -59,16 +59,19 @@ public abstract class IrisNativeJavaClass {
 	protected static IrisValue GetLocalVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = context.GetLocalVariable(variableName);
 		if(value == null) {
-			context.AddLocalVariable(variableName, IrisDevUtil.Nil());
-			value = IrisDevUtil.Nil();
+			value = IrisValue.CloneValue(IrisDevUtil.Nil());
+			context.AddLocalVariable(variableName, value);
 		}
-		return value;
+		else {
+			value = IrisValue.CloneValue(value);
+		}
+		return IrisValue.CloneValue(value);
 	}
 	
 	protected static IrisValue SetLocalVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue testValue = context.GetLocalVariable(variableName);
 		if(testValue == null) {
-			context.AddLocalVariable(variableName, value);
+			context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
 		} else {
 			testValue.setObject(value.getObject());
 		}
@@ -81,8 +84,11 @@ public abstract class IrisNativeJavaClass {
 		if(context.getRunningType() == null) {
 			value = context.GetLocalVariable(variableName);
 			if(value == null) {
-				context.AddLocalVariable(variableName, IrisDevUtil.Nil());
-				value = IrisDevUtil.Nil();
+				value = IrisValue.CloneValue(IrisDevUtil.Nil());
+				context.AddLocalVariable(variableName, value);
+			}
+			else {
+				value = IrisValue.CloneValue(value);
 			}
 		}
 		// Class Type
@@ -91,15 +97,21 @@ public abstract class IrisNativeJavaClass {
 			case ClassDefineTime :
 				value = ((IrisClass)context.getRunningType()).SearchClassVariable(variableName);
 				if(value == null) {
-					((IrisClass)context.getRunningType()).AddClassVariable(variableName, IrisDevUtil.Nil());
-					value = IrisDevUtil.Nil();
+					value = IrisValue.CloneValue(IrisDevUtil.Nil());
+					((IrisClass)context.getRunningType()).AddClassVariable(variableName, value);
+				}
+				else {
+					value = IrisValue.CloneValue(value);
 				}
 				break;
 			case ModuleDefineTime :
 				value = ((IrisModule)context.getRunningType()).SearchClassVariable(variableName);
 				if(value == null) {
-					((IrisModule)context.getRunningType()).AddClassVariable(variableName, IrisDevUtil.Nil());
-					value = IrisDevUtil.Nil();
+					value = IrisValue.CloneValue(IrisDevUtil.Nil());
+					((IrisModule)context.getRunningType()).AddClassVariable(variableName, value);
+				}
+				else {
+					value = IrisValue.CloneValue(value);
 				}
 				break;
 			case InterfaceDefineTime :
@@ -108,8 +120,11 @@ public abstract class IrisNativeJavaClass {
 			case RunTime :
 				value = ((IrisClass)context.getRunningType()).SearchClassVariable(variableName);
 				if(value == null) {
-					((IrisClass)context.getRunningType()).AddClassVariable(variableName, IrisDevUtil.Nil());
-					value = IrisDevUtil.Nil();
+					value = IrisValue.CloneValue(IrisDevUtil.Nil());
+					((IrisClass)context.getRunningType()).AddClassVariable(variableName, value);
+				}
+				else {
+					value = IrisValue.CloneValue(value);
 				}
 				break;
 			}
@@ -123,7 +138,7 @@ public abstract class IrisNativeJavaClass {
 		if(context.getRunningType() == null) {
 			testValue = context.GetLocalVariable(variableName);
 			if(testValue == null) {
-				context.AddLocalVariable(variableName, value);
+				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
 			} else {
 				testValue.setObject(value.getObject());
 			}
@@ -133,7 +148,7 @@ public abstract class IrisNativeJavaClass {
 			case ClassDefineTime :
 				testValue = ((IrisClass)context.getRunningType()).SearchClassVariable(variableName);
 				if(testValue == null) {
-					((IrisClass)context.getRunningType()).AddClassVariable(variableName, value);
+					((IrisClass)context.getRunningType()).AddClassVariable(variableName, IrisValue.CloneValue(value));
 				} else {
 					testValue.setObject(value.getObject());
 				}
@@ -141,7 +156,7 @@ public abstract class IrisNativeJavaClass {
 			case ModuleDefineTime :
 				testValue = ((IrisModule)context.getRunningType()).SearchClassVariable(variableName);
 				if(testValue == null) {
-					((IrisModule)context.getRunningType()).AddClassVariable(variableName, value);
+					((IrisModule)context.getRunningType()).AddClassVariable(variableName, IrisValue.CloneValue(value));
 				} else {
 					testValue.setObject(value.getObject());
 				}
@@ -152,7 +167,7 @@ public abstract class IrisNativeJavaClass {
 			case RunTime :
 				testValue = ((IrisClass)context.getRunningType()).SearchClassVariable(variableName);
 				if(testValue == null) {
-					((IrisClass)context.getRunningType()).AddClassVariable(variableName, value);
+					((IrisClass)context.getRunningType()).AddClassVariable(variableName, IrisValue.CloneValue(value));
 				} else {
 					testValue.setObject(value.getObject());
 				}
@@ -168,36 +183,48 @@ public abstract class IrisNativeJavaClass {
 		if(context.getRunningType() == null) {
 			value = IrisInterpreter.INSTANCE.GetConstance(variableName);
 			if(value == null) {
-				value = IrisDevUtil.Nil();
+				value = IrisValue.CloneValue(IrisDevUtil.Nil());
 				IrisInterpreter.INSTANCE.AddConstance(variableName, value);
+			}
+			else {
+				value = IrisValue.CloneValue(value);
 			}
 		}
 		else {
 			switch(context.getRunTimeType()) {
-			case ClassDefineTime :
-				value = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
-				if(value == null) {
-					value = IrisDevUtil.Nil();
-					((IrisClass)context.getRunningType()).AddConstance(variableName, value);
-				}
-				break;
-			case ModuleDefineTime :
-				value = ((IrisModule)context.getRunningType()).SearchConstance(variableName);
-				if(value == null) {
-					value = IrisDevUtil.Nil();
-					((IrisModule)context.getRunningType()).AddConstance(variableName, value);
-				}
-				break;
-			case InterfaceDefineTime :
+				case ClassDefineTime :
+					value = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
+					if(value == null) {
+						value = IrisValue.CloneValue(IrisDevUtil.Nil());
+						((IrisClass)context.getRunningType()).AddConstance(variableName, value);
+					}
+					else {
+						value = IrisValue.CloneValue(value);
+					}
+					break;
+				case ModuleDefineTime :
+					value = ((IrisModule)context.getRunningType()).SearchConstance(variableName);
+					if(value == null) {
+						value = IrisValue.CloneValue(IrisDevUtil.Nil());
+						((IrisModule)context.getRunningType()).AddConstance(variableName, value);
+					}
+					else {
+						value = IrisValue.CloneValue(value);
+					}
+					break;
+				case InterfaceDefineTime :
 				/* Error */
-				return null;
-			case RunTime :
-				value = ((IrisObject)context.getRunningType()).getObjectClass().SearchConstance(variableName);
-				if(value == null) {
-					value = IrisDevUtil.Nil();
-					((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, value);
-				}
-				break;
+					return null;
+				case RunTime :
+					value = ((IrisObject)context.getRunningType()).getObjectClass().SearchConstance(variableName);
+					if(value == null) {
+						value = IrisValue.CloneValue(IrisDevUtil.Nil());
+						((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, value);
+					}
+					else {
+						value = IrisValue.CloneValue(value);
+					}
+					break;
 			}
 		}
 		return value;
@@ -208,7 +235,7 @@ public abstract class IrisNativeJavaClass {
 		if(context.getRunningType() == null) {
 			testValue = IrisInterpreter.INSTANCE.GetConstance(variableName);
 			if(testValue == null) {
-				IrisInterpreter.INSTANCE.AddConstance(variableName, value);
+				IrisInterpreter.INSTANCE.AddConstance(variableName, IrisValue.CloneValue(value));
 			} else {
 				/* Error */
 				return null;
@@ -219,7 +246,7 @@ public abstract class IrisNativeJavaClass {
 			case ClassDefineTime :
 				testValue = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
 				if(testValue == null) {
-					((IrisClass)context.getRunningType()).AddConstance(variableName, value);
+					((IrisClass)context.getRunningType()).AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
 					/* Error */
 					return null;
@@ -228,7 +255,7 @@ public abstract class IrisNativeJavaClass {
 			case ModuleDefineTime :
 				testValue = ((IrisModule)context.getRunningType()).SearchConstance(variableName);
 				if(testValue == null) {
-					((IrisModule)context.getRunningType()).AddConstance(variableName, value);
+					((IrisModule)context.getRunningType()).AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
 					/* Error */
 					return null;
@@ -240,7 +267,7 @@ public abstract class IrisNativeJavaClass {
 			case RunTime :
 				testValue = ((IrisObject)context.getRunningType()).getObjectClass().SearchConstance(variableName);
 				if(testValue == null) {
-					((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, value);
+					((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
 					/* Error */
 					return null;
@@ -255,18 +282,18 @@ public abstract class IrisNativeJavaClass {
 		IrisValue value = null;
 		value = IrisInterpreter.INSTANCE.GetGlobalValue(variableName);
 		if(value == null) {
-			value = IrisDevUtil.Nil();
+			value = IrisValue.CloneValue(IrisDevUtil.Nil());
 			IrisInterpreter.INSTANCE.AddGlobalValue(variableName, value);
 		}
 		return value;
 	}
 	
 	protected static IrisValue SetGlobalVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
-		IrisValue testvalue = IrisInterpreter.INSTANCE.GetGlobalValue(variableName);
-		if(testvalue == null) {
-			IrisInterpreter.INSTANCE.AddGlobalValue(variableName, value);
+		IrisValue testValue = IrisInterpreter.INSTANCE.GetGlobalValue(variableName);
+		if(testValue == null) {
+			IrisInterpreter.INSTANCE.AddGlobalValue(variableName, IrisValue.CloneValue(value));
 		} else {
-			testvalue.setObject(value.getObject());
+			testValue.setObject(value.getObject());
 		}
 		return value;
 	}
@@ -278,14 +305,20 @@ public abstract class IrisNativeJavaClass {
 		if(obj != null) {
 			value = obj.GetInstanceVariable(variableName);
 			if(value == null) {
-				value = IrisDevUtil.Nil();
+				value = IrisValue.CloneValue(IrisDevUtil.Nil());
 				obj.AddInstanceVariable(variableName, value);
+			}
+			else {
+				value = IrisValue.CloneValue(value);
 			}
 		} else {
 			value = context.GetLocalVariable(variableName);
 			if(value == null) {
-				value = IrisDevUtil.Nil();
-				context.AddLocalVariable(variableName, value);
+				value = IrisValue.CloneValue(IrisDevUtil.Nil());
+				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+			}
+			else {
+				value = IrisValue.CloneValue(value);
 			}
 		}
 		
@@ -300,14 +333,14 @@ public abstract class IrisNativeJavaClass {
 		if(obj != null) {
 			testValue = obj.GetInstanceVariable(variableName);
 			if(testValue == null) {
-				obj.AddInstanceVariable(variableName, value);
+				obj.AddInstanceVariable(variableName, IrisValue.CloneValue(value));
 			} else {
 				testValue.setObject(value.getObject());
 			}
 		} else {
 			testValue = context.GetLocalVariable(variableName);
 			if(testValue == null) {
-				context.AddLocalVariable(variableName, value);
+				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
 			} else {
 				testValue.setObject(value.getObject());
 			}

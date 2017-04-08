@@ -41,6 +41,32 @@ public class IrisThreadInfo {
 	private Stack<IrisValue> m_loopTimeStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_comparedObjectStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_counterStack = new Stack<IrisValue>();
+	private Stack<IrisValue> m_vesselStack = new Stack<IrisValue>();
+	private Stack<IrisValue> m_iteratorStack = new Stack<IrisValue>();
+
+	public void PushVessel(IrisValue vessel) {
+		m_vesselStack.push(vessel);
+	}
+
+	public IrisValue GetVessel() {
+		return m_vesselStack.lastElement();
+	}
+
+	public void PopVessel() {
+		m_vesselStack.pop();
+	}
+
+	public void PushIterator(IrisValue iterator) {
+		m_iteratorStack.push(iterator);
+	}
+
+	public IrisValue GetIterator() {
+		return m_iteratorStack.lastElement();
+	}
+
+	public void PopIterator() {
+		m_iteratorStack.pop();
+	}
 
 	public void PushComparedObject(IrisValue value) { m_comparedObjectStack.add(value);}
 
@@ -51,7 +77,7 @@ public class IrisThreadInfo {
 	public void PushLoopTime(IrisValue value) {
 		m_loopTimeStack.add(value);
 	}
-		
+
 	public void PopLoopTime() {
 		m_loopTimeStack.pop();
 	}
