@@ -4,6 +4,7 @@ import jdk.nashorn.internal.runtime.Debug;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisInteger;
 import org.omg.CORBA.PRIVATE_MEMBER;
+import sun.misc.Cleaner;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -43,6 +44,51 @@ public class IrisThreadInfo {
 	private Stack<IrisValue> m_counterStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_vesselStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_iteratorStack = new Stack<IrisValue>();
+	private Stack<IrisContextEnvironment> m_environmentStack = new Stack<IrisContextEnvironment>();
+
+	private IrisValue m_tempSuperClass = null;
+	private LinkedList<IrisValue> m_tempModules = new LinkedList<IrisValue>();
+	private LinkedList<IrisValue> m_tempInterfaces =  new LinkedList<IrisValue>();
+
+	public void SetTempSuperClass(IrisValue value) {
+	    m_tempSuperClass = value;
+    }
+
+    public IrisValue GetTempSuperClass() {
+	    return m_tempSuperClass;
+    }
+
+    public void ClearTempModules() {
+        m_tempModules.clear();
+    }
+
+    public void AddTempModule(IrisValue value) {
+	    m_tempModules.add(value);
+    }
+
+    public LinkedList<IrisValue> GetTempModules() {
+	    return m_tempModules;
+    }
+
+    public void ClearTempInterfaces() {
+        m_tempInterfaces.clear();
+    }
+
+    public void AddTempInterface(IrisValue value) {
+	    m_tempInterfaces.add(value);
+    }
+
+    public LinkedList<IrisValue> getTempInterfaces() {
+	    return m_tempInterfaces;
+    }
+
+	public void PushContext(IrisContextEnvironment environment) {
+		m_environmentStack.push(environment);
+	}
+
+	public IrisContextEnvironment PopContext() {
+		return m_environmentStack.pop();
+	}
 
 	public void PushVessel(IrisValue vessel) {
 		m_vesselStack.push(vessel);

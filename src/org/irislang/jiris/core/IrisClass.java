@@ -72,6 +72,16 @@ public class IrisClass implements IrisRunningObject {
 		m_externClass.NativeClassDefine(this);
 
 	}
+
+	public IrisClass(String className, IrisModule upperModule, IrisClass superClass) throws Throwable {
+	    m_className = className;
+	    m_upperModule = upperModule;
+	    m_superClass = superClass;
+
+        IrisClass classObj = IrisDevUtil.GetClass("Class");
+        m_classObject = classObj.CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo()).getObject();
+        ((IrisClassBase.IrisClassBaseTag)IrisDevUtil.GetNativeObjectRef(m_classObject)).setClassObj(this);;
+	}
 	
 	public void ResetAllMethodsObject() throws Throwable {
 
@@ -140,8 +150,13 @@ public class IrisClass implements IrisRunningObject {
 		// new object
 		IrisObject object = new IrisObject();
 		object.setObjectClass(this);
-		Object nativeObj =  m_externClass.NativeAlloc();
-		object.setNativeObject(nativeObj);
+		if(m_externClass == null) {
+            object.setNativeObject(null);
+        }
+        else {
+            Object nativeObj =  m_externClass.NativeAlloc();
+            object.setNativeObject(nativeObj);
+        }
 		
 		object.CallInstanceMethod("__format", parameterList, context, threadInfo, IrisMethod.CallSide.Outeside);
 		

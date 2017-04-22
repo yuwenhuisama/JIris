@@ -185,7 +185,7 @@ public interface IrisParserConstants {
   /** RegularExpression Id. */
   int ITER = 97;
   /** RegularExpression Id. */
-  int FILED = 98;
+  int FIELD = 98;
   /** RegularExpression Id. */
   int SHARP = 99;
   /** RegularExpression Id. */
@@ -257,7 +257,7 @@ public interface IrisParserConstants {
     "\"*/\"",
     "\"\\n\"",
     "<token of kind 10>",
-    "\"function\"",
+    "\"fun\"",
     "\"class\"",
     "\"module\"",
     "\"interface\"",

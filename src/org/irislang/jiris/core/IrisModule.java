@@ -161,4 +161,8 @@ public class IrisModule implements IrisRunningObject {
 	public void AddClassVariable(String variableName, IrisValue value) {
 		m_classVariables.put(variableName, value);
 	}
+
+    public void AddInvolvedModule(IrisModule moduleObj) {
+	    m_involvedModules.add(moduleObj);
+    }
 }

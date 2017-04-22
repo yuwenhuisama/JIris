@@ -6,7 +6,10 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
+import com.sun.org.apache.xml.internal.utils.ThreadControllerWrapper;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import org.irislang.jiris.core.IrisClass;
 import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisObject;
@@ -17,14 +20,15 @@ import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
 import org.irislang.jiris.dev.IrisDevUtil;
+import org.irislang.jiris.irisclass.IrisClassBase;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
 
 public abstract class IrisNativeJavaClass {
-	
+
 	public static CallSite BootstrapMethod(Class<?> classObj, MethodHandles.Lookup lookup, String name, MethodType mt) throws Throwable {
         return new ConstantCallSite(lookup.findStatic(classObj, name, mt));
     }
-	
+
 	protected static IrisValue CallMethod(IrisValue object, String methodName, IrisThreadInfo threadInfo, IrisContextEnvironment context, int parameterCount) throws Throwable {
 		IrisValue result = null;
 		// hide call
@@ -48,14 +52,14 @@ public abstract class IrisNativeJavaClass {
 						result = method.CallMain(threadInfo.getPartPrameterListOf(parameterCount), context, threadInfo);
 					}
 				}
-			} 
+			}
 		} else {
 			// normal call
 			result = object.getObject().CallInstanceMethod(methodName, threadInfo.getPartPrameterListOf(parameterCount), context, threadInfo, IrisMethod.CallSide.Outeside);
 		}
-		return result; 
+		return result;
 	}
-	
+
 	protected static IrisValue GetLocalVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = context.GetLocalVariable(variableName);
 		if(value == null) {
@@ -67,7 +71,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return IrisValue.CloneValue(value);
 	}
-	
+
 	protected static IrisValue SetLocalVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue testValue = context.GetLocalVariable(variableName);
 		if(testValue == null) {
@@ -77,7 +81,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue GetClassVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = null;
 		// Main context
@@ -131,7 +135,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue SetClassVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue testValue = null;
 		// Main context
@@ -174,10 +178,10 @@ public abstract class IrisNativeJavaClass {
 				break;
 			}
 		}
-		
+
 		return value;
 	}
-	
+
 	protected static IrisValue GetConstance(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = null;
 		if(context.getRunningType() == null) {
@@ -195,7 +199,7 @@ public abstract class IrisNativeJavaClass {
 				case ClassDefineTime :
 					value = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
 					if(value == null) {
-						value = IrisValue.CloneValue(IrisDevUtil.Nil());
+                        value = IrisValue.CloneValue(IrisDevUtil.Nil());
 						((IrisClass)context.getRunningType()).AddConstance(variableName, value);
 					}
 					else {
@@ -229,7 +233,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue SetConstance(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue testValue = null;
 		if(context.getRunningType() == null) {
@@ -277,7 +281,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue GetGlobalVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = null;
 		value = IrisInterpreter.INSTANCE.GetGlobalValue(variableName);
@@ -287,7 +291,7 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue SetGlobalVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue testValue = IrisInterpreter.INSTANCE.GetGlobalValue(variableName);
 		if(testValue == null) {
@@ -297,11 +301,11 @@ public abstract class IrisNativeJavaClass {
 		}
 		return value;
 	}
-	
+
 	protected static IrisValue GetInstanceVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
 		IrisValue value = null;
 		IrisObject obj = (IrisObject) context.getRunningType();
-		
+
 		if(obj != null) {
 			value = obj.GetInstanceVariable(variableName);
 			if(value == null) {
@@ -321,15 +325,15 @@ public abstract class IrisNativeJavaClass {
 				value = IrisValue.CloneValue(value);
 			}
 		}
-		
+
 		return value;
 	}
-	
+
 	protected static IrisValue SetInstanceVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
-		
+
 		IrisValue testValue = null;
 		IrisObject obj = (IrisObject) context.getRunningType();
-		
+
 		if(obj != null) {
 			testValue = obj.GetInstanceVariable(variableName);
 			if(testValue == null) {
@@ -345,10 +349,10 @@ public abstract class IrisNativeJavaClass {
 				testValue.setObject(value.getObject());
 			}
 		}
-		
+
 		return value;
 	}
-	
+
 	protected static boolean CompareCounterLess(IrisValue org, IrisValue tar, IrisThreadInfo threadInfo, IrisContextEnvironment context) throws Throwable {
 //		int b = IrisDevUtil.GetInt(target);
 //		return a < b;
@@ -358,38 +362,175 @@ public abstract class IrisNativeJavaClass {
 		threadInfo.PopParameter(1);
 		return result == IrisDevUtil.True();
 	}
-	
-	protected static void DefineInstanceMethod(Class<?> nativeClass, 
-			String nativeName, 
-			String methodName, 
-			String[] parameters, 
-			String variableParameter, 
-			String withBlockName, 
+
+	protected static void DefineInstanceMethod(
+	        Class<?> nativeClass,
+			String nativeName,
+			String methodName,
+			String[] parameters,
+			String variableParameter,
+			String withBlockName,
 			String withoutBlockName,
 			IrisMethod.MethodAuthority authority,
 			IrisContextEnvironment context,
 			IrisThreadInfo threadInfo) throws Throwable {
-		
+
 		IrisUserMethod userMethod = new IrisUserMethod();
 		if(parameters != null) {
-			userMethod.setParameterList(new ArrayList<String>(Arrays.asList(parameters)));	
+			userMethod.setParameterList(new ArrayList<String>(Arrays.asList(parameters)));
 		} else {
 			userMethod.setParameterList(null);
 		}
-		
+
 		if(variableParameter != null) {
 			userMethod.setVariableParameterName(variableParameter);
 		}
-		
+
 		if(context.getRunTimeType() == IrisContextEnvironment.RunTimeType.RunTime) {
 			IrisInterpreter.INSTANCE.AddMainMethod(
 					new IrisMethod(
-							methodName, 
-							userMethod, 
+							methodName,
+							userMethod,
 							authority,
 							IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName)));
-		} else {
-			;
+		} else if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
+			IrisClass classObj = (IrisClass)context.getRunningType();
+			classObj.AddInstanceMethod(nativeClass, nativeName, methodName, userMethod, authority);
 		}
 	}
+
+    protected static void DefineClassMethod(
+            Class<?> nativeClass,
+            String nativeName,
+            String methodName,
+            String[] parameters,
+            String variableParameter,
+            String withBlockName,
+            String withoutBlockName,
+            IrisMethod.MethodAuthority authority,
+            IrisContextEnvironment context,
+            IrisThreadInfo threadInfo) throws Throwable {
+        IrisUserMethod userMethod = new IrisUserMethod();
+        if (parameters != null) {
+            userMethod.setParameterList(new ArrayList<String>(Arrays.asList(parameters)));
+        } else {
+            userMethod.setParameterList(null);
+        }
+
+        if (variableParameter != null) {
+            userMethod.setVariableParameterName(variableParameter);
+        }
+
+        if (context.getRunTimeType() == IrisContextEnvironment.RunTimeType.RunTime) {
+            // Error
+            return;
+        }
+        else if(context.getRunTimeType() == IrisContextEnvironment.RunTimeType.ClassDefineTime) {
+            IrisClass classObj = (IrisClass)context.getRunningType();
+            classObj.AddClassMethod(nativeClass, nativeName, methodName, userMethod, authority);
+        }
+    }
+
+	protected static IrisContextEnvironment DefineClass(String className, IrisContextEnvironment context,
+														IrisThreadInfo threadInfo) {
+		IrisContextEnvironment newEnv = new IrisContextEnvironment();
+		newEnv.setRunTimeType(IrisContextEnvironment.RunTimeType.ClassDefineTime);
+		newEnv.setUpperContext(context);
+
+		// check if open class
+		IrisModule upperModule = null;
+		IrisContextEnvironment upperContext = context;
+		while(upperContext != null) {
+			upperModule = (IrisModule)upperContext.getRunningType();
+			if(upperModule != null) {
+				break;
+			}
+			upperContext = upperContext.getUpperContext();
+		}
+
+		IrisClass currentClass = null;
+		IrisValue result = null;
+		if(upperModule != null) {
+			result = upperModule.GetConstance(className);
+		}
+		else {
+			result = IrisInterpreter.INSTANCE.GetConstance(className);
+		}
+
+		if(result != null && IrisDevUtil.CheckClass(result, "Class")) {
+			currentClass = ((IrisClassBase.IrisClassBaseTag)IrisDevUtil.GetNativeObjectRef(result)).getClassObj();
+		}
+		else {
+            try {
+                currentClass = new IrisClass(className, upperModule, IrisDevUtil.GetClass("Object"));
+                if(upperModule != null) {
+                    upperModule.AddConstance(className, IrisValue.WrapObject(currentClass.getClassObject()));
+                    upperModule.AddSubClass(currentClass);
+                }
+                else {
+                    IrisInterpreter.INSTANCE.AddConstance(className, IrisValue.WrapObject(currentClass.getClassObject()));
+                }
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        }
+
+        //
+		newEnv.setRunningType(currentClass);
+
+		return newEnv;
+	}
+
+	protected static void SetSuperClass(IrisContextEnvironment context,  IrisThreadInfo
+            threadInfo) {
+	    IrisValue superClass = threadInfo.GetTempSuperClass();
+
+	    if(context.getRunTimeType() != RunTimeType.ClassDefineTime) {
+	        // Error
+	        return;
+        }
+
+        if(!IrisDevUtil.CheckClass(superClass, "Class")) {
+	        // Error
+	        return;
+        }
+
+        IrisClass classObj = (IrisClass) context.getRunningType();
+	    classObj.setSuperClass(((IrisClassBase.IrisClassBaseTag)IrisDevUtil.GetNativeObjectRef(superClass)).getClassObj());
+    }
+
+    protected static void AddModule(IrisContextEnvironment context,  IrisThreadInfo
+            threadInfo) {
+        LinkedList<IrisValue> tempModules = threadInfo.GetTempModules();
+
+        for(IrisValue involvedModule : tempModules) {
+            if(context.getRunTimeType() == RunTimeType.ClassDefineTime){
+                IrisClass classObj = (IrisClass)context.getRunningType();
+                if(!IrisDevUtil.CheckClass(involvedModule, "Module")) {
+                    // Error
+                    return;
+                }
+                IrisModule tmpModuleObj = (IrisModule)IrisDevUtil.GetNativeObjectRef(involvedModule);
+                classObj.AddInvolvedModule(tmpModuleObj);
+            }
+            else if(context.getRunTimeType() == RunTimeType.ModuleDefineTime) {
+                IrisModule moduleObj = (IrisModule) context.getRunningType();
+                if(!IrisDevUtil.CheckClass(involvedModule, "Module")) {
+                    // Error
+                    return;
+                }
+                IrisModule tmpModuleObj = (IrisModule)IrisDevUtil.GetNativeObjectRef(involvedModule);
+                moduleObj.AddInvolvedModule(tmpModuleObj);;
+            }
+            else {
+                // Error
+                return;
+            }
+        }
+    }
+
+    protected static void AddInterface(IrisContextEnvironment context, IrisThreadInfo
+            threadInfo) {
+
+    }
 }

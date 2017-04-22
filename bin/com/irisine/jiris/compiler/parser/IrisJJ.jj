@@ -1,7 +1,14 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.6.0+
- */options{  static = false;
-  token_factory = "IrisToken";}PARSER_BEGIN(IrisParser)
+ */
+options
+{
+  static = false;
+  token_factory = "IrisToken";
+}
+
+PARSER_BEGIN(IrisParser)
+
 package com.irisine.jiris.compiler.parser;
 
 import com.irisine.jiris.compiler.*;
@@ -14,9 +21,13 @@ import java.io.FileInputStream;
 
 import java.util.LinkedList;
 
-import org.apache.commons.lang3.StringEscapeUtils;;
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.util.Stack;
 
 public class IrisParser {
+
+   private Stack<IrisParserDefineType> m_defineStack = new Stack<IrisParserDefineType>();
 
    public IrisParser(String fileName)
    {
@@ -24,7 +35,9 @@ public class IrisParser {
       try { ReInit(new FileInputStream(new File(fileName))); }
       catch(Exception e) { e.printStackTrace(); }
    }
-}PARSER_END(IrisParser)
+}
+
+PARSER_END(IrisParser)
 
 < DEFAULT >
 SKIP :
@@ -73,7 +86,7 @@ MORE :
 // Reserved word
 TOKEN :
 {
-  < FUNCTION  : "function">
+  < FUNCTION  : "fun">
 | < CLASS     : "class" >
 | < MODULE    : "module" >
 | < INTERFACE : "interface" >
@@ -166,7 +179,7 @@ TOKEN :
 | < ASSIGN_BIT_SAR : ">>>=" >
 | < ASSIGN_BIT_SAL : "<<<=" >
 | < ITER : "=>" >
-| < FILED : "::" >
+| < FIELD : "::" >
 | < SHARP : "#" >
 | < CONLON : ":" >   
 }
@@ -335,7 +348,8 @@ void translation_unit() :
 {
   (
     tmpStatement = statement()
-    { IrisCompiler.INSTANCE.AddStatement(tmpStatement); }  )*
+    { IrisCompiler.INSTANCE.AddStatement(tmpStatement); }
+  )*
   < EOF >
 }
 
@@ -368,6 +382,100 @@ IrisStatement statement() :
  |
    tmpStatement = for_statement()
    { return tmpStatement; }
+ |
+   tmpStatement = class_statement()
+   { return tmpStatement; } 
+}
+
+IrisStatement class_statement() :
+{
+  IrisIdentifier tmpClassName = null;
+  IrisExpression tmpSuperClassName = null;
+  LinkedList<IrisExpression> tmpModules = null;
+  LinkedList<IrisExpression> tmpInterfaces = null;
+  IrisBlock tmpBlock = null;
+}
+{
+  { m_defineStack.push(IrisParserDefineType.Class); }
+  < CLASS >
+  tmpClassName = identifier()
+  tmpSuperClassName = extends_field()
+  tmpModules = module_field()
+  tmpInterfaces = interface_field()
+  tmpBlock = block()
+  {
+    m_defineStack.pop();
+    return new IrisClassStatement(tmpClassName, tmpSuperClassName, tmpModules, tmpInterfaces, tmpBlock);
+  }
+}
+
+IrisExpression extends_field() :
+{
+  IrisExpression tmpExpression = null;
+  IrisIdentifier tmpIdentifier = null;
+}
+{
+  < EXTENDS >
+  (
+    LOOKAHEAD(2)
+    tmpExpression = field_expression()
+  |
+    tmpIdentifier = identifier()
+    { tmpExpression = new IrisIdentifierExpression(tmpIdentifier); }
+  )
+  { return tmpExpression; }
+|
+  { return tmpExpression; }
+}
+
+LinkedList<IrisExpression> module_field() :
+{ LinkedList<IrisExpression> tmpList = null; }
+{
+  < INVOLVES > tmpList = field_identifier_list()
+  { return tmpList; }
+| 
+  { return tmpList; }
+}
+
+LinkedList<IrisExpression> interface_field() :
+{ LinkedList<IrisExpression> tmpList = null; }
+{
+  < JOINTS > tmpList = field_identifier_list()
+  { return tmpList; }
+|
+  { return tmpList; }
+}
+
+LinkedList<IrisExpression> field_identifier_list() :
+{
+   IrisIdentifier tmpIdentifier = null;
+   IrisExpression tmpExpression = null;
+   LinkedList<IrisExpression> tmpList = null;
+}
+{
+   { tmpList = new LinkedList<IrisExpression>(); }
+   (
+     LOOKAHEAD(2)
+     tmpExpression = field_expression()
+     { tmpList.add(tmpExpression); }
+   | 
+     tmpIdentifier = identifier()
+     { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+   )
+   (
+     < COMMA >
+     (
+       LOOKAHEAD(2)
+       tmpExpression = field_expression()
+       { tmpList.add(tmpExpression); }
+     |
+       tmpIdentifier = identifier()
+       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+     )
+   )+
+   { return tmpList; }
+ |
+   { return tmpList; }
 }
 
 IrisStatement function_statement() :
@@ -379,31 +487,14 @@ IrisStatement function_statement() :
 }
 {
   tmpHeader = function_header()
-  tmpBlock = function_block()
+  tmpBlock = block()
   [
   < WITH >
-  tmpWithBlock = with_block()
+  tmpWithBlock = block()
   < WITHOUT >
-  tmpWithoutBlock = function_block()
+  tmpWithoutBlock = block()
   ]
-  { return new IrisFunctionStatement(tmpHeader, tmpWithBlock, tmpWithoutBlock, tmpBlock); }
-}
-
-IrisBlock function_block() :
-{ LinkedList<IrisStatement> statements = null; }
-{
-  < LC > [ statements = block_statement_list() ] < RC >
-  { return new IrisBlock(statements); }
-}
-
-IrisBlock with_block() :
-{ LinkedList<IrisStatement> statements = null; }
-{
-  LOOKAHEAD(2) < LC > <RC > 
-  { return null; }
-|
-  < LC > statements = block_statement_list() < RC >
-  { return new IrisBlock(statements); }
+  { return new IrisFunctionStatement(tmpHeader, tmpWithBlock, tmpWithoutBlock, tmpBlock, m_defineStack.lastElement()); }
 }
 
 IrisFunctionHeader function_header() :
@@ -413,8 +504,9 @@ IrisFunctionHeader function_header() :
 	IrisIdentifier tmpVariableParameter = null;
 	boolean isClassMethod = false;
 }
-{  [< SELF > < DOT > { isClassMethod = true; }]
+{
   < FUNCTION >
+  [< SELF > < DOT > { isClassMethod = true; }]
   tmpIdentifier = identifier()
   < LP >
   (
@@ -438,7 +530,8 @@ LinkedList<IrisIdentifier> identifier_list() :
 	(
 	  LOOKAHEAD(2) < COMMA >
 	  tmpIdentifier = identifier()
-	  { identifiers.add(tmpIdentifier);  }	)*
+	  { identifiers.add(tmpIdentifier);  }
+	)*
 	{ return identifiers; } 
 }
 
@@ -569,7 +662,8 @@ LinkedList<IrisStatement> block_statement_list() :
 }
 {
   { statementList = new LinkedList<IrisStatement>(); }
-  (	tmpStatement = statement()
+  (
+	tmpStatement = statement()
 	{ statementList.add(tmpStatement); }
   )+
   { return statementList; }
@@ -972,7 +1066,8 @@ IrisExpression unary_expression() :
     tmpExpression.setLineNumber(lineNumber);
     return tmpExpression;
   }
-|  < SUB > tmpExpression = unary_expression()
+|
+  < SUB > tmpExpression = unary_expression()
   {
     lineNumber = tmpExpression.getLineNumber();
     tmpExpression = new IrisUnaryExpression(IrisUnaryExpression.UnaryExpressionType.Minus, tmpExpression);
@@ -992,6 +1087,49 @@ IrisExpression unary_expression() :
 IrisExpression top_expression() :
 {
   IrisExpression tmpExpression = null;
+  IrisTopExpressionApostrophe tmpExpression2 = null;
+}
+{
+  (
+    LOOKAHEAD(hide_function_call())
+    tmpExpression = hide_function_call()
+  |
+  	tmpExpression = primary_expression()
+  )
+  tmpExpression2 = top_expression_apostrophe()
+  {
+    return new IrisTopExpression(tmpExpression, tmpExpression2).ToDirectExpression();
+  }
+}
+
+IrisTopExpressionApostrophe top_expression_apostrophe() :
+{
+   IrisIdentifier tmpIdentifier = null;
+   LinkedList<IrisExpression> expressions = null;
+   IrisExpression tmpExpression = null;
+   IrisTopExpressionApostrophe tmpExpression2 = null;
+   IrisTopExpressionApostropheBase tmpFore = null;
+}
+{
+  (
+    < DOT >
+   	tmpIdentifier = identifier()
+  	< LP > [ expressions = expression_list() ] < RP >
+  	{ tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, null); }
+  | 
+  	< LB > tmpExpression = expression() < RB >
+  	{ tmpFore = new IrisTopExpressionApostropheForeIndex(tmpExpression);  }
+  )
+  tmpExpression2 = top_expression_apostrophe()
+  { return new IrisTopExpressionApostrophe(tmpFore, tmpExpression2); }
+|
+  { return null; }
+}
+
+/*
+IrisExpression top_expression() :
+{
+  IrisExpression tmpExpression = null;
 }
 {
   LOOKAHEAD(hide_function_call()) tmpExpression = hide_function_call()
@@ -1003,9 +1141,11 @@ IrisExpression top_expression() :
   tmpExpression = primary_expression()
   { return tmpExpression; }
 }
+*/
 
 IrisExpression hide_function_call():
 {
+   IrisExpression tmpCaller = null;
    IrisIdentifier tmpIdentifier = null;
    LinkedList<IrisExpression> expressions = null;
    IrisExpression tmpExpression = null;
@@ -1014,7 +1154,7 @@ IrisExpression hide_function_call():
   tmpIdentifier = identifier()
   < LP > [ expressions = expression_list() ] < RP >
   {
-    tmpExpression = new IrisFunctionCallExpression(null, tmpIdentifier, expressions, null);
+    tmpExpression = new IrisFunctionCallExpression(tmpCaller, tmpIdentifier, expressions, null);
     tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
     return tmpExpression;
   }
@@ -1030,22 +1170,26 @@ LinkedList<IrisExpression> expression_list() :
   tmpExpression = expression()
   { expressions.add(tmpExpression); }
   (
-    LOOKAHEAD(2)    < COMMA >
+    LOOKAHEAD(2)
+    < COMMA >
     tmpExpression = expression()
-    { expressions.add(tmpExpression); }  )*
+    { expressions.add(tmpExpression); }
+  )*
   { return expressions; }
 }
 
+/*
 IrisExpression index_expression() :
 {
   IrisExpression target = null;
   IrisExpression indexer = null;
 }
 {
-  target = primary_expression()
+  target = top_expression()
   < LB > indexer = expression() < RB >
   { return new IrisIndexExpression(target, indexer); }
 }
+*/
 
 IrisExpression primary_expression() :
 {
@@ -1057,6 +1201,10 @@ IrisExpression primary_expression() :
   < LP > tmpExpression = expression() < RP >
   { return tmpExpression; }
 |
+   LOOKAHEAD(2)
+   tmpExpression = field_expression()
+   { return tmpExpression;  }
+| 
   tmpIdentifier = identifier()
   {
     tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
@@ -1165,6 +1313,35 @@ LinkedList<IrisHashPair> hash_pair_list() :
     tmpKey = expression()
     < ITER >
     tmpValue = expression()
-    { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }  )*
+    { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }
+  )*
   { return hashPairs; }
+}
+
+IrisExpression field_expression() :
+{
+   LinkedList<IrisIdentifier> tmpList = null;
+   IrisIdentifier tmpIdentifier = null;
+   boolean tmpIsTopField = false;
+}
+{
+  	< FIELD >
+  	{ tmpIsTopField = true; }
+    (
+       LOOKAHEAD(2)
+       { if(tmpList == null) tmpList = new LinkedList<IrisIdentifier>(); }
+       tmpIdentifier = identifier() < FIELD >
+       { tmpList.add(tmpIdentifier); }
+    )*
+	tmpIdentifier = identifier()
+	{ return new IrisFieldExpression(tmpList, tmpIdentifier, tmpIsTopField); }
+| 
+    { tmpList = new LinkedList<IrisIdentifier>(); }
+    (
+       LOOKAHEAD(2)
+       tmpIdentifier = identifier() < FIELD >
+       { tmpList.add(tmpIdentifier); }
+    )+
+	tmpIdentifier = identifier()
+	{ return new IrisFieldExpression(tmpList, tmpIdentifier, tmpIsTopField); }
 }
