@@ -384,7 +384,28 @@ IrisStatement statement() :
    { return tmpStatement; }
  |
    tmpStatement = class_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = module_statment()
    { return tmpStatement; } 
+}
+
+IrisStatement module_statment() :
+{
+  IrisIdentifier tmpModuleName = null;
+  LinkedList<IrisExpression> tmpModules = null;
+  IrisBlock tmpBlock = null;
+}
+{
+   { m_defineStack.push(IrisParserDefineType.Module); }
+   < MODULE >
+   tmpModuleName = identifier()
+   tmpModules = module_field()
+   tmpBlock = block()
+   {
+     m_defineStack.pop();
+     return new IrisModuleStatement(tmpModuleName, tmpModules, tmpBlock);
+   }
 }
 
 IrisStatement class_statement() :
@@ -455,7 +476,7 @@ LinkedList<IrisExpression> field_identifier_list() :
 {
    { tmpList = new LinkedList<IrisExpression>(); }
    (
-     LOOKAHEAD(2)
+     LOOKAHEAD(field_expression())
      tmpExpression = field_expression()
      { tmpList.add(tmpExpression); }
    | 
@@ -465,14 +486,14 @@ LinkedList<IrisExpression> field_identifier_list() :
    (
      < COMMA >
      (
-       LOOKAHEAD(2)
+       LOOKAHEAD(field_expression())
        tmpExpression = field_expression()
        { tmpList.add(tmpExpression); }
      |
        tmpIdentifier = identifier()
        { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
      )
-   )+
+   )*
    { return tmpList; }
  |
    { return tmpList; }
@@ -1320,7 +1341,7 @@ LinkedList<IrisHashPair> hash_pair_list() :
 
 IrisExpression field_expression() :
 {
-   LinkedList<IrisIdentifier> tmpList = null;
+   LinkedList<IrisIdentifierExpression> tmpList = null;
    IrisIdentifier tmpIdentifier = null;
    boolean tmpIsTopField = false;
 }
@@ -1329,19 +1350,19 @@ IrisExpression field_expression() :
   	{ tmpIsTopField = true; }
     (
        LOOKAHEAD(2)
-       { if(tmpList == null) tmpList = new LinkedList<IrisIdentifier>(); }
+       { if(tmpList == null) tmpList = new LinkedList<IrisIdentifierExpression>(); }
        tmpIdentifier = identifier() < FIELD >
-       { tmpList.add(tmpIdentifier); }
+       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
     )*
 	tmpIdentifier = identifier()
-	{ return new IrisFieldExpression(tmpList, tmpIdentifier, tmpIsTopField); }
+	{ return new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField); }
 | 
-    { tmpList = new LinkedList<IrisIdentifier>(); }
+    { tmpList = new LinkedList<IrisIdentifierExpression>(); }
     (
        LOOKAHEAD(2)
        tmpIdentifier = identifier() < FIELD >
-       { tmpList.add(tmpIdentifier); }
+       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
     )+
 	tmpIdentifier = identifier()
-	{ return new IrisFieldExpression(tmpList, tmpIdentifier, tmpIsTopField); }
+	{ return new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField); }
 }

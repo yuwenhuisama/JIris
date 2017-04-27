@@ -2,6 +2,8 @@ package org.irislang.jiris.core;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
@@ -28,8 +30,17 @@ public class IrisModule implements IrisRunningObject {
 		
 		upperModule.NativeModuleDefine(this);
 	}
-	
-	public void AddSubClass(IrisClass subClass) {
+
+    public IrisModule(String moduleName, IrisModule upperModule) throws Throwable {
+        m_moduleName = moduleName;
+        m_upperModule = upperModule;
+
+        IrisValue obj = IrisDevUtil.GetClass("Module").CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo());
+        ((IrisModuleBaseTag)IrisDevUtil.GetNativeObjectRef(obj)).setModule(this);
+        m_moduleObject = obj.getObject();
+    }
+
+    public void AddSubClass(IrisClass subClass) {
 		m_subClasses.add(subClass);
 	}
 	
@@ -141,7 +152,12 @@ public class IrisModule implements IrisRunningObject {
 		AddClassMethod(method);
 	}
 
-	public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
+    public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws Throwable {
+        IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
+        AddClassMethod(method);
+    }
+
+    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
 		IrisMethod method = new IrisMethod(methodName,
 				parameterAmount,
 				isWithVariableParameter,
@@ -149,10 +165,27 @@ public class IrisModule implements IrisRunningObject {
 				IrisDevUtil.GetIrisNativeMethodHandle(nativeClass, nativeName));
 		AddInstanceMethod(method);
 	}
-	
-	private void AddClassMethod(IrisMethod method) {
+
+    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws Throwable {
+        IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
+        AddInstanceMethod(method);
+    }
+
+    private void AddClassMethod(IrisMethod method) {
 		m_moduleObject.AddInstanceMethod(method);
-	}
+    }
+
+    public void ResetAllMethodsObject() throws Throwable {
+        m_moduleObject.ResetAllMethodsObject();
+
+        Iterator<?> iterator = m_instanceMethods.entrySet().iterator();
+        while(iterator.hasNext()) {
+            @SuppressWarnings("unchecked")
+            Map.Entry<String, IrisMethod> entry = (Map.Entry<String, IrisMethod>) iterator.next();
+            IrisMethod method = entry.getValue();
+            method.ResetMethodObject();
+        }
+    }
 	
 	private void AddInstanceMethod(IrisMethod method) {
 		m_instanceMethods.put(method.getMethodName(), method);

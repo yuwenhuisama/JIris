@@ -45,7 +45,7 @@ public class Main {
 
 			IrisInterpreter.INSTANCE.Run();
 
-			IrisInterpreter.INSTANCE.ShutDown();
+ 			IrisInterpreter.INSTANCE.ShutDown();
 		}
 
 		//VerifyBrace(null);

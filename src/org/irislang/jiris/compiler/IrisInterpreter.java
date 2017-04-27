@@ -313,14 +313,18 @@ public class IrisInterpreter {
 		RegistModule(new IrisKernel());	
 		
 		RegistClass(new IrisObjectBase());
+		IrisDevUtil.GetClass("Object").AddInvolvedModule(IrisDevUtil.GetModule("Kernel"));
 				
 		IrisDevUtil.GetClass("Class").setSuperClass(IrisDevUtil.GetClass("Object"));
+        IrisDevUtil.GetClass("Module").setSuperClass(IrisDevUtil.GetClass("Object"));
 		
 		RegistClass(new IrisMethodBase());
 		
 		IrisDevUtil.GetClass("Class").ResetAllMethodsObject();
 		IrisDevUtil.GetClass("Object").ResetAllMethodsObject();
+        IrisDevUtil.GetClass("Module").ResetAllMethodsObject();
 		IrisDevUtil.GetClass("Method").ResetAllMethodsObject();
+        IrisDevUtil.GetModule("Kernel").ResetAllMethodsObject();
 		
 		RegistClass(new IrisInteger());
 		RegistClass(new IrisFloat());

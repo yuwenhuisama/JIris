@@ -152,7 +152,7 @@ public enum IrisCompiler {
 		}
 		else {
 			m_blockNameCount.put(name, count + 1);
-			return count;
+			return count + 1;
 		}
 	}
 

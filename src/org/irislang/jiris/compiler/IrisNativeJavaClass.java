@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import com.sun.org.apache.xml.internal.utils.ThreadControllerWrapper;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import org.irislang.jiris.core.IrisClass;
 import org.irislang.jiris.core.IrisModule;
@@ -22,11 +21,50 @@ import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisClassBase;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
+import org.irislang.jiris.irisclass.IrisModuleBase;
 
 public abstract class IrisNativeJavaClass {
 
 	public static CallSite BootstrapMethod(Class<?> classObj, MethodHandles.Lookup lookup, String name, MethodType mt) throws Throwable {
         return new ConstantCallSite(lookup.findStatic(classObj, name, mt));
+    }
+
+    protected static IrisValue GetFieldValue(IrisValue headValue, String[] pathConstance, String lastConstance) {
+        IrisValue currentValue = headValue;
+        IrisModule currentModule = null;
+
+        if(IrisDevUtil.CheckClass(currentValue, "Module")) {
+            currentModule = ((IrisModuleBase.IrisModuleBaseTag)IrisDevUtil.GetNativeObjectRef(currentValue)).getModule();
+        }
+        else {
+            // Error
+            return IrisDevUtil.Nil();
+        }
+
+        if(pathConstance != null) {
+            for(String identifier : pathConstance) {
+                currentValue = currentModule.SearchConstance(identifier);
+                if(currentValue == null) {
+                    // Error
+                    return IrisDevUtil.Nil();
+                }
+
+                if(!IrisDevUtil.CheckClass(currentValue, "Class")) {
+                    // Error
+                    return IrisDevUtil.Nil();
+                }
+
+                currentModule = ((IrisModuleBase.IrisModuleBaseTag)IrisDevUtil.GetNativeObjectRef(currentValue)).getModule();
+            }
+        }
+        
+        currentValue = currentModule.SearchConstance(lastConstance);
+        if(currentValue == null) {
+            // Error
+            return IrisDevUtil.Nil();
+        }
+
+        return currentValue;
     }
 
 	protected static IrisValue CallMethod(IrisValue object, String methodName, IrisThreadInfo threadInfo, IrisContextEnvironment context, int parameterCount) throws Throwable {
@@ -396,7 +434,10 @@ public abstract class IrisNativeJavaClass {
 		} else if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
 			IrisClass classObj = (IrisClass)context.getRunningType();
 			classObj.AddInstanceMethod(nativeClass, nativeName, methodName, userMethod, authority);
-		}
+		} else if(context.getRunTimeType() == RunTimeType.ModuleDefineTime) {
+            IrisModule moduleObj = (IrisModule) context.getRunningType();
+            moduleObj.AddInstanceMethod(nativeClass, nativeName, methodName, userMethod, authority);
+        }
 	}
 
     protected static void DefineClassMethod(
@@ -421,13 +462,18 @@ public abstract class IrisNativeJavaClass {
             userMethod.setVariableParameterName(variableParameter);
         }
 
-        if (context.getRunTimeType() == IrisContextEnvironment.RunTimeType.RunTime) {
+        if (context.getRunTimeType() == IrisContextEnvironment.RunTimeType.RunTime
+                || context.getRunTimeType() == RunTimeType.InterfaceDefineTime) {
             // Error
             return;
         }
         else if(context.getRunTimeType() == IrisContextEnvironment.RunTimeType.ClassDefineTime) {
             IrisClass classObj = (IrisClass)context.getRunningType();
             classObj.AddClassMethod(nativeClass, nativeName, methodName, userMethod, authority);
+        }
+        else if(context.getRunTimeType() == RunTimeType.ModuleDefineTime) {
+            IrisModule moduleObj = (IrisModule)context.getRunningType();
+            moduleObj.AddClassMethod(nativeClass, nativeName, methodName, userMethod, authority);
         }
     }
 
@@ -481,6 +527,56 @@ public abstract class IrisNativeJavaClass {
 		return newEnv;
 	}
 
+	protected static IrisContextEnvironment DefineModule(String moduleName, IrisContextEnvironment context,
+                                                         IrisThreadInfo threadInfo) {
+        IrisContextEnvironment newEnv = new IrisContextEnvironment();
+        newEnv.setRunTimeType(RunTimeType.ModuleDefineTime);
+        newEnv.setUpperContext(context);
+
+        // check if open module
+        IrisModule upperModule = null;
+        IrisContextEnvironment upperContext = context;
+        while(upperContext != null) {
+            upperModule = (IrisModule)upperContext.getRunningType();
+            if(upperModule != null) {
+                break;
+            }
+            upperContext = upperContext.getUpperContext();
+        }
+
+        IrisModule currentModule = null;
+        IrisValue result = null;
+        if(upperModule != null) {
+            result = upperModule.SearchConstance(moduleName);
+        }
+        else {
+            result = IrisInterpreter.INSTANCE.GetConstance(moduleName);
+        }
+
+        if(result != null && IrisDevUtil.CheckClass(result, "Module")) {
+            currentModule = ((IrisModuleBase.IrisModuleBaseTag)IrisDevUtil.GetNativeObjectRef(result)).getModule();
+        }
+        else {
+            try {
+                currentModule = new IrisModule(moduleName, upperModule);
+                if(upperModule != null) {
+                    upperModule.AddConstance(moduleName, IrisValue.WrapObject(currentModule.getModuleObject()));
+                    upperModule.AddSubModule(currentModule);
+                }
+                else {
+                    IrisInterpreter.INSTANCE.AddConstance(moduleName, IrisValue.WrapObject(currentModule.getModuleObject()));
+                }
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        }
+
+        //
+        newEnv.setRunningType(currentModule);
+
+        return newEnv;
+    }
+
 	protected static void SetSuperClass(IrisContextEnvironment context,  IrisThreadInfo
             threadInfo) {
 	    IrisValue superClass = threadInfo.GetTempSuperClass();
@@ -510,7 +606,8 @@ public abstract class IrisNativeJavaClass {
                     // Error
                     return;
                 }
-                IrisModule tmpModuleObj = (IrisModule)IrisDevUtil.GetNativeObjectRef(involvedModule);
+                IrisModule tmpModuleObj = ((IrisModuleBase.IrisModuleBaseTag)IrisDevUtil.GetNativeObjectRef
+                        (involvedModule)).getModule();
                 classObj.AddInvolvedModule(tmpModuleObj);
             }
             else if(context.getRunTimeType() == RunTimeType.ModuleDefineTime) {
