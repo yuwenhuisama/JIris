@@ -61,8 +61,8 @@ TOKEN_MGR_DECLS :
 MORE :
 {
 	"/*" : MULTIPLE_LINE_COMMENT_STATE
-| 
-	"//" : SINGLE_LINE_COMMENT_STATE
+//| 
+	//"//" : SINGLE_LINE_COMMENT_STATE
 }
 
 < MULTIPLE_LINE_COMMENT_STATE >
@@ -71,10 +71,15 @@ SKIP :
 	"*/" : DEFAULT
 }
 
-< SINGLE_LINE_COMMENT_STATE >
-SKIP :
+//< SINGLE_LINE_COMMENT_STATE >
+//SPECIAL_TOKEN :
+//{
+//< SINGLE_LINE_COMMENT: "\n"|"\r"|"\r\n" > : DEFAULT
+//}
+
+SPECIAL_TOKEN :
 {
-	"\n" : DEFAULT
+  <SINGLE_LINE_COMMENT: "//" (~["\n", "\r"])* ("\n" | "\r" | "\r\n")?>
 }
 
 < MULTIPLE_LINE_COMMENT_STATE, SINGLE_LINE_COMMENT_STATE >
@@ -98,7 +103,7 @@ TOKEN :
 | < EVERYONE  : "everyone" >
 | < GET       : "get" >
 | < SET       : "set" >
-| < GSET      : "gest" >
+| < GSET      : "gset" >
 | < IF        : "if" >
 | < ELSE      : "else" >
 | < ELSEIF    : "elseif" >
@@ -359,15 +364,17 @@ IrisStatement statement() :
   IrisStatement tmpStatement = null;
 }
 {
-   LOOKAHEAD(2)< SEMICOLON > tmpExpression = expression()
-   { return new IrisNormalStatement(tmpExpression); }
- |
+   LOOKAHEAD(2) 
+   < SEMICOLON > tmpExpression = expression()
+   { return new IrisNormalStatement(tmpExpression); } 
+ | 
    LOOKAHEAD(2) tmpStatement = return_statement()
    { return tmpStatement; }
  |
    LOOKAHEAD(2) tmpStatement = break_statement()
    { return tmpStatement; }
  |
+   LOOKAHEAD(continue_statement())
    tmpStatement = continue_statement()
    { return tmpStatement; }   
  |
@@ -386,11 +393,66 @@ IrisStatement statement() :
    tmpStatement = class_statement()
    { return tmpStatement; }
  |
-   tmpStatement = module_statment()
-   { return tmpStatement; } 
+   tmpStatement = module_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(getter_statement())
+   tmpStatement = getter_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(setter_statement())
+   tmpStatement = setter_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(gsetter_statement())
+   tmpStatement = gsetter_statement()
+   { return tmpStatement; }
 }
 
-IrisStatement module_statment() :
+IrisStatement getter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+  IrisBlock tmpBlock = null;
+}
+{
+  < SEMICOLON > < GET > < LB > tmpIdentifier = identifier()  < RB >
+  { return new IrisGetterStatement(tmpIdentifier, tmpBlock); }
+|
+  < GET >
+  < LB > tmpIdentifier = identifier() < RB >
+  < LP > < RP >
+  tmpBlock = block()
+  { return new IrisGetterStatement(tmpIdentifier, tmpBlock); }
+}
+
+IrisStatement setter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+  IrisIdentifier tmpParam = null;
+  IrisBlock tmpBlock = null;
+}
+{
+  < SEMICOLON > < SET > < LB > tmpIdentifier = identifier()  < RB >
+  { return new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock); }
+|
+  < SET >
+  < LB > tmpIdentifier = identifier() < RB >
+  < LP > tmpParam = identifier() < RP >
+  tmpBlock = block()
+  { return new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock); }
+}
+
+
+IrisStatement gsetter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+}
+{
+  < SEMICOLON > < GSET > < LB > tmpIdentifier = identifier()  < RB >
+  { return new IrisGSetterStatement(tmpIdentifier); }
+}
+
+IrisStatement module_statement() :
 {
   IrisIdentifier tmpModuleName = null;
   LinkedList<IrisExpression> tmpModules = null;
@@ -1130,13 +1192,24 @@ IrisTopExpressionApostrophe top_expression_apostrophe() :
    IrisExpression tmpExpression = null;
    IrisTopExpressionApostrophe tmpExpression2 = null;
    IrisTopExpressionApostropheBase tmpFore = null;
+   boolean tmpIsNormalCallExpr = false;
 }
 {
   (
     < DOT >
    	tmpIdentifier = identifier()
-  	< LP > [ expressions = expression_list() ] < RP >
-  	{ tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, null); }
+  	[
+  	   < LP > [ expressions = expression_list() ] < RP >
+  	   { tmpIsNormalCallExpr = true; }
+  	]
+  	{
+  	  if(tmpIsNormalCallExpr) {
+  	    tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, null);
+  	  }
+  	  else {
+  	    tmpFore = new IrisTopExpressionApostropheForeMember(tmpIdentifier);
+  	  }
+  	}     
   | 
   	< LB > tmpExpression = expression() < RB >
   	{ tmpFore = new IrisTopExpressionApostropheForeIndex(tmpExpression);  }

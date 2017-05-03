@@ -74,7 +74,7 @@ public class IrisIndexExpression extends IrisExpression {
 			result.setResult(false);
 			return result;
 		}
-		
+
 		result.setType(LeftValueType.IndexVariable);
 		result.setResult(true);
 		

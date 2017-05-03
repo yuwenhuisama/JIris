@@ -190,12 +190,12 @@ public class IrisClass implements IrisRunningObject {
 		IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
 		AddInstanceMethod(method);
 	}
-	
-	private void AddClassMethod(IrisMethod method) {
+
+	public void AddClassMethod(IrisMethod method) {
 		m_classObject.AddInstanceMethod(method);
 	}
 	
-	private void AddInstanceMethod(IrisMethod method) {
+	public void AddInstanceMethod(IrisMethod method) {
 		m_instanceMethods.put(method.getMethodName(), method);
 	}
 	

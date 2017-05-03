@@ -179,8 +179,15 @@ public class IrisBinaryExpression extends IrisExpression {
 			default:
 				break;
 			}
-		} else if(result.getType() == LeftValueType.MemberVariable){
+            visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
+        }
+		else if(result.getType() == LeftValueType.MemberVariable) {
+            visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+            IrisGenerateHelper.GetRecord(visitor, currentCompiler);
+            visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo",
+                    "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
+            IrisGenerateHelper.CallMethod(visitor, currentCompiler, result.getIdentifier(), 1, false);
 		}
 		else if(result.getType() == LeftValueType.IndexVariable) {
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
@@ -191,7 +198,6 @@ public class IrisBinaryExpression extends IrisExpression {
 			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
 			IrisGenerateHelper.CallMethod(visitor, currentCompiler, "[]=", 2, false);
-			IrisGenerateHelper.PopParameter(visitor, currentCompiler, 2);
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
 //			visitor.visitLdcInsn("[]=");
 //			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
@@ -199,7 +205,6 @@ public class IrisBinaryExpression extends IrisExpression {
 //			visitor.visitInsn(Opcodes.ICONST_2);
 //			visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/compiler/IrisNativeJavaClass", "CallMethod", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;I)Lorg/irislang/jiris/core/IrisValue;", false);
 		}
-        visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
     }
 
 	protected boolean AssignGenterate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {

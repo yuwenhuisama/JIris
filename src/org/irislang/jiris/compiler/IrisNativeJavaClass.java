@@ -392,15 +392,42 @@ public abstract class IrisNativeJavaClass {
 	}
 
 	protected static boolean CompareCounterLess(IrisValue org, IrisValue tar, IrisThreadInfo threadInfo, IrisContextEnvironment context) throws Throwable {
-//		int b = IrisDevUtil.GetInt(target);
-//		return a < b;
-		//int a = IrisDevUtil.GetInt(org);
 		threadInfo.AddParameter(tar);
 		IrisValue result = CallMethod(org, "<", threadInfo, context, 1);
 		threadInfo.PopParameter(1);
 		return result == IrisDevUtil.True();
 	}
 
+	protected static void DefineDefaultGetter(String methodName,
+                                               String targetVariale,
+                                               IrisMethod.MethodAuthority authority,
+                                               IrisContextEnvironment context,
+                                               IrisThreadInfo threadInfo) throws Throwable {
+
+        if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
+            IrisClass classObj = (IrisClass)context.getRunningType();
+            IrisMethod method = new IrisMethod(methodName, targetVariale, IrisMethod.GetterSetter.Getter, authority);
+            classObj.AddInstanceMethod(method);
+        }
+        else {
+            // Error
+        }
+    }
+
+    protected static void DefineDefaultSetter(String methodName,
+                                              String targetVariale,
+                                              IrisMethod.MethodAuthority authority,
+                                              IrisContextEnvironment context,
+                                              IrisThreadInfo threadInfo) throws Throwable {
+        if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
+            IrisClass classObj = (IrisClass)context.getRunningType();
+            IrisMethod method = new IrisMethod(methodName, targetVariale, IrisMethod.GetterSetter.Setter, authority);
+            classObj.AddInstanceMethod(method);
+        }
+        else {
+            // Error
+        }
+    }
 	protected static void DefineInstanceMethod(
 	        Class<?> nativeClass,
 			String nativeName,

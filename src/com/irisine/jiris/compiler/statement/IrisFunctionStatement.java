@@ -115,7 +115,7 @@ public class IrisFunctionStatement extends IrisStatement {
 		String nativeName = m_blockNativeName;
 		
 		// Preinvoke
-		visitor.visitVarInsn(Opcodes.ALOAD, 0);
+        //visitor.visitVarInsn(Opcodes.ALOAD, 0);
 		visitor.visitVarInsn(Opcodes.ALOAD, 0);
 		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Object", "getClass", "()Ljava/lang/Class;", false);
 
