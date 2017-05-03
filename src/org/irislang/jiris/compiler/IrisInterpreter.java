@@ -15,6 +15,7 @@ import org.irislang.jiris.core.IrisMethod;
 import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
@@ -69,11 +70,11 @@ public class IrisInterpreter {
 		return m_mainMethods.get(methodName);
 	}
 	
-	public IrisModule GetModule(LinkedList<String> fullPath) throws Throwable {
+	public IrisModule GetModule(LinkedList<String> fullPath) throws IrisExceptionBase {
 		
-		if(fullPath.isEmpty()) {
-			throw new Exception("Path is empty!");
-		}
+//		if(fullPath.isEmpty()) {
+//			throw new iRIS("Path is empty!");
+//		}
 		
 		IrisModule tmpCur = null;
 		IrisValue tmpValue = null;
@@ -207,7 +208,7 @@ public class IrisInterpreter {
 		return GetInterface(stringList);
 	}
 	
-	public boolean RegistClass(IrisClassRoot classObj) throws Throwable {
+	public boolean RegistClass(IrisClassRoot classObj) throws IrisExceptionBase {
 		
 		IrisModule upperModule = classObj.NativeUpperModuleDefine();
 		String className = classObj.NativeClassNameDefine();
@@ -235,7 +236,7 @@ public class IrisInterpreter {
 		return true;
 	}
 	
-	public boolean RegistModule(IrisModuleRoot moduleObj) throws Throwable {
+	public boolean RegistModule(IrisModuleRoot moduleObj) throws IrisExceptionBase {
 		
 		IrisModule upperModule = moduleObj.NativeUpperModuleDefine();
 		String moduleName = moduleObj.NativeModuleNameDefine();
@@ -301,7 +302,7 @@ public class IrisInterpreter {
 		return m_globalValues.get(name);
 	}
 		
-	public boolean Initialize() throws Throwable {
+	public boolean Initialize() throws IrisExceptionBase {
 		
 		IrisThreadInfo.SetMainThreadID(Thread.currentThread().getId());
 		IrisThreadInfo mainThreadInfo = new IrisThreadInfo();		

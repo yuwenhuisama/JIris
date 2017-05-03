@@ -7,6 +7,7 @@ import java.lang.invoke.MethodType;
 
 import org.irislang.jiris.core.IrisClass;
 import org.irislang.jiris.core.IrisModule;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 
 public abstract class IrisClassRoot {
 
@@ -18,5 +19,5 @@ public abstract class IrisClassRoot {
 	abstract public IrisClass NativeSuperClassDefine();
 	abstract public IrisModule NativeUpperModuleDefine();
 	abstract public Object NativeAlloc();
-	abstract public void NativeClassDefine(IrisClass classObj) throws Throwable;
+	abstract public void NativeClassDefine(IrisClass classObj) throws IrisExceptionBase;
 }

@@ -1,6 +1,7 @@
 package org.irislang.jiris.core;
 
 import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisMethodBase;
 
@@ -42,7 +43,8 @@ public class IrisMethod {
         return m_methodObject;
     }
 
-    public IrisMethod(String methodName, int parameterCount, boolean isWithVariableParameter, MethodAuthority authority, MethodHandle methodHandle) throws Throwable {
+    public IrisMethod(String methodName, int parameterCount, boolean isWithVariableParameter, MethodAuthority
+            authority, MethodHandle methodHandle) throws IrisExceptionBase {
         m_methodName = methodName;
         m_parameterCount = parameterCount;
         m_isWithVariableParameter = isWithVariableParameter;
@@ -55,7 +57,7 @@ public class IrisMethod {
         }
     }
 
-    public IrisMethod(String methodName, IrisUserMethod userMethod, MethodAuthority authority, MethodHandle methodHandle) throws Throwable {
+    public IrisMethod(String methodName, IrisUserMethod userMethod, MethodAuthority authority, MethodHandle methodHandle) throws IrisExceptionBase {
         m_methodName = methodName;
         m_parameterCount = userMethod.getParameterList() == null ? 0 : userMethod.getParameterList().size();
         m_isWithVariableParameter = userMethod.getVariableParameterName().equals("");
@@ -67,7 +69,7 @@ public class IrisMethod {
     }
 
     public IrisMethod(String methodName, String targetVariable, GetterSetter type, MethodAuthority authority) throws
-            Throwable {
+            IrisExceptionBase {
         m_methodName = methodName;
         m_targetVariable = targetVariable;
         m_isWithVariableParameter = false;
@@ -91,7 +93,7 @@ public class IrisMethod {
         CreateMethodObject(IrisDevUtil.GetClass("Method"));
     }
 
-    private IrisContextEnvironment CreateNewContext(IrisObject caller, ArrayList<IrisValue> parameterList, IrisContextEnvironment currentContext, IrisThreadInfo threadInfo) throws Throwable {
+    private IrisContextEnvironment CreateNewContext(IrisObject caller, ArrayList<IrisValue> parameterList, IrisContextEnvironment currentContext, IrisThreadInfo threadInfo) throws IrisExceptionBase {
         IrisContextEnvironment newContex = new IrisContextEnvironment();
 
         newContex.setRunTimeType(RunTimeType.RunTime);
@@ -137,18 +139,18 @@ public class IrisMethod {
         }
     }
 
-    private void CreateMethodObject(IrisClass methodClass) throws Throwable {
+    private void CreateMethodObject(IrisClass methodClass) throws IrisExceptionBase {
         IrisValue methodObj = methodClass.CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo());
         ((IrisMethodBase.IrisMethodBaseTag) (IrisDevUtil.GetNativeObjectRef(methodObj))).setMethodObj(this);
         m_methodObject = methodObj.getObject();
     }
 
-    public void ResetMethodObject() throws Throwable {
+    public void ResetMethodObject() throws IrisExceptionBase {
         CreateMethodObject(IrisDevUtil.GetClass("Method"));
     }
 
     @SuppressWarnings("rawtypes")
-    public IrisValue Call(IrisValue caller, ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws Throwable {
+    public IrisValue Call(IrisValue caller, ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
         IrisValue result = null;
 
         if (!ParameterCheck(parameterList)) {
@@ -182,34 +184,39 @@ public class IrisMethod {
         }
 
         IrisContextEnvironment newContext = CreateNewContext(caller.getObject(), parameterList, context, threadInfo);
-        // Call
-        if (parameterList == null || parameterList.size() == 0) {
-            if (m_userMethod == null) {
-                result = (IrisValue) m_methodHanlde.invokeExact(caller, (ArrayList) null, (ArrayList) null, newContext, threadInfo);
-            } else {
-                result = (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
-            }
-        } else {
-            if (m_userMethod == null) {
-                // Variable Parameters
-                ArrayList<IrisValue> variableValues = null;
-                ArrayList<IrisValue> normalParameters = null;
-                if (parameterList.size() > m_parameterCount) {
-                    variableValues = new ArrayList<IrisValue>(parameterList.subList(m_parameterCount, parameterList.size()));
+        try {
+            // Call
+            if (parameterList == null || parameterList.size() == 0) {
+                if (m_userMethod == null) {
+                    result = (IrisValue) m_methodHanlde.invokeExact(caller, (ArrayList) null, (ArrayList) null, newContext, threadInfo);
+                } else {
+                    result = (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
                 }
-                if (m_parameterCount > 0) {
-                    normalParameters = new ArrayList<IrisValue>(parameterList.subList(0, m_parameterCount));
-                }
-                result = (IrisValue) m_methodHanlde.invokeExact(caller, normalParameters, variableValues, newContext, threadInfo);
             } else {
-                result = (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
+                if (m_userMethod == null) {
+                    // Variable Parameters
+                    ArrayList<IrisValue> variableValues = null;
+                    ArrayList<IrisValue> normalParameters = null;
+                    if (parameterList.size() > m_parameterCount) {
+                        variableValues = new ArrayList<IrisValue>(parameterList.subList(m_parameterCount, parameterList.size()));
+                    }
+                    if (m_parameterCount > 0) {
+                        normalParameters = new ArrayList<IrisValue>(parameterList.subList(0, m_parameterCount));
+                    }
+                    result = (IrisValue) m_methodHanlde.invokeExact(caller, normalParameters, variableValues, newContext, threadInfo);
+                } else {
+                    result = (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
+                }
             }
+        }
+        catch (Throwable e) {
+            e.printStackTrace();
         }
 
         return result;
     }
 
-    public IrisValue CallMain(ArrayList<IrisValue> arrayList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws Throwable {
+    public IrisValue CallMain(ArrayList<IrisValue> arrayList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
         if (!ParameterCheck(arrayList)) {
 			/* Error */
             return IrisDevUtil.Nil();
@@ -217,7 +224,15 @@ public class IrisMethod {
 
         IrisContextEnvironment newContext = CreateNewContext(null, arrayList, context, threadInfo);
 
-        return (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
+        try {
+            return (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);
+        }
+        catch (Throwable e) {
+            if(e instanceof IrisExceptionBase) {
+                throw (IrisExceptionBase)e;
+            }
+            return IrisDevUtil.Nil();
+        }
     }
 
     public String getMethodName() {

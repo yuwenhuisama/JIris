@@ -2,6 +2,7 @@ package org.irislang.jiris.irisclass;
 
 import net.bytebuddy.pool.TypePool;
 import org.irislang.jiris.core.*;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 
@@ -34,7 +35,7 @@ public class IrisArrayIterator extends IrisClassRoot {
     }
 
     @Override
-    public void NativeClassDefine(IrisClass classObj) throws Throwable {
+    public void NativeClassDefine(IrisClass classObj) throws IrisExceptionBase {
         classObj.AddInstanceMethod(IrisArrayIterator.class, "Initialize", "__format", 1, false, IrisMethod.MethodAuthority.Everyone);
         classObj.AddInstanceMethod(IrisArrayIterator.class, "Next", "next", 0, false, IrisMethod.MethodAuthority
                 .Everyone);

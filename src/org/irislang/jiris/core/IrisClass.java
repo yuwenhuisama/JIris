@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.irislang.jiris.core.IrisMethod.IrisUserMethod;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisClassBase;
@@ -45,7 +46,7 @@ public class IrisClass implements IrisRunningObject {
 	private HashMap<String, IrisValue> m_constances = new HashMap<String, IrisValue>();
 	private HashMap<String, IrisMethod> m_instanceMethods = new HashMap<String, IrisMethod>();
 	
-	public IrisClass(IrisClassRoot externClass) throws Throwable {
+	public IrisClass(IrisClassRoot externClass) throws IrisExceptionBase {
 		m_className = externClass.NativeClassNameDefine();
 		m_superClass = externClass.NativeSuperClassDefine();
 		m_upperModule = externClass.NativeUpperModuleDefine();
@@ -73,7 +74,7 @@ public class IrisClass implements IrisRunningObject {
 
 	}
 
-	public IrisClass(String className, IrisModule upperModule, IrisClass superClass) throws Throwable {
+	public IrisClass(String className, IrisModule upperModule, IrisClass superClass) throws IrisExceptionBase {
 	    m_className = className;
 	    m_upperModule = upperModule;
 	    m_superClass = superClass;
@@ -83,7 +84,7 @@ public class IrisClass implements IrisRunningObject {
         ((IrisClassBase.IrisClassBaseTag)IrisDevUtil.GetNativeObjectRef(m_classObject)).setClassObj(this);;
 	}
 	
-	public void ResetAllMethodsObject() throws Throwable {
+	public void ResetAllMethodsObject() throws IrisExceptionBase {
 
 		m_classObject.ResetAllMethodsObject();
 		
@@ -146,7 +147,7 @@ public class IrisClass implements IrisRunningObject {
 		return method;
 	}
 	
-	public IrisValue CreateNewInstance(ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws Throwable {
+	public IrisValue CreateNewInstance(ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
 		// new object
 		IrisObject object = new IrisObject();
 		object.setObjectClass(this);
@@ -163,7 +164,7 @@ public class IrisClass implements IrisRunningObject {
 		return IrisValue.WrapObject(object);
 	}
 	
-	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
+	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName,
 				parameterAmount,
 				isWithVariableParameter,
@@ -172,12 +173,12 @@ public class IrisClass implements IrisRunningObject {
 		AddClassMethod(method);
 	}
 
-	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, IrisUserMethod userMethod, MethodAuthority authority) throws Throwable {
+	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, IrisUserMethod userMethod, MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
 		AddClassMethod(method);
 	}
 	
-	public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
+	public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName,
 				parameterAmount,
 				isWithVariableParameter,
@@ -186,7 +187,7 @@ public class IrisClass implements IrisRunningObject {
 		AddInstanceMethod(method);
 	}
 	
-	public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, IrisUserMethod userMethod, MethodAuthority authority) throws Throwable {
+	public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, IrisUserMethod userMethod, MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
 		AddInstanceMethod(method);
 	}

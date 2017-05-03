@@ -15,6 +15,7 @@ import org.irislang.jiris.compiler.IrisRunnable;
 import org.irislang.jiris.core.IrisContextEnvironment;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 
 import com.irisine.jiris.compiler.assistpart.IrisBlock;
@@ -74,6 +75,40 @@ public enum IrisCompiler {
 
 	private Label m_currentEndLable = null;
 
+	public static class IrregularVariableLabelPair {
+	    private Label fromLable = null;
+	    private Label toLable = null;
+
+        public Label getFromLable() {
+            return fromLable;
+        }
+
+        public Label getToLable() {
+            return toLable;
+        }
+
+        public IrregularVariableLabelPair(Label fromLabel, Label toLabel) {
+            this.fromLable = fromLabel;
+            this.toLable = toLabel;
+        }
+    }
+
+    public LinkedList<IrregularVariableLabelPair> getIrregularVariableLabelPairs() {
+        return m_irregularVariableLabelPairs;
+    }
+
+    private LinkedList<IrregularVariableLabelPair> m_irregularVariableLabelPairs = new LinkedList<IrregularVariableLabelPair>();
+
+	public void AddIrregularVariableLabelPair(IrregularVariableLabelPair pair) {
+        m_irregularVariableLabelPairs.push(pair);
+    }
+
+    public void ClearIrregularVariableLabelPair() {
+        m_irregularVariableLabelPairs.clear();
+    }
+
+
+
     public Label getCurrentLoopContinueLable() {
         return m_currentLoopContinueLable;
     }
@@ -116,7 +151,11 @@ public enum IrisCompiler {
 		m_staticDefine = staticDefine;
 	}
 
-	public int GetIndexOfContextVar() {
+    public boolean isStaticDefine() {
+        return m_staticDefine;
+    }
+
+    public int GetIndexOfContextVar() {
 		return m_staticDefine ? 0 : 1;
 	}
 
@@ -127,6 +166,8 @@ public enum IrisCompiler {
 	public int GetIndexOfResultValue() {
 		return GetIndexOfContextVar() + 2;
 	}
+
+	public int GetIndexOfIrregularVar() { return GetIndexOfContextVar() + 3; }
 
 	public CurrentDefineType getCurrentDefineType() {
 		return m_currentDefineType;
@@ -259,7 +300,7 @@ public enum IrisCompiler {
 					Visibility.PUBLIC, 
 					Ownership.STATIC)
 					.withParameters(IrisContextEnvironment.class, IrisThreadInfo.class)
-					.throwing(Throwable.class)
+					.throwing(IrisExceptionBase.class)
 					.intercept(new Implementation() {
 						@Override
 						public InstrumentedType prepare(InstrumentedType arg0) {
@@ -327,7 +368,7 @@ public enum IrisCompiler {
 		
 		return m_currentBuilder.defineMethod(methodName, IrisValue.class, Visibility.PUBLIC)
 						.withParameters(IrisContextEnvironment.class, IrisThreadInfo.class)
-						.throwing(Throwable.class)
+						.throwing(IrisExceptionBase.class)
 						.intercept(impl);
 	}
 	
@@ -376,7 +417,10 @@ public enum IrisCompiler {
 		
 		@Override
 		public Size apply(MethodVisitor mv, Context arg1, MethodDescription arg2) {
-			m_compiler.setFirstStackFrameGenerated(false);
+
+		    m_compiler.ClearIrregularVariableLabelPair();
+
+		    m_compiler.setFirstStackFrameGenerated(false);
 			m_compiler.setStaticDefine(false);
 			Label lableFrom = new Label();
 			Label lableEnd = new Label();
@@ -402,7 +446,17 @@ public enum IrisCompiler {
 			mv.visitLocalVariable("context", "Lorg/irislang/jiris/core/IrisContextEnvironment;", null, lableFrom, lableEnd, 1);
 			mv.visitLocalVariable("threadInfo", "Lorg/irislang/jiris/core/IrisThreadInfo;", null, lableFrom, lableEnd, 2);
 			mv.visitLocalVariable("resultValue", "Lorg/irislang/jiris/core/IrisValue;", null, lableFrom, lableEnd, 3);
-			
+            //mv.visitLocalVariable("runtimeIrregular", "Lorg/irislang/jiris/core/exceptions/IrisRuntimeException;",
+                    //null, lableFrom,
+            //lableEnd,
+            //      4);
+
+            for(IrregularVariableLabelPair pair : m_compiler.getIrregularVariableLabelPairs()) {
+                mv.visitLocalVariable("runtimeIrregular",
+                        "Lorg/irislang/jiris/core/exceptions/IrisRuntimeException;", null, pair.getFromLable(),
+                        pair.getToLable(), 4);
+            }
+
 			return new Size(0, 0);
 		}
 		
@@ -420,6 +474,9 @@ public enum IrisCompiler {
 
 		@Override
 		public Size apply(MethodVisitor mv, Context arg1, MethodDescription arg2) {
+
+            m_compiler.ClearIrregularVariableLabelPair();
+
 			m_compiler.setFirstStackFrameGenerated(false);
 			m_compiler.setStaticDefine(true);
 			Label lableFrom = new Label();
@@ -444,8 +501,16 @@ public enum IrisCompiler {
 			mv.visitLocalVariable("context", "Lorg/irislang/jiris/core/IrisContextEnvironment;", null, lableFrom, lableEnd, 0);
 			mv.visitLocalVariable("threadInfo", "Lorg/irislang/jiris/core/IrisThreadInfo;", null, lableFrom, lableEnd, 1);
 			mv.visitLocalVariable("resultValue", "Lorg/irislang/jiris/core/IrisValue;", null, lableFrom, lableEnd, 2);
-			
-			return new Size(0, 0);
+//            mv.visitLocalVariable("runtimeIrregular", "Lorg/irislang/jiris/core/exceptions/IrisRuntimeException;",
+//                    null, lableFrom, lableEnd, 3);
+
+            for(IrregularVariableLabelPair pair : m_compiler.getIrregularVariableLabelPairs()) {
+                mv.visitLocalVariable("runtimeIrregular",
+                        "Lorg/irislang/jiris/core/exceptions/IrisRuntimeException;", null, pair.getFromLable(),
+                        pair.getToLable(), 3);
+            }
+
+            return new Size(0, 0);
 		}
 		
 	}

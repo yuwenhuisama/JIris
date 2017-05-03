@@ -30,8 +30,9 @@ public class IrisParser {
    private Stack<IrisParserDefineType> m_defineStack = new Stack<IrisParserDefineType>();
 
    public IrisParser(String fileName)
-   {
+   {     
       this(System.in);
+      m_defineStack.push(IrisParserDefineType.Normal);
       try { ReInit(new FileInputStream(new File(fileName))); }
       catch(Exception e) { e.printStackTrace(); }
    }
@@ -407,7 +408,37 @@ IrisStatement statement() :
    LOOKAHEAD(gsetter_statement())
    tmpStatement = gsetter_statement()
    { return tmpStatement; }
+ |
+   LOOKAHEAD(groan_statement())
+   tmpStatement = groan_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = order_statement()
+   { return tmpStatement; }
 }
+
+IrisStatement groan_statement() :
+{ IrisExpression tmpExpr = null; }
+{
+	< SEMICOLON > < GROAN > [ tmpExpr = expression() ]
+	{ return new IrisGroanStatement(tmpExpr);  }
+}
+
+IrisStatement order_statement() :
+{
+  IrisBlock tmpOrderBlock = null;
+  IrisBlock tmpServeBlock = null;
+  IrisBlock tmpIgnoreBlock = null;
+  IrisIdentifier tmpIrregularObject = null; 
+}
+{
+	< ORDER > tmpOrderBlock = block()
+	< SERVE > < LP > tmpIrregularObject = identifier() < RP >
+	tmpServeBlock = block()
+	[ < IGNORE > tmpIgnoreBlock = block() ]
+	{ return new IrisOrderStatement(tmpOrderBlock, tmpIrregularObject, tmpServeBlock, tmpIgnoreBlock); } 
+}
+
 
 IrisStatement getter_statement() :
 {

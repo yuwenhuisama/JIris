@@ -8,6 +8,7 @@ import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 
@@ -80,7 +81,7 @@ public class IrisString extends IrisClassRoot {
 	}
 
 	@Override
-	public void NativeClassDefine(IrisClass classObj) throws Throwable {
+	public void NativeClassDefine(IrisClass classObj) throws IrisExceptionBase {
 		classObj.AddInstanceMethod(IrisInteger.class, "Add", "+", 1, false, MethodAuthority.Everyone);
 		classObj.AddInstanceMethod(IrisInteger.class, "Equal", "==", 1, false, MethodAuthority.Everyone);
 	}

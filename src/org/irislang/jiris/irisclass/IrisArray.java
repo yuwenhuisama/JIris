@@ -9,6 +9,7 @@ import org.irislang.jiris.core.IrisMethod;
 import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 
@@ -135,7 +136,7 @@ public class IrisArray extends IrisClassRoot {
 	}
 
 	@Override
-	public void NativeClassDefine(IrisClass classObj) throws Throwable {
+	public void NativeClassDefine(IrisClass classObj) throws IrisExceptionBase {
 		classObj.AddInstanceMethod(IrisArray.class, "Initialize", "__format", 0, true, IrisMethod.MethodAuthority.Everyone);
 		classObj.AddInstanceMethod(IrisArray.class, "At", "[]", 1, false, IrisMethod.MethodAuthority.Everyone);
 		classObj.AddInstanceMethod(IrisArray.class, "Set", "[]=", 2, false, IrisMethod.MethodAuthority.Everyone);

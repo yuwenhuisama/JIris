@@ -8,6 +8,7 @@ import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.IrisMethod.CallSide;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
 import org.irislang.jiris.irisclass.IrisString.IrisStringTag;
@@ -46,7 +47,7 @@ public class IrisKernel extends IrisModuleRoot {
 	}
 
 	@Override
-	public void NativeModuleDefine(IrisModule moduleObj) throws Throwable {
+	public void NativeModuleDefine(IrisModule moduleObj) throws IrisExceptionBase {
 		
 		moduleObj.AddClassMethod(IrisKernel.class, "Print", "print", 0, true, MethodAuthority.Everyone);
 		

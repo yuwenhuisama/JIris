@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
 import org.irislang.jiris.irisclass.IrisModuleBase.IrisModuleBaseTag;
@@ -20,7 +21,7 @@ public class IrisModule implements IrisRunningObject {
 	private HashMap<String, IrisValue> m_classVariables = new HashMap<String, IrisValue>();
 	private HashMap<String, IrisMethod> m_instanceMethods = new HashMap<String, IrisMethod>();
 	
-	public IrisModule(IrisModuleRoot upperModule) throws Throwable {
+	public IrisModule(IrisModuleRoot upperModule) throws IrisExceptionBase {
 		setModuleName(upperModule.NativeModuleNameDefine());
 		setUpperModule(upperModule.NativeUpperModuleDefine());
 		
@@ -31,7 +32,7 @@ public class IrisModule implements IrisRunningObject {
 		upperModule.NativeModuleDefine(this);
 	}
 
-    public IrisModule(String moduleName, IrisModule upperModule) throws Throwable {
+    public IrisModule(String moduleName, IrisModule upperModule) throws IrisExceptionBase {
         m_moduleName = moduleName;
         m_upperModule = upperModule;
 
@@ -143,7 +144,7 @@ public class IrisModule implements IrisRunningObject {
 		m_moduleName = moduleName;
 	}
 	
-	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
+	public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName,
 				parameterAmount,
 				isWithVariableParameter,
@@ -152,12 +153,12 @@ public class IrisModule implements IrisRunningObject {
 		AddClassMethod(method);
 	}
 
-    public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws Throwable {
+    public void AddClassMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
         IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
         AddClassMethod(method);
     }
 
-    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws Throwable {
+    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, int parameterAmount, boolean isWithVariableParameter, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
 		IrisMethod method = new IrisMethod(methodName,
 				parameterAmount,
 				isWithVariableParameter,
@@ -166,7 +167,7 @@ public class IrisModule implements IrisRunningObject {
 		AddInstanceMethod(method);
 	}
 
-    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws Throwable {
+    public void AddInstanceMethod(Class<?> nativeClass, String nativeName, String methodName, IrisMethod.IrisUserMethod userMethod, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
         IrisMethod method = new IrisMethod(methodName, userMethod, authority, IrisDevUtil.GetIrisNativeUserMethodHandle(nativeClass, nativeName));
         AddInstanceMethod(method);
     }
@@ -175,7 +176,7 @@ public class IrisModule implements IrisRunningObject {
 		m_moduleObject.AddInstanceMethod(method);
     }
 
-    public void ResetAllMethodsObject() throws Throwable {
+    public void ResetAllMethodsObject() throws IrisExceptionBase {
         m_moduleObject.ResetAllMethodsObject();
 
         Iterator<?> iterator = m_instanceMethods.entrySet().iterator();

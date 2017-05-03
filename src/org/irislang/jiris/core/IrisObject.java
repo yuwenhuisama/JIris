@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.irislang.jiris.core.IrisMethod.CallSide;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 
 public class IrisObject implements IrisRunningObject {
@@ -26,7 +27,8 @@ public class IrisObject implements IrisRunningObject {
 		return m_objectID;
 	}
 	
-	public IrisValue CallInstanceMethod(String methodName, ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo, IrisMethod.CallSide callSide) throws Throwable {
+	public IrisValue CallInstanceMethod(String methodName, ArrayList<IrisValue> parameterList,
+                                        IrisContextEnvironment context, IrisThreadInfo threadInfo, IrisMethod.CallSide callSide) throws IrisExceptionBase {
 		IrisMethod method = null;
 		boolean isCurrentMethod = false;
 		
@@ -108,7 +110,7 @@ public class IrisObject implements IrisRunningObject {
 		m_nativeObject = nativeObject;
 	}
 	
-	public void ResetAllMethodsObject() throws Throwable {
+	public void ResetAllMethodsObject() throws IrisExceptionBase {
 		Iterator<?> iterator = m_methods.entrySet().iterator();
 		while(iterator.hasNext()) {
 			@SuppressWarnings("unchecked")

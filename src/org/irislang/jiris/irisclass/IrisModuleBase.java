@@ -7,6 +7,7 @@ import org.irislang.jiris.core.IrisContextEnvironment;
 import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisClassRoot;
 
@@ -53,7 +54,7 @@ public class IrisModuleBase extends IrisClassRoot {
 	}
 
 	@Override
-	public void NativeClassDefine(IrisClass classObj) throws Throwable {
+	public void NativeClassDefine(IrisClass classObj) throws IrisExceptionBase {
 		
 	}
 

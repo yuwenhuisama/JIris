@@ -18,6 +18,7 @@ import org.irislang.jiris.core.IrisMethod.IrisUserMethod;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisClassBase;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
@@ -67,7 +68,7 @@ public abstract class IrisNativeJavaClass {
         return currentValue;
     }
 
-	protected static IrisValue CallMethod(IrisValue object, String methodName, IrisThreadInfo threadInfo, IrisContextEnvironment context, int parameterCount) throws Throwable {
+	protected static IrisValue CallMethod(IrisValue object, String methodName, IrisThreadInfo threadInfo, IrisContextEnvironment context, int parameterCount) throws IrisExceptionBase {
 		IrisValue result = null;
 		// hide call
 		if(object == null) {
@@ -391,7 +392,7 @@ public abstract class IrisNativeJavaClass {
 		return value;
 	}
 
-	protected static boolean CompareCounterLess(IrisValue org, IrisValue tar, IrisThreadInfo threadInfo, IrisContextEnvironment context) throws Throwable {
+	protected static boolean CompareCounterLess(IrisValue org, IrisValue tar, IrisThreadInfo threadInfo, IrisContextEnvironment context) throws IrisExceptionBase {
 		threadInfo.AddParameter(tar);
 		IrisValue result = CallMethod(org, "<", threadInfo, context, 1);
 		threadInfo.PopParameter(1);
@@ -402,7 +403,7 @@ public abstract class IrisNativeJavaClass {
                                                String targetVariale,
                                                IrisMethod.MethodAuthority authority,
                                                IrisContextEnvironment context,
-                                               IrisThreadInfo threadInfo) throws Throwable {
+                                               IrisThreadInfo threadInfo) throws IrisExceptionBase {
 
         if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
             IrisClass classObj = (IrisClass)context.getRunningType();
@@ -418,7 +419,7 @@ public abstract class IrisNativeJavaClass {
                                               String targetVariale,
                                               IrisMethod.MethodAuthority authority,
                                               IrisContextEnvironment context,
-                                              IrisThreadInfo threadInfo) throws Throwable {
+                                              IrisThreadInfo threadInfo) throws IrisExceptionBase {
         if(context.getRunTimeType() == RunTimeType.ClassDefineTime) {
             IrisClass classObj = (IrisClass)context.getRunningType();
             IrisMethod method = new IrisMethod(methodName, targetVariale, IrisMethod.GetterSetter.Setter, authority);
@@ -438,7 +439,7 @@ public abstract class IrisNativeJavaClass {
 			String withoutBlockName,
 			IrisMethod.MethodAuthority authority,
 			IrisContextEnvironment context,
-			IrisThreadInfo threadInfo) throws Throwable {
+			IrisThreadInfo threadInfo) throws IrisExceptionBase {
 
 		IrisUserMethod userMethod = new IrisUserMethod();
 		if(parameters != null) {
@@ -477,7 +478,7 @@ public abstract class IrisNativeJavaClass {
             String withoutBlockName,
             IrisMethod.MethodAuthority authority,
             IrisContextEnvironment context,
-            IrisThreadInfo threadInfo) throws Throwable {
+            IrisThreadInfo threadInfo) throws IrisExceptionBase {
         IrisUserMethod userMethod = new IrisUserMethod();
         if (parameters != null) {
             userMethod.setParameterList(new ArrayList<String>(Arrays.asList(parameters)));

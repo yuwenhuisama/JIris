@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
 import org.irislang.jiris.core.IrisModule;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 
 public abstract class IrisModuleRoot {
 	public static CallSite BootstrapMethod(Class<?> classObj, MethodHandles.Lookup lookup, String name, MethodType mt) throws Throwable {
@@ -14,5 +15,5 @@ public abstract class IrisModuleRoot {
 
 	abstract public String NativeModuleNameDefine();
 	abstract public IrisModule NativeUpperModuleDefine();
-	abstract public void NativeModuleDefine(IrisModule moduleObj) throws Throwable;
+	abstract public void NativeModuleDefine(IrisModule moduleObj) throws IrisExceptionBase;
 }
