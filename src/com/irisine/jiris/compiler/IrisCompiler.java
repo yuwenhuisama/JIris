@@ -263,11 +263,18 @@ public enum IrisCompiler {
 			}
 		}).name(m_currentClassName);
 
-		m_currentBuilder = m_currentBuilder.defineField("sm_uniqueStringObjects",
-				ArrayList.class,
-				Visibility.PUBLIC,
-				FieldManifestation.FINAL, 
-				Ownership.STATIC).initializer(new ByteCodeAppender(){
+		m_currentBuilder = m_currentBuilder
+                .defineField("sm_uniqueStringObjects",
+				    ArrayList.class,
+				    Visibility.PUBLIC,
+				    FieldManifestation.FINAL,
+				    Ownership.STATIC)
+                .defineField("sm_scriptFileName",
+                    String.class,
+                    Visibility.PUBLIC,
+                    FieldManifestation.FINAL,
+                    Ownership.STATIC)
+                .initializer(new ByteCodeAppender(){
 
 			@Override
 			public Size apply(MethodVisitor mv, Context arg1, MethodDescription arg2) {
@@ -275,7 +282,12 @@ public enum IrisCompiler {
 				mv.visitInsn(Opcodes.DUP);
 				mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false);
 				mv.visitFieldInsn(Opcodes.PUTSTATIC, m_currentClassName, "sm_uniqueStringObjects", "Ljava/util/ArrayList;");
-				mv.visitInsn(Opcodes.RETURN);
+
+				mv.visitLdcInsn(m_currentFile);
+                mv.visitFieldInsn(Opcodes.PUTSTATIC, m_currentClassName, "sm_scriptFileName",
+                        "Ljava/lang/String;");
+
+                mv.visitInsn(Opcodes.RETURN);
 				return new Size(0, 0);
 			}
 		});
@@ -425,7 +437,9 @@ public enum IrisCompiler {
 			Label lableFrom = new Label();
 			Label lableEnd = new Label();
 			m_compiler.setCurrentEndLable(new Label());
-			
+
+			IrisGenerateHelper.SetFileName(mv, m_compiler);
+
 			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "Nil", "()Lorg/irislang/jiris/core/IrisValue;", false);
 			mv.visitVarInsn(Opcodes.ASTORE, 3);
 			
@@ -446,10 +460,6 @@ public enum IrisCompiler {
 			mv.visitLocalVariable("context", "Lorg/irislang/jiris/core/IrisContextEnvironment;", null, lableFrom, lableEnd, 1);
 			mv.visitLocalVariable("threadInfo", "Lorg/irislang/jiris/core/IrisThreadInfo;", null, lableFrom, lableEnd, 2);
 			mv.visitLocalVariable("resultValue", "Lorg/irislang/jiris/core/IrisValue;", null, lableFrom, lableEnd, 3);
-            //mv.visitLocalVariable("runtimeIrregular", "Lorg/irislang/jiris/core/exceptions/IrisRuntimeException;",
-                    //null, lableFrom,
-            //lableEnd,
-            //      4);
 
             for(IrregularVariableLabelPair pair : m_compiler.getIrregularVariableLabelPairs()) {
                 mv.visitLocalVariable("runtimeIrregular",

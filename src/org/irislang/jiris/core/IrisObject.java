@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.irislang.jiris.core.IrisMethod.CallSide;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisInvalidAuthorityException;
 import org.irislang.jiris.dev.IrisDevUtil;
 
 public class IrisObject implements IrisRunningObject {
@@ -46,8 +47,12 @@ public class IrisObject implements IrisRunningObject {
 		
 		if(method == null) {
 			/* Error */
-			//return CallInstanceMethod("missing_method", parameterList, context, callSide);
-			return IrisDevUtil.Nil();
+			IrisValue mName = IrisDevUtil.CreateString(methodName);
+			IrisValue mClsName = IrisDevUtil.CreateString(m_class.getClassName());
+			ArrayList<IrisValue> tmpList = new ArrayList<IrisValue>(2);
+			tmpList.add(mName);
+			tmpList.add(mClsName);
+			return IrisDevUtil.CallMethod(IrisValue.WrapObject(this), "missing_method", tmpList, context, threadInfo);
 		}
 		
 		// Inside call
@@ -61,7 +66,8 @@ public class IrisObject implements IrisRunningObject {
 			else {
 				if(method.getAuthority() == MethodAuthority.Personal) {
 					/* Error */
-					callResult = IrisDevUtil.Nil();
+                    throw new IrisInvalidAuthorityException(threadInfo.getCurrentFileName(), threadInfo
+                            .getCurrentLineNumber(), "Method with personal authority cannot be called here.");
 				}
 				else {
 					callResult = method.Call(caller, parameterList, context, threadInfo);
@@ -71,8 +77,9 @@ public class IrisObject implements IrisRunningObject {
 		// Outside call
 		else {
 			if(method.getAuthority() != MethodAuthority.Everyone) {
-				/* Error */
-				callResult = IrisDevUtil.Nil();
+			    /* Error */
+                throw new IrisInvalidAuthorityException(threadInfo.getCurrentFileName(), threadInfo
+                        .getCurrentLineNumber(), "Only method with everyone authority can be called here.");
 			}
 			else {
 				callResult = method.Call(caller, parameterList, context, threadInfo);

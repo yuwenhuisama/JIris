@@ -118,4 +118,26 @@ public final class IrisGenerateHelper {
         }
     }
 
+    static int sm_preLineNumber = -1;
+    public static void SetLineNumber(MethodVisitor visitor, IrisCompiler currentCompiler, int lineNumber) {
+        if(sm_preLineNumber == lineNumber) {
+            return;
+        }
+        sm_preLineNumber = lineNumber;
+        try {
+            visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+            visitor.visitLdcInsn(new Integer(lineNumber));
+            visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setCurrentLineNumber", "(I)V", false);
+        }
+        catch(Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void SetFileName(MethodVisitor visitor, IrisCompiler currentCompiler) {
+        visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+        visitor.visitFieldInsn(Opcodes.GETSTATIC, currentCompiler.getCurrentClassName(), "sm_scriptFileName",
+                "Ljava/lang/String;");
+        visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setCurrentFileName", "(Ljava/lang/String;)V", false);
+    }
 }

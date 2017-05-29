@@ -2,6 +2,8 @@ package org.irislang.jiris.core;
 
 import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisParameterNotFitException;
+import org.irislang.jiris.core.exceptions.fatal.IrisUnkownFatalException;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisMethodBase;
 
@@ -87,7 +89,10 @@ public class IrisMethod {
                 break;
             case Normal:
                 // Error
-                break;
+                throw new IrisUnkownFatalException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        "Oh, shit! An UNKNOWN ERROR has been lead to by YOU to Iris! What a SHIT unlucky man you are! " +
+                                "Please don't approach Iris ANYMORE ! - Wrong getter/setter type ");
         }
 
         CreateMethodObject(IrisDevUtil.GetClass("Method"));
@@ -95,12 +100,9 @@ public class IrisMethod {
 
     private IrisContextEnvironment CreateNewContext(IrisObject caller, ArrayList<IrisValue> parameterList, IrisContextEnvironment currentContext, IrisThreadInfo threadInfo) throws IrisExceptionBase {
         IrisContextEnvironment newContex = new IrisContextEnvironment();
-
         newContex.setRunTimeType(RunTimeType.RunTime);
         newContex.setRunningType(caller);
-
         newContex.setUpperContext(currentContext);
-
         newContex.setCurrentMethod(this);
 
         if (m_userMethod != null) {
@@ -155,7 +157,12 @@ public class IrisMethod {
 
         if (!ParameterCheck(parameterList)) {
             /* Error */
-            return IrisDevUtil.Nil();
+            throw new IrisParameterNotFitException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                    IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                    "Parameter not fit:" + parameterList == null ? " 0" : " " + Integer.toString(parameterList.size())
+                            + " " +
+                            "for " +
+                            Integer.toString(m_parameterCount) + ".");
         }
 
         // Getter Setter
@@ -210,19 +217,27 @@ public class IrisMethod {
             }
         }
         catch (Throwable e) {
-            e.printStackTrace();
+            if(e instanceof IrisExceptionBase) {
+                throw (IrisExceptionBase)e;
+            }
+            return IrisDevUtil.Nil();
         }
 
         return result;
     }
 
-    public IrisValue CallMain(ArrayList<IrisValue> arrayList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
-        if (!ParameterCheck(arrayList)) {
+    public IrisValue CallMain(ArrayList<IrisValue> parameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+        if (!ParameterCheck(parameterList)) {
 			/* Error */
-            return IrisDevUtil.Nil();
+            throw new IrisParameterNotFitException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                    IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                    "Parameter not fit:" + parameterList == null ? " 0" : " " + Integer.toString(parameterList.size())
+                            + " " +
+                            "for " +
+                            Integer.toString(m_parameterCount) + ".");
         }
 
-        IrisContextEnvironment newContext = CreateNewContext(null, arrayList, context, threadInfo);
+        IrisContextEnvironment newContext = CreateNewContext(null, parameterList, context, threadInfo);
 
         try {
             return (IrisValue) m_methodHanlde.invokeExact(newContext, threadInfo);

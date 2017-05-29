@@ -5,17 +5,14 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
-import org.irislang.jiris.core.IrisClass;
-import org.irislang.jiris.core.IrisContextEnvironment;
-import org.irislang.jiris.core.IrisInterface;
-import org.irislang.jiris.core.IrisMethod;
-import org.irislang.jiris.core.IrisModule;
-import org.irislang.jiris.core.IrisThreadInfo;
-import org.irislang.jiris.core.IrisValue;
+import org.irislang.jiris.core.*;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.IrisRuntimeException;
+import org.irislang.jiris.core.exceptions.fatal.*;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
@@ -25,8 +22,54 @@ import org.irislang.jiris.irisclass.IrisClassBase.IrisClassBaseTag;
 import org.irislang.jiris.irismodule.IrisKernel;
 
 public class IrisInterpreter {
-	
-	public static final IrisInterpreter INSTANCE = new IrisInterpreter();
+
+    private IrisClass m_classClass = null;
+    private IrisClass m_moduleClass = null;
+    private IrisClass m_interfaceClass = null;
+    private IrisClass m_objectClass = null;
+    private IrisClass m_methodClass = null;
+
+    public IrisClass getMethodClass() {
+        return m_methodClass;
+    }
+
+    public void setMethodClass(IrisClass methodClass) {
+        m_methodClass = methodClass;
+    }
+
+    public IrisClass getObjectClass() {
+        return m_objectClass;
+    }
+
+    public void setObjectClass(IrisClass objectClass) {
+        m_objectClass = objectClass;
+    }
+
+    public IrisClass getClassClass() {
+        return m_classClass;
+    }
+
+    public void setClassClass(IrisClass classClass) {
+        m_classClass = classClass;
+    }
+
+    public IrisClass getModuleClass() {
+        return m_moduleClass;
+    }
+
+    public void setModuleClass(IrisClass moduleClass) {
+        m_moduleClass = moduleClass;
+    }
+
+    public IrisClass getInterfaceClass() {
+        return m_interfaceClass;
+    }
+
+    public void setInterfaceClass(IrisClass interfaceClass) {
+        m_interfaceClass = interfaceClass;
+    }
+
+    public static final IrisInterpreter INSTANCE = new IrisInterpreter();
 	private IrisInterpreter() {}
 	
 	private HashMap<String, IrisValue> m_constances = new HashMap<String, IrisValue>();
@@ -61,8 +104,8 @@ public class IrisInterpreter {
 	public IrisValue False() {
 		return m_False;
 	}
-	
-	public void AddMainMethod(IrisMethod method) {
+
+    public void AddMainMethod(IrisMethod method) {
 		m_mainMethods.put(method.getMethodName(), method);
 	}
 	
@@ -72,9 +115,12 @@ public class IrisInterpreter {
 	
 	public IrisModule GetModule(LinkedList<String> fullPath) throws IrisExceptionBase {
 		
-//		if(fullPath.isEmpty()) {
-//			throw new iRIS("Path is empty!");
-//		}
+		if(fullPath.isEmpty()) {
+			throw new IrisUnkownFatalException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                    IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                    "Oh, shit! An UNKNOWN ERROR has been lead to by YOU to Iris! What a SHIT unlucky man you are! " +
+                            "Please don't approach Iris ANYMORE ! - The interface CANNOT be registed to Iris.");
+		}
 		
 		IrisModule tmpCur = null;
 		IrisValue tmpValue = null;
@@ -215,11 +261,17 @@ public class IrisInterpreter {
 		
 		if(upperModule == null) {
 			if(GetConstance(className) != null) {
-				return false;
+			    throw new IrisClassExistsException(IrisDevUtil.GetCurrentThreadInfo()
+                        .getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        "Class " + className +  " has been already registered.");
 			}
 		} else {
 			if(upperModule.GetConstance(className) != null) {
-				return false;
+                throw new IrisClassExistsException(IrisDevUtil.GetCurrentThreadInfo()
+                        .getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        "Class " + className +  " has been already registered.");
 			}
 		}
 		
@@ -243,11 +295,17 @@ public class IrisInterpreter {
 		
 		if(upperModule == null) {
 			if(GetConstance(moduleName) != null) {
-				return false;
+                throw new IrisModuleExistsException(IrisDevUtil.GetCurrentThreadInfo()
+                        .getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        "Module " + moduleName +  " has been already registered.");
 			}
 		} else {
 			if(upperModule.GetConstance(moduleName) != null) {
-				return false;
+                throw new IrisModuleExistsException(IrisDevUtil.GetCurrentThreadInfo()
+                        .getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        "Module " + moduleName +  " has been already registered.");
 			}
 		}
 		
@@ -285,7 +343,7 @@ public class IrisInterpreter {
 	public boolean RegistInterface(IrisInterface interfaceObj) {
 		return true;
 	}
-*/			
+*/
 	public void AddConstance(String name, IrisValue value) {
 		m_constances.put(name, value);
 	}
@@ -307,24 +365,29 @@ public class IrisInterpreter {
 		IrisThreadInfo.SetMainThreadID(Thread.currentThread().getId());
 		IrisThreadInfo mainThreadInfo = new IrisThreadInfo();		
 		IrisThreadInfo.SetMainThreedInfo(mainThreadInfo);
-		
+
 		RegistClass(new IrisClassBase());
+		setClassClass(GetClass("Class"));
+
 		RegistClass(new IrisModuleBase());
+		setModuleClass(GetClass("Module"));
 		
 		RegistModule(new IrisKernel());	
 		
 		RegistClass(new IrisObjectBase());
-		IrisDevUtil.GetClass("Object").AddInvolvedModule(IrisDevUtil.GetModule("Kernel"));
-				
-		IrisDevUtil.GetClass("Class").setSuperClass(IrisDevUtil.GetClass("Object"));
-        IrisDevUtil.GetClass("Module").setSuperClass(IrisDevUtil.GetClass("Object"));
+		setObjectClass(GetClass("Object"));
+		getObjectClass().AddInvolvedModule(IrisDevUtil.GetModule("Kernel"));
+
+		getClassClass().setSuperClass(getObjectClass());
+        getModuleClass().setSuperClass(getObjectClass());
 		
 		RegistClass(new IrisMethodBase());
+		setMethodClass(GetClass("Method"));
 		
-		IrisDevUtil.GetClass("Class").ResetAllMethodsObject();
-		IrisDevUtil.GetClass("Object").ResetAllMethodsObject();
-        IrisDevUtil.GetClass("Module").ResetAllMethodsObject();
-		IrisDevUtil.GetClass("Method").ResetAllMethodsObject();
+		getClassClass().ResetAllMethodsObject();
+		getObjectClass().ResetAllMethodsObject();
+        getModuleClass().ResetAllMethodsObject();
+		getMethodClass().ResetAllMethodsObject();
         IrisDevUtil.GetModule("Kernel").ResetAllMethodsObject();
 		
 		RegistClass(new IrisInteger());
@@ -360,30 +423,40 @@ public class IrisInterpreter {
 			Object instance = runClass.newInstance();
 			Method method = runClass.getMethod("run", IrisContextEnvironment.class, IrisThreadInfo.class);
  			method.invoke(instance, mainEnv, IrisDevUtil.GetCurrentThreadInfo());
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+                NoSuchMethodException | SecurityException | InstantiationException e) {
+            e.printStackTrace();
+            return false;
+        }
+        catch (Exception e) {
+            if(e instanceof IrisFatalException) {
+                System.out.print(((IrisFatalException)e).GetReportString());
+            }
+            else if(e instanceof IrisRuntimeException) {
+                IrisRuntimeException runtimeException = (IrisRuntimeException)e;
+                IrisValue irregularObject = runtimeException.getExceptionObject();
+                IrisValue stringResult;
+                try {
+                    stringResult = IrisDevUtil.CallMethod(irregularObject, "to_string", null, null,
+                            IrisDevUtil.GetCurrentThreadInfo());
+                }
+                catch (IrisExceptionBase e2) {
+                    e2.printStackTrace();
+                    return false;
+                }
+
+                String outString = IrisDevUtil.GetString(stringResult);
+                System.out.print(new IrisIrregularNotDealedException(IrisDevUtil.GetCurrentThreadInfo()
+                        .getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), outString).GetReportString()
+                );
+            }
+            else {
+                e.printStackTrace();
+            }
+            return false;
+        }
 		
 		return true;
 	}

@@ -32,7 +32,7 @@ public class IrisForStatement extends  IrisStatement {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         Label oldLoopContinueLable = currentCompiler.getCurrentLoopContinueLable();
         Label oldLoopEndLable = currentCompiler.getCurrentLoopEndLable();
 

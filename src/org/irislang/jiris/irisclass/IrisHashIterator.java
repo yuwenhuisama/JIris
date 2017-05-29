@@ -49,8 +49,7 @@ public class IrisHashIterator extends IrisClassRoot {
 
     public static IrisValue Initialize(IrisValue self, ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
         IrisHashIteratorTag iter = (IrisHashIteratorTag)IrisDevUtil.GetNativeObjectRef(self);
-        HashMap<IrisValue, IrisValue> hashMap = (HashMap<IrisValue, IrisValue>)IrisDevUtil.GetNativeObjectRef
-                (parameterList.get(0));
+        HashMap<IrisValue, IrisValue> hashMap = (HashMap<IrisValue, IrisValue>)IrisDevUtil.GetNativeObjectRef(parameterList.get(0));
         iter.Initialize(hashMap);
         return self;
     }

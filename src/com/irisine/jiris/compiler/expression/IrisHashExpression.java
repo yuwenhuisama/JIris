@@ -23,6 +23,7 @@ public class IrisHashExpression extends IrisExpression {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 
         if(m_hashPairs != null) {
             for (IrisHashPair hashPair : m_hashPairs) {

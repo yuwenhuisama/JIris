@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.irislang.jiris.compiler.IrisInterpreter;
 import org.irislang.jiris.core.IrisMethod.IrisUserMethod;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
@@ -55,13 +56,8 @@ public class IrisClass implements IrisRunningObject {
 		IrisClass classObj = IrisDevUtil.GetClass("Class");
 		
 		if(classObj != null) {
-			try {
-				m_classObject = classObj.CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo()).getObject();
-				((IrisClassBase.IrisClassBaseTag)m_classObject.getNativeObject()).setClassObj(this);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			m_classObject = classObj.CreateNewInstance(null, null, IrisDevUtil.GetCurrentThreadInfo()).getObject();
+			((IrisClassBase.IrisClassBaseTag)m_classObject.getNativeObject()).setClassObj(this);
 		}
 		else {
 			m_classObject = new IrisObject();
@@ -158,9 +154,11 @@ public class IrisClass implements IrisRunningObject {
             Object nativeObj =  m_externClass.NativeAlloc();
             object.setNativeObject(nativeObj);
         }
-		
-		object.CallInstanceMethod("__format", parameterList, context, threadInfo, IrisMethod.CallSide.Outeside);
-		
+
+        if(IrisInterpreter.INSTANCE.getObjectClass() != null) {
+            object.CallInstanceMethod("__format", parameterList, context, threadInfo, IrisMethod.CallSide.Outeside);
+        }
+
 		return IrisValue.WrapObject(object);
 	}
 	

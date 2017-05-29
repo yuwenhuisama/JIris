@@ -3,6 +3,7 @@ package com.irisine.jiris.compiler.statement;
 import java.util.LinkedList;
 import java.util.Stack;
 
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.parser.IrisParserDefineType;
 import org.irislang.jiris.compiler.IrisNativeJavaClass;
 
@@ -109,7 +110,7 @@ public class IrisFunctionStatement extends IrisStatement {
     @Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 		String functionName = m_functionHeader.getFunctionName().getIdentifier(); 
 		LinkedList<IrisIdentifier> parameters = m_functionHeader.getParameters();
 		String nativeName = m_blockNativeName;

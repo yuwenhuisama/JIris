@@ -22,6 +22,9 @@ public class IrisArrayExpression extends IrisExpression {
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
+
+	    IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
+
 		if(m_expressions != null) {
 			for(IrisExpression elem : m_expressions) {
 				if(!elem.Generate(currentCompiler, currentBuilder, visitor)) {

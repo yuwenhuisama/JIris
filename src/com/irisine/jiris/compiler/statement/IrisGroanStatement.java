@@ -1,8 +1,10 @@
 package com.irisine.jiris.compiler.statement;
 
 import com.irisine.jiris.compiler.IrisCompiler;
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.expression.IrisExpression;
 import com.irisine.jiris.compiler.statement.IrisStatement;
+import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
@@ -20,6 +22,7 @@ public class IrisGroanStatement extends IrisStatement {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 
         if(m_expression != null && !m_expression.Generate(currentCompiler, currentBuilder, visitor)) {
             return false;
@@ -28,10 +31,14 @@ public class IrisGroanStatement extends IrisStatement {
         visitor.visitTypeInsn(Opcodes.NEW, "org/irislang/jiris/core/exceptions/IrisRuntimeException");
         visitor.visitInsn(Opcodes.DUP);
         visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-        visitor.visitLdcInsn("");
-        visitor.visitInsn(Opcodes.ICONST_0);
+        visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+        visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getCurrentFileName", "()Ljava/lang/String;", false);
+        visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
+        visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getCurrentLineNumber", "()I", false);
         visitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "org/irislang/jiris/core/exceptions/IrisRuntimeException", "<init>", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;I)V", false);
+
         visitor.visitInsn(Opcodes.ATHROW);
+
 
         return true;
     }

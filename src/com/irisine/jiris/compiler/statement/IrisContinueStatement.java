@@ -21,6 +21,7 @@ public class IrisContinueStatement extends IrisStatement {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         visitor.visitJumpInsn(Opcodes.GOTO, currentCompiler.getCurrentLoopContinueLable());
         IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);
         return true;

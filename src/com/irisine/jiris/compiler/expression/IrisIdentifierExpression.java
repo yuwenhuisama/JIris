@@ -1,5 +1,6 @@
 package com.irisine.jiris.compiler.expression;
 
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import org.irislang.jiris.compiler.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
@@ -51,7 +52,8 @@ public class IrisIdentifierExpression extends IrisExpression {
 	
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-		
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
+
 		visitor.visitLdcInsn(m_identifier.getIdentifier());
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());

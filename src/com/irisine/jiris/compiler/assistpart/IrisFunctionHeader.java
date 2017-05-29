@@ -9,6 +9,7 @@ public class IrisFunctionHeader extends IrisSyntaxUnit {
 	private LinkedList<IrisIdentifier> m_parameters = null;
 	private IrisIdentifier m_variableParameter = null;
 	private boolean m_isClassMethod = false;
+	private int m_lineNumber = -1;
 	
 	public IrisFunctionHeader(IrisIdentifier functionName, LinkedList<IrisIdentifier> parameters, IrisIdentifier variableParameter, boolean isClassMethod) {
 		m_functionName = functionName;
@@ -16,8 +17,16 @@ public class IrisFunctionHeader extends IrisSyntaxUnit {
 		m_variableParameter = variableParameter;
 		m_isClassMethod = isClassMethod;
 	}
-	
-	public IrisIdentifier getFunctionName() {
+
+    public int getLineNumber() {
+        return m_lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        m_lineNumber = lineNumber;
+    }
+
+    public IrisIdentifier getFunctionName() {
 		return m_functionName;
 	}
 	

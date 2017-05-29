@@ -8,5 +8,13 @@ import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
 
 public abstract class IrisStatement extends IrisSyntaxUnit {
-	public abstract boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor);
+    protected int m_lineNumber = 0;
+
+    public int getLineNumber() {
+        return m_lineNumber;
+    }
+    public void setLineNumber(int lineNumber) {
+        this.m_lineNumber = lineNumber;
+    }
+    public abstract boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor);
 }

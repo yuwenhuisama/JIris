@@ -30,7 +30,7 @@ public class IrisSwitchStatement extends IrisStatement {
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 	    // generate condition
 	    if(!m_condition.Generate(currentCompiler, currentBuilder, visitor)){
 	        return false;

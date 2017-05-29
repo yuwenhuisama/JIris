@@ -9,6 +9,7 @@ import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisTypeNotCorretException;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
@@ -110,12 +111,14 @@ public class IrisFloat extends IrisClassRoot {
 		}			
 	}
 	
-	private static IrisValue CastOperation(Operation type, IrisValue leftValue, IrisValue rightValue) {
+	private static IrisValue CastOperation(Operation type, IrisValue leftValue, IrisValue rightValue, IrisThreadInfo
+            threadInfo) throws IrisExceptionBase {
 		IrisValue result = null;
 		boolean needCast = IrisDevUtil.CheckClass(rightValue, "Integer");
 		if(!needCast && !IrisDevUtil.CheckClass(rightValue, "Float")) {
 			/* Error */
-			return IrisDevUtil.Nil();
+            throw new IrisTypeNotCorretException(threadInfo.getCurrentFileName(), threadInfo.getCurrentLineNumber(),
+                    "Wrong right value's type : it must be a float or an Integer");
 		}
 		IrisFloatTag orgLeftValue = IrisDevUtil.GetNativeObjectRef(leftValue);
 		IrisFloatTag resultValue = null;
@@ -151,12 +154,14 @@ public class IrisFloat extends IrisClassRoot {
 		return result;
 	}
 	
-	private static IrisValue CmpOperation(Operation type, IrisValue leftValue, IrisValue rightValue) {
+	private static IrisValue CmpOperation(Operation type, IrisValue leftValue, IrisValue rightValue, IrisThreadInfo
+            threadInfo) throws IrisExceptionBase{
 		boolean cmpResult = false;
 		boolean needCast = IrisDevUtil.CheckClass(rightValue, "Integer");
 		if(!needCast && !IrisDevUtil.CheckClass(rightValue, "Float")) {
 			/* Error */
-			return IrisDevUtil.Nil();
+            throw new IrisTypeNotCorretException(threadInfo.getCurrentFileName(), threadInfo.getCurrentLineNumber(),
+                    "Wrong right value's type : it must be a float or an Integer");
 		}
 		
 		IrisFloatTag orgLeftValue =  IrisDevUtil.GetNativeObjectRef(leftValue);
@@ -194,48 +199,59 @@ public class IrisFloat extends IrisClassRoot {
 		return cmpResult ? IrisDevUtil.True() : IrisDevUtil.False();
 	}
 			
-	public static IrisValue Add(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CastOperation(Operation.Add, self, parameterList.get(0));
+	public static IrisValue Add(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase{
+		return CastOperation(Operation.Add, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue Sub(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CastOperation(Operation.Sub, self, parameterList.get(0));
+	public static IrisValue Sub(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CastOperation(Operation.Sub, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue Mul(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CastOperation(Operation.Mul, self, parameterList.get(0));
+	public static IrisValue Mul(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CastOperation(Operation.Mul, self, parameterList.get(0), threadInfo);
 	}
 
-	public static IrisValue Div(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CastOperation(Operation.Div, self, parameterList.get(0));
+	public static IrisValue Div(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CastOperation(Operation.Div, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue Power(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CastOperation(Operation.Power, self, parameterList.get(0));
+	public static IrisValue Power(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CastOperation(Operation.Power, self, parameterList.get(0), threadInfo);
 	}
 
-	public static IrisValue Equal(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.Equal, self, parameterList.get(0));
+	public static IrisValue Equal(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.Equal, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue NotEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.NotEqual, self, parameterList.get(0));
+	public static IrisValue NotEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.NotEqual, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue BigThan(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.BigThan, self, parameterList.get(0));
+	public static IrisValue BigThan(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.BigThan, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue BigThanOrEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.BigThanOrEqual, self, parameterList.get(0));
+	public static IrisValue BigThanOrEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.BigThanOrEqual, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue LessThan(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.LessThan, self, parameterList.get(0));
+	public static IrisValue LessThan(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.LessThan, self, parameterList.get(0), threadInfo);
 	}
 	
-	public static IrisValue LessThanOrEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
-		return CmpOperation(Operation.LessThanOrEqual, self, parameterList.get(0));
+	public static IrisValue LessThanOrEqual(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
+		return CmpOperation(Operation.LessThanOrEqual, self, parameterList.get(0), threadInfo);
 	}
 		
 	public static IrisValue Plus(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {

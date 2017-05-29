@@ -46,7 +46,7 @@ public class IrisNilClass extends IrisClassRoot {
 
 	@Override
 	public IrisClass NativeSuperClassDefine() {
-		return null;
+		return IrisDevUtil.GetClass("Object");
 	}
 
 	@Override

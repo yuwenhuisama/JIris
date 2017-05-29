@@ -1,6 +1,7 @@
 package com.irisine.jiris.compiler.statement;
 
 import com.irisine.jiris.compiler.IrisCompiler;
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisBlock;
 import com.irisine.jiris.compiler.assistpart.IrisElseIf;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
@@ -32,7 +33,7 @@ public class IrisClassStatement extends IrisStatement  {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         if(m_superClassName != null) {
             if (!m_superClassName.Generate(currentCompiler, currentBuilder, visitor)) {
                 return false;

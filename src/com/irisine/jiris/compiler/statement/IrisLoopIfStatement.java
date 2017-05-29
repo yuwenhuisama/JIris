@@ -31,7 +31,7 @@ public class IrisLoopIfStatement extends IrisStatement{
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-		
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 		// set counter => 0
 //		visitor.visitVarInsn(Opcodes.ALOAD, 2);
 //		visitor.visitInsn(Opcodes.ICONST_0);

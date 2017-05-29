@@ -1,6 +1,7 @@
 package com.irisine.jiris.compiler.expression;
 
 import com.irisine.jiris.compiler.IrisCompiler;
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
@@ -25,6 +26,7 @@ public class IrisFieldExpression extends IrisExpression {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 
         IrisIdentifierExpression firstIdentifier = m_list.removeFirst();
 

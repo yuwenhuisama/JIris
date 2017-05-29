@@ -31,15 +31,10 @@ public class IrisClassBase extends IrisClassRoot {
 		
 	}
 	
-	public static IrisValue New(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
+	public static IrisValue New(IrisValue self,  ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase{
 		IrisClassBaseTag classObj = IrisDevUtil.GetNativeObjectRef(self);
-		IrisValue result = IrisDevUtil.Nil();
-		try {
-			result = classObj.getClassObj().CreateNewInstance(variableParameterList, context, threadInfo);
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        IrisValue result = classObj.getClassObj().CreateNewInstance(variableParameterList, context, threadInfo);
 		return result;
 	}
 	

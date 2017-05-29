@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import org.irislang.jiris.compiler.IrisInterpreter;
 import org.irislang.jiris.core.*;
+import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.IrisRuntimeException;
 import org.irislang.jiris.irisclass.IrisUniqueString;
 import org.irislang.jiris.irisclass.IrisFloat.IrisFloatTag;
 import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
@@ -18,9 +20,10 @@ import org.irislang.jiris.irisclass.IrisString.IrisStringTag;
 import org.irislang.jiris.irisclass.IrisUniqueString.IrisUniqueStringTag;
 
 import net.bytebuddy.jar.asm.Type;
+import sun.reflect.ReflectionFactory;
 
 final public class IrisDevUtil {
-		
+
 	public static IrisValue Nil() {
 		return IrisInterpreter.INSTANCE.Nil();
 	}
@@ -34,13 +37,13 @@ final public class IrisDevUtil {
 	}
 
 	public static IrisValue CallMethod(IrisValue caller, String methodName, ArrayList<IrisValue> parameterList,
-									   IrisContextEnvironment context, IrisThreadInfo threadInfo) throws Throwable {
+									   IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
 		return caller.getObject().CallInstanceMethod(methodName, parameterList, context, threadInfo, IrisMethod
 				.CallSide.Outeside);
 	}
 
 	public static IrisValue CreateInstance(IrisClass classObj, ArrayList<IrisValue> params, IrisContextEnvironment
-			context, IrisThreadInfo threadInfo) throws Throwable {
+			context, IrisThreadInfo threadInfo) throws IrisExceptionBase {
 		return classObj.CreateNewInstance(params, context, threadInfo);
 	}
 
@@ -114,15 +117,10 @@ final public class IrisDevUtil {
 		return IrisValue.WrapObject(arrayObject);
 	}
 
-	public static IrisValue CreateHash(ArrayList<IrisValue> pairs) {
+	public static IrisValue CreateHash(ArrayList<IrisValue> pairs) throws IrisExceptionBase {
 		IrisClass hashClass = GetClass("Hash");
-		try {
-			IrisValue obj = CreateInstance(hashClass, pairs, null, null);
-			return obj;
-		} catch (Throwable throwable) {
-			throwable.printStackTrace();
-			return IrisDevUtil.Nil();
-		}
+        IrisValue obj = CreateInstance(hashClass, pairs, null, null);
+		return obj;
 	}
 
 	public static int GetInt(IrisValue intVar) {
@@ -164,7 +162,7 @@ final public class IrisDevUtil {
 	}
 
 	public static boolean NotFalseOrNil(IrisValue value) {
-		return value != IrisDevUtil.Nil() && value != IrisDevUtil.False();
+		return !value.equals(IrisDevUtil.Nil()) && !value.equals(IrisDevUtil.False());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -220,5 +218,17 @@ final public class IrisDevUtil {
     	String decp = Type.getMethodDescriptor(method);
         CallSite cs = (CallSite) MH_BootstrapMethod(classObj).invokeWithArguments(classObj, lookup(), methodName, MethodType.fromMethodDescriptorString(decp, null));
         return cs.dynamicInvoker();
+    }
+
+    public static String GetString(IrisValue obj) {
+	    if(CheckClass(obj, "String")) {
+	        return ((IrisStringTag)GetNativeObjectRef(obj)).getString();
+        }
+        else if(CheckClass(obj, "UniqueString")) {
+            return ((IrisUniqueStringTag)GetNativeObjectRef(obj)).getString();
+        }
+        else {
+	        return "";
+        }
     }
 }

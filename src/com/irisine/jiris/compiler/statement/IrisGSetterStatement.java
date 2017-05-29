@@ -1,6 +1,7 @@
 package com.irisine.jiris.compiler.statement;
 
 import com.irisine.jiris.compiler.IrisCompiler;
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
@@ -19,7 +20,7 @@ public class IrisGSetterStatement extends IrisStatement{
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         StringBuilder functionNameBuffer = new StringBuilder();
         String getterFunctionName = functionNameBuffer.append("__get_")
                 .append(m_variableName.getIdentifier()

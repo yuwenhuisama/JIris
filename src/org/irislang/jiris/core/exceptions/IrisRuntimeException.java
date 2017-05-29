@@ -7,13 +7,10 @@ import org.irislang.jiris.core.IrisValue;
  */
 public class IrisRuntimeException extends IrisExceptionBase {
     private IrisValue m_exceptionObject = null;
-    private String m_fileName = null;
-    private int m_lineNumber = -1;
 
     public IrisRuntimeException(IrisValue exceptionObject, String fileName, int lineNumber) {
+        super(fileName, lineNumber, "");
         m_exceptionObject = exceptionObject;
-        m_fileName = fileName;
-        m_lineNumber = lineNumber;
     }
 
     public IrisValue getExceptionObject() {
@@ -22,26 +19,5 @@ public class IrisRuntimeException extends IrisExceptionBase {
 
     public void setExceptionObject(IrisValue exceptionObject) {
         m_exceptionObject = exceptionObject;
-    }
-
-    public String getFileName() {
-        return m_fileName;
-    }
-
-    public void setFileName(String fileName) {
-        m_fileName = fileName;
-    }
-
-    public int getLineNumber() {
-        return m_lineNumber;
-    }
-
-    public void setLineNumber(int lineNumber) {
-        m_lineNumber = lineNumber;
-    }
-
-    @Override
-    public String GetExceptionString() {
-        return null;
     }
 }

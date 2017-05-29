@@ -1,6 +1,7 @@
 package com.irisine.jiris.compiler.statement;
 
 import com.irisine.jiris.compiler.IrisCompiler;
+import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisBlock;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
 import com.irisine.jiris.compiler.expression.IrisExpression;
@@ -29,7 +30,7 @@ public class IrisModuleStatement extends IrisStatement {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         if(m_modules != null) {
             for(IrisExpression expr : m_modules) {
                 if(!expr.Generate(currentCompiler, currentBuilder, visitor)) {

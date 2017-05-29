@@ -23,7 +23,8 @@ public class IrisIndexExpression extends IrisExpression {
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-		
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
+
 		if(!m_indexer.Generate(currentCompiler, currentBuilder, visitor)) {
 			return false;
 		}

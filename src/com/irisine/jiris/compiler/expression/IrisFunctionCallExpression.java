@@ -31,7 +31,8 @@ public class IrisFunctionCallExpression extends IrisExpression {
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-		
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
+
 		int pushedCount = 0;
 		
 		if(m_parameters != null) {

@@ -50,7 +50,26 @@ public class IrisThreadInfo {
 	private LinkedList<IrisValue> m_tempModules = new LinkedList<IrisValue>();
 	private LinkedList<IrisValue> m_tempInterfaces =  new LinkedList<IrisValue>();
 
-	public void SetTempSuperClass(IrisValue value) {
+	private int m_currentLineNumber = -1;
+	private String m_currentFileName = null;
+
+    public int getCurrentLineNumber() {
+        return m_currentLineNumber;
+    }
+
+    public void setCurrentLineNumber(int currentLineNumber) {
+        m_currentLineNumber = currentLineNumber;
+    }
+
+    public String getCurrentFileName() {
+        return m_currentFileName;
+    }
+
+    public void setCurrentFileName(String currentFileName) {
+        m_currentFileName = currentFileName;
+    }
+
+    public void SetTempSuperClass(IrisValue value) {
 	    m_tempSuperClass = value;
     }
 
@@ -147,9 +166,6 @@ public class IrisThreadInfo {
 	public void increamCounter() {
 		IrisInteger.IrisIntegerTag tag = (IrisInteger.IrisIntegerTag)IrisDevUtil.GetNativeObjectRef(getCounter());
 		tag.setInteger(tag.getInteger() + 1);
-//		System.out.print("\ncounter : ");
-//		System.out.print(tag.getInteger());
-//		System.out.print("\n");
 	}
 	
 	public ArrayList<IrisValue> getPartPrameterListOf(int count) {

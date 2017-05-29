@@ -363,11 +363,16 @@ IrisStatement statement() :
 {
   IrisExpression tmpExpression = null;
   IrisStatement tmpStatement = null;
+  Token tmpToken = null;
 }
 {
    LOOKAHEAD(2) 
    < SEMICOLON > tmpExpression = expression()
-   { return new IrisNormalStatement(tmpExpression); } 
+   {
+     tmpStatement = new IrisNormalStatement(tmpExpression);
+     tmpStatement.setLineNumber(tmpExpression.getLineNumber());
+     return tmpStatement;
+   } 
  | 
    LOOKAHEAD(2) tmpStatement = return_statement()
    { return tmpStatement; }
@@ -418,10 +423,18 @@ IrisStatement statement() :
 }
 
 IrisStatement groan_statement() :
-{ IrisExpression tmpExpr = null; }
 {
-	< SEMICOLON > < GROAN > [ tmpExpr = expression() ]
-	{ return new IrisGroanStatement(tmpExpr);  }
+  IrisExpression tmpExpr = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+	< SEMICOLON > tmpToken = < GROAN > [ tmpExpr = expression() ]
+	{
+	  tmpStmt = new IrisGroanStatement(tmpExpr);
+	  tmpStmt.setLineNumber(tmpToken.beginLine);
+	  return tmpStmt;
+    }
 }
 
 IrisStatement order_statement() :
@@ -429,14 +442,20 @@ IrisStatement order_statement() :
   IrisBlock tmpOrderBlock = null;
   IrisBlock tmpServeBlock = null;
   IrisBlock tmpIgnoreBlock = null;
-  IrisIdentifier tmpIrregularObject = null; 
+  IrisIdentifier tmpIrregularObject = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
-	< ORDER > tmpOrderBlock = block()
+	tmpToken = < ORDER > tmpOrderBlock = block()
 	< SERVE > < LP > tmpIrregularObject = identifier() < RP >
 	tmpServeBlock = block()
 	[ < IGNORE > tmpIgnoreBlock = block() ]
-	{ return new IrisOrderStatement(tmpOrderBlock, tmpIrregularObject, tmpServeBlock, tmpIgnoreBlock); } 
+	{
+	  tmpStmt = new IrisOrderStatement(tmpOrderBlock, tmpIrregularObject, tmpServeBlock, tmpIgnoreBlock);
+	  tmpStmt.setLineNumber(tmpToken.beginLine);
+	  return tmpStmt;
+    } 
 }
 
 
@@ -444,16 +463,26 @@ IrisStatement getter_statement() :
 {
   IrisIdentifier tmpIdentifier = null;
   IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
-  < SEMICOLON > < GET > < LB > tmpIdentifier = identifier()  < RB >
-  { return new IrisGetterStatement(tmpIdentifier, tmpBlock); }
+  < SEMICOLON > tmpToken = < GET > < LB > tmpIdentifier = identifier()  < RB >
+  {
+    tmpStmt = new IrisGetterStatement(tmpIdentifier, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
 |
-  < GET >
+  tmpToken = < GET >
   < LB > tmpIdentifier = identifier() < RB >
   < LP > < RP >
   tmpBlock = block()
-  { return new IrisGetterStatement(tmpIdentifier, tmpBlock); }
+  {
+    tmpStmt = new IrisGetterStatement(tmpIdentifier, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
 }
 
 IrisStatement setter_statement() :
@@ -461,26 +490,42 @@ IrisStatement setter_statement() :
   IrisIdentifier tmpIdentifier = null;
   IrisIdentifier tmpParam = null;
   IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
-  < SEMICOLON > < SET > < LB > tmpIdentifier = identifier()  < RB >
-  { return new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock); }
+  < SEMICOLON > tmpToken =< SET > < LB > tmpIdentifier = identifier()  < RB >
+  {
+    tmpStmt = new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
 |
-  < SET >
+  tmpToken = < SET >
   < LB > tmpIdentifier = identifier() < RB >
   < LP > tmpParam = identifier() < RP >
   tmpBlock = block()
-  { return new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock); }
+  {
+    tmpStmt = new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
 }
 
 
 IrisStatement gsetter_statement() :
 {
   IrisIdentifier tmpIdentifier = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
   < SEMICOLON > < GSET > < LB > tmpIdentifier = identifier()  < RB >
-  { return new IrisGSetterStatement(tmpIdentifier); }
+  {
+    tmpStmt = new IrisGSetterStatement(tmpIdentifier);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+    return tmpStmt;
+  }
 }
 
 IrisStatement module_statement() :
@@ -488,16 +533,20 @@ IrisStatement module_statement() :
   IrisIdentifier tmpModuleName = null;
   LinkedList<IrisExpression> tmpModules = null;
   IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
    { m_defineStack.push(IrisParserDefineType.Module); }
-   < MODULE >
+   tmpToken = < MODULE >
    tmpModuleName = identifier()
    tmpModules = module_field()
    tmpBlock = block()
    {
      m_defineStack.pop();
-     return new IrisModuleStatement(tmpModuleName, tmpModules, tmpBlock);
+     tmpStmt = new IrisModuleStatement(tmpModuleName, tmpModules, tmpBlock);
+	 tmpStmt.setLineNumber(tmpToken.beginLine);
+     return tmpStmt;
    }
 }
 
@@ -508,10 +557,12 @@ IrisStatement class_statement() :
   LinkedList<IrisExpression> tmpModules = null;
   LinkedList<IrisExpression> tmpInterfaces = null;
   IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
   { m_defineStack.push(IrisParserDefineType.Class); }
-  < CLASS >
+  tmpToken = < CLASS >
   tmpClassName = identifier()
   tmpSuperClassName = extends_field()
   tmpModules = module_field()
@@ -519,7 +570,9 @@ IrisStatement class_statement() :
   tmpBlock = block()
   {
     m_defineStack.pop();
-    return new IrisClassStatement(tmpClassName, tmpSuperClassName, tmpModules, tmpInterfaces, tmpBlock);
+    tmpStmt = new IrisClassStatement(tmpClassName, tmpSuperClassName, tmpModules, tmpInterfaces, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+    return tmpStmt;
   }
 }
 
@@ -527,6 +580,8 @@ IrisExpression extends_field() :
 {
   IrisExpression tmpExpression = null;
   IrisIdentifier tmpIdentifier = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
 }
 {
   < EXTENDS >
@@ -574,7 +629,11 @@ LinkedList<IrisExpression> field_identifier_list() :
      { tmpList.add(tmpExpression); }
    | 
      tmpIdentifier = identifier()
-     { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+     {
+       tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+       tmpExpression.setLineNumber(tmpIdentifier.getLineNumber()); 
+       tmpList.add(tmpExpression);
+     }
    )
    (
      < COMMA >
@@ -584,7 +643,11 @@ LinkedList<IrisExpression> field_identifier_list() :
        { tmpList.add(tmpExpression); }
      |
        tmpIdentifier = identifier()
-       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+       {
+       	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+       	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber()); 
+         tmpList.add(tmpExpression);
+       }
      )
    )*
    { return tmpList; }
@@ -598,6 +661,7 @@ IrisStatement function_statement() :
   IrisBlock tmpBlock = null;
   IrisBlock tmpWithBlock = null;
   IrisBlock tmpWithoutBlock = null;
+  IrisStatement tmpStat = null;
 }
 {
   tmpHeader = function_header()
@@ -608,7 +672,11 @@ IrisStatement function_statement() :
   < WITHOUT >
   tmpWithoutBlock = block()
   ]
-  { return new IrisFunctionStatement(tmpHeader, tmpWithBlock, tmpWithoutBlock, tmpBlock, m_defineStack.lastElement()); }
+  {
+    tmpStat = new IrisFunctionStatement(tmpHeader, tmpWithBlock, tmpWithoutBlock, tmpBlock, m_defineStack.lastElement());
+    tmpStat.setLineNumber(tmpHeader.getLineNumber());
+    return tmpStat;
+  }
 }
 
 IrisFunctionHeader function_header() :
@@ -617,9 +685,11 @@ IrisFunctionHeader function_header() :
 	LinkedList<IrisIdentifier> tmpParameters = null;
 	IrisIdentifier tmpVariableParameter = null;
 	boolean isClassMethod = false;
+	Token tmpToken = null;
+	IrisFunctionHeader tmpHeader = null;
 }
 {
-  < FUNCTION >
+  tmpToken = < FUNCTION >
   [< SELF > < DOT > { isClassMethod = true; }]
   tmpIdentifier = identifier()
   < LP >
@@ -629,7 +699,11 @@ IrisFunctionHeader function_header() :
     [tmpParameters = identifier_list()] [ < COMMA > < MUL > tmpVariableParameter = identifier() ] 
   )
   < RP >
-  { return new IrisFunctionHeader(tmpIdentifier, tmpParameters, tmpVariableParameter, isClassMethod); }
+  {
+    tmpHeader = new IrisFunctionHeader(tmpIdentifier, tmpParameters, tmpVariableParameter, isClassMethod);
+    tmpHeader.setLineNumber(tmpToken.beginLine);
+    return tmpHeader;
+  }
 }
 
 LinkedList<IrisIdentifier> identifier_list() :
@@ -655,9 +729,11 @@ IrisStatement for_statement() :
   IrisIdentifier tmpIter2 = null;
   IrisExpression tmpSource = null;
   IrisBlock tmpBlock = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
 }
 {
-	< FOR > < LP >
+	tmpToken = < FOR > < LP >
 	(
 		tmpIter1 = identifier()
 	|
@@ -671,28 +747,54 @@ IrisStatement for_statement() :
 		tmpSource = expression()
 	< RP >
 	tmpBlock = block()
-	{ return new IrisForStatement(tmpIter1, tmpIter2, tmpSource, tmpBlock); }
+	{
+	  tmpStat = new IrisForStatement(tmpIter1, tmpIter2, tmpSource, tmpBlock);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+    }
 }
 
 IrisStatement break_statement() :
-{ }
 {
-	< SEMICOLON > < BREAK >
-	{ return new IrisBreakStatement(null); }
+    Token tmpToken = null;
+    IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < BREAK >
+	{
+	  tmpStat = new IrisBreakStatement(null);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
 }
 
 IrisStatement continue_statement() :
-{ }
 {
-	< SEMICOLON > < CONTINUE >
-	{ return new IrisContinueStatement(null); }
+    Token tmpToken = null;
+    IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < CONTINUE >
+	{
+	  tmpStat = new IrisContinueStatement(null);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
 }
 
 IrisStatement return_statement() :
-{ IrisExpression tmpExpression = null; }
 {
-	< SEMICOLON > < RETURN > [ tmpExpression = expression() ]
-	{ return new IrisReturnStatement(tmpExpression); }
+  IrisExpression tmpExpression = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < RETURN > [ tmpExpression = expression() ]
+	{
+	  tmpStat = new IrisReturnStatement(tmpExpression);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
 }
 
 IrisStatement if_statement() :
@@ -711,13 +813,19 @@ IrisStatement condition_if() :
   IrisBlock block = null;
   LinkedList<IrisElseIf> elseIfList = null;
   IrisBlock elseBlock = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
 }
 {
-  < IF > < LP > conditionExpr = expression() < RP >
+  tmpToken = < IF > < LP > conditionExpr = expression() < RP >
   block = block()
   [ elseIfList = elseif_list() ]
   [ < ELSE > elseBlock = block() ]
-  { return new IrisConditionIfStatement(conditionExpr, block, elseIfList, elseBlock); }
+  {
+    tmpStat = new IrisConditionIfStatement(conditionExpr, block, elseIfList, elseBlock);
+    tmpStat.setLineNumber(tmpToken.beginLine);
+	return tmpStat;
+  }
 }
 
 IrisStatement loop_if() :
@@ -726,13 +834,19 @@ IrisStatement loop_if() :
   IrisExpression timeExpr = null;
   IrisIdentifier logVariable = null;
   IrisBlock block = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
 }
 {
-  < IF > < LP > conditionExpr = expression()
+  tmpToken = < IF > < LP > conditionExpr = expression()
   < COMMA > timeExpr = expression()
   [ < COMMA > logVariable = identifier() ] < RP >
   block = block()
-  { return new IrisLoopIfStatement(conditionExpr, timeExpr, logVariable, block); }
+  {
+    tmpStat = new IrisLoopIfStatement(conditionExpr, timeExpr, logVariable, block);
+    tmpStat.setLineNumber(tmpToken.beginLine);
+    return tmpStat;
+  }
 }
 
 LinkedList<IrisElseIf> elseif_list() :
@@ -787,12 +901,16 @@ IrisStatement switch_statement() :
 {
 	IrisExpression conditionExpression = null;
 	IrisSwitchBlock tmpSwitchBody = null;
+  	Token tmpToken = null;
+  	IrisStatement tmpStat = null;
 }
 {
-	< SWITCH >  < LP > conditionExpression = expression() < RP >
+	tmpToken = < SWITCH >  < LP > conditionExpression = expression() < RP >
 	tmpSwitchBody = switch_block()
 	{
-	  return new IrisSwitchStatement(conditionExpression, tmpSwitchBody);
+	  tmpStat = new IrisSwitchStatement(conditionExpression, tmpSwitchBody);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
 	}
 }
 
@@ -1202,6 +1320,7 @@ IrisExpression top_expression() :
 {
   IrisExpression tmpExpression = null;
   IrisTopExpressionApostrophe tmpExpression2 = null;
+  IrisExpression tmpExprResult = null;
 }
 {
   (
@@ -1212,7 +1331,9 @@ IrisExpression top_expression() :
   )
   tmpExpression2 = top_expression_apostrophe()
   {
-    return new IrisTopExpression(tmpExpression, tmpExpression2).ToDirectExpression();
+    tmpExprResult = new IrisTopExpression(tmpExpression, tmpExpression2).ToDirectExpression();
+    tmpExprResult.setLineNumber(tmpExpression.getLineNumber());
+    return tmpExprResult;
   }
 }
 
@@ -1407,17 +1528,33 @@ IrisNativeObjectExpression string() :
 }
 
 IrisExpression array_literal() :
-{ LinkedList<IrisExpression> expressions = null; }
 {
-  < LB > [ expressions = expression_list() [ <COMMA > ] ] < RB >
-  { return new IrisArrayExpression(expressions); }
+  LinkedList<IrisExpression> expressions = null;
+  Token tmpToken = null;
+  IrisExpression tmpExpr = null;
+}
+{
+  tmpToken = < LB > [ expressions = expression_list() [ <COMMA > ] ] < RB >
+  {
+    tmpExpr = new IrisArrayExpression(expressions);
+    tmpExpr.setLineNumber(tmpToken.beginLine);
+    return tmpExpr;
+  }
 }
 
 IrisExpression hash_literal() :
-{ LinkedList<IrisHashPair> hashPairs = null; }
 {
-  < LC > [ hashPairs = hash_pair_list() [ <COMMA> ] ] < RC >
-  { return new IrisHashExpression(hashPairs); }
+  LinkedList<IrisHashPair> hashPairs = null;
+  Token tmpToken = null;
+  IrisExpression tmpExpr = null;
+}
+{
+  tmpToken = < LC > [ hashPairs = hash_pair_list() [ <COMMA> ] ] < RC >
+  {
+    tmpExpr = new IrisHashExpression(hashPairs);
+    tmpExpr.setLineNumber(tmpToken.beginLine);
+    return tmpExpr;
+  }
 }
 
 LinkedList<IrisHashPair> hash_pair_list() :
@@ -1448,6 +1585,7 @@ IrisExpression field_expression() :
    LinkedList<IrisIdentifierExpression> tmpList = null;
    IrisIdentifier tmpIdentifier = null;
    boolean tmpIsTopField = false;
+   IrisExpression tmpExpr = null;
 }
 {
   	< FIELD >
@@ -1459,7 +1597,11 @@ IrisExpression field_expression() :
        { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
     )*
 	tmpIdentifier = identifier()
-	{ return new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField); }
+	{
+	  tmpExpr = new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField);
+	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
+	  return tmpExpr;
+    }
 | 
     { tmpList = new LinkedList<IrisIdentifierExpression>(); }
     (
@@ -1468,5 +1610,9 @@ IrisExpression field_expression() :
        { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
     )+
 	tmpIdentifier = identifier()
-	{ return new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField); }
+	{
+	  tmpExpr = new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField);
+	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
+	  return tmpExpr;
+	}
 }

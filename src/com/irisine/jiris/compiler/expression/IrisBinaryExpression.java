@@ -243,6 +243,8 @@ public class IrisBinaryExpression extends IrisExpression {
 	
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
+
 		boolean result = false;
 		switch (m_type) {
 		case Assign:

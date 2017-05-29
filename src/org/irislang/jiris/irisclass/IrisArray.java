@@ -10,6 +10,7 @@ import org.irislang.jiris.core.IrisModule;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisTypeNotCorretException;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 
@@ -27,14 +28,16 @@ public class IrisArray extends IrisClassRoot {
 	}
 	
 	public static IrisValue At(IrisValue self, ArrayList<IrisValue> parameterList,
-			ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
+			ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo)
+            throws IrisExceptionBase {
 		
 		IrisValue index = parameterList.get(0);
 		ArrayList<IrisValue> arrayList = IrisDevUtil.GetNativeObjectRef(self);
 		
 		if(!IrisDevUtil.CheckClass(index, "Integer")) {
 			/* Error */
-			return IrisDevUtil.Nil();
+			throw new IrisTypeNotCorretException(threadInfo.getCurrentFileName(), threadInfo.getCurrentLineNumber(),
+                    "Parameter of [] can only be an Integer.");
 		}
 		
 		int indexNum = IrisDevUtil.GetInt(index);
@@ -46,7 +49,6 @@ public class IrisArray extends IrisClassRoot {
 				for(int i = 0; i < indexNum - arrayList.size(); ++i) {
 					arrayList.add(IrisDevUtil.Nil());
 				}
-				
 				return IrisDevUtil.Nil();
 			}
 			else {
@@ -56,13 +58,15 @@ public class IrisArray extends IrisClassRoot {
 	}
 	
 	public static IrisValue Set(IrisValue self, ArrayList<IrisValue> parameterList,
-			ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
+			ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo)
+            throws IrisExceptionBase {
 		IrisValue index = parameterList.get(0);
 		IrisValue targetValue = parameterList.get(1);
 		ArrayList<IrisValue> arrayList = IrisDevUtil.GetNativeObjectRef(self);
 		if(!IrisDevUtil.CheckClass(index, "Integer")) {
 			/* Error */
-			return IrisDevUtil.Nil();
+            throw new IrisTypeNotCorretException(threadInfo.getCurrentFileName(), threadInfo.getCurrentLineNumber(),
+                    "Index parameter of []= can only be an Integer.");
 		}
 
 		int indexNum = IrisDevUtil.GetInt(index);
@@ -103,16 +107,12 @@ public class IrisArray extends IrisClassRoot {
 		return IrisDevUtil.CreateInt(arrayList.size());
 	}
 
-	public static IrisValue GetIterator(IrisValue self, ArrayList<IrisValue> parameterList, ArrayList<IrisValue> variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) {
+	public static IrisValue GetIterator(IrisValue self, ArrayList<IrisValue> parameterList, ArrayList<IrisValue>
+            variableParameterList, IrisContextEnvironment context, IrisThreadInfo threadInfo) throws IrisExceptionBase{
 		ArrayList<IrisValue> params = new ArrayList<IrisValue>(1);
 		params.add(0, self);
 		// ** Error **
-		try {
-			return IrisDevUtil.CreateInstance(IrisDevUtil.GetClass("ArrayIterator"), params, context, threadInfo);
-		} catch (Throwable throwable) {
-			throwable.printStackTrace();
-			return IrisDevUtil.Nil();
-		}
+        return IrisDevUtil.CreateInstance(IrisDevUtil.GetClass("ArrayIterator"), params, context, threadInfo);
 	}
 	
 	@Override

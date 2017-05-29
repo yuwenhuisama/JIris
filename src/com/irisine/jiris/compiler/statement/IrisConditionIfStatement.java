@@ -32,7 +32,7 @@ public class IrisConditionIfStatement extends IrisStatement {
 	@Override
 	public boolean Generate(IrisCompiler currentCompiler, Builder<IrisNativeJavaClass> currentBuilder,
 			MethodVisitor visitor) {
-		
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 		Label nextLabel = null;
 		Label endLabel = new Label(); 
 		

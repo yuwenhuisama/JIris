@@ -23,7 +23,7 @@ public class IrisBreakStatement extends IrisStatement {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
-
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
         //visitor.visitLabel(currentCompiler.getCurrentLoopEndLable());
         visitor.visitJumpInsn(Opcodes.GOTO, currentCompiler.getCurrentLoopEndLable());
         IrisGenerateHelper.StackFrameOpreate(visitor, currentCompiler);

@@ -23,6 +23,7 @@ public class IrisMemberExpression extends IrisExpression {
 
     @Override
     public boolean Generate(IrisCompiler currentCompiler, DynamicType.Builder<IrisNativeJavaClass> currentBuilder, MethodVisitor visitor) {
+        IrisGenerateHelper.SetLineNumber(visitor, currentCompiler, getLineNumber());
 
         String property = m_property.getIdentifier();
         StringBuilder builder = new StringBuilder("__get_").append(property);
