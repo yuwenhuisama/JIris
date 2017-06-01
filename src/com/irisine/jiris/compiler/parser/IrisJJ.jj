@@ -420,6 +420,39 @@ IrisStatement statement() :
  |
    tmpStatement = order_statement()
    { return tmpStatement; }
+ |
+   tmpStatement = authority_statement()
+   { return tmpStatement; }  
+}
+
+IrisStatement authority_statement() :
+{
+  IrisIdentifier methodName = null;
+  IrisAuthorityStatement.Target tar = IrisAuthorityStatement.Target.InstanceMethod;
+  IrisAuthorityStatement.Authority auth = IrisAuthorityStatement.Authority.Everyone;
+}
+{
+	< SEMICOLON >
+	auth = authority()
+	< LB >
+	[
+	< SELF > < DOT >
+	{ tar = IrisAuthorityStatement.Target.ClassMethod; }
+	]
+	methodName = identifier()
+	< RB >
+	{ return new IrisAuthorityStatement(methodName, tar, auth); }
+}
+
+IrisAuthorityStatement.Authority authority() :
+{ }
+{
+  < EVERYONE >
+  { return IrisAuthorityStatement.Authority.Everyone; }
+| < RELATIVE >
+  { return IrisAuthorityStatement.Authority.Relative; }
+| < PERSONAL >
+  { return IrisAuthorityStatement.Authority.Personal; }
 }
 
 IrisStatement groan_statement() :
@@ -590,7 +623,10 @@ IrisExpression extends_field() :
     tmpExpression = field_expression()
   |
     tmpIdentifier = identifier()
-    { tmpExpression = new IrisIdentifierExpression(tmpIdentifier); }
+    {
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+    }
   )
   { return tmpExpression; }
 |
@@ -1586,6 +1622,7 @@ IrisExpression field_expression() :
    IrisIdentifier tmpIdentifier = null;
    boolean tmpIsTopField = false;
    IrisExpression tmpExpr = null;
+   IrisIdentifierExpression tmpExpression = null;
 }
 {
   	< FIELD >
@@ -1594,11 +1631,18 @@ IrisExpression field_expression() :
        LOOKAHEAD(2)
        { if(tmpList == null) tmpList = new LinkedList<IrisIdentifierExpression>(); }
        tmpIdentifier = identifier() < FIELD >
-       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+       {
+    	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+    	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+         tmpList.add(tmpExpression);
+       }
     )*
 	tmpIdentifier = identifier()
 	{
-	  tmpExpr = new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField);
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+	  
+	  tmpExpr = new IrisFieldExpression(tmpList, tmpExpression, tmpIsTopField);
 	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
 	  return tmpExpr;
     }
@@ -1607,11 +1651,19 @@ IrisExpression field_expression() :
     (
        LOOKAHEAD(2)
        tmpIdentifier = identifier() < FIELD >
-       { tmpList.add(new IrisIdentifierExpression(tmpIdentifier)); }
+       {
+      	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+         
+         tmpList.add(tmpExpression);
+       }
     )+
 	tmpIdentifier = identifier()
 	{
-	  tmpExpr = new IrisFieldExpression(tmpList, new IrisIdentifierExpression(tmpIdentifier), tmpIsTopField);
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+	  
+	  tmpExpr = new IrisFieldExpression(tmpList, tmpExpression, tmpIsTopField);
 	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
 	  return tmpExpr;
 	}

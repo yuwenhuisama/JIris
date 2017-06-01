@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisMethodNotFoundException;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.dev.IrisModuleRoot;
 import org.irislang.jiris.irisclass.IrisModuleBase.IrisModuleBaseTag;
@@ -187,8 +188,33 @@ public class IrisModule implements IrisRunningObject {
             method.ResetMethodObject();
         }
     }
-	
-	private void AddInstanceMethod(IrisMethod method) {
+
+    public void SetInstanceMethodAuthority(String methodName, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
+	    IrisMethod method = null;
+        if(m_instanceMethods.containsKey(methodName)) {
+            method = m_instanceMethods.get(methodName);
+        }
+        else {
+            StringBuilder rstring = new StringBuilder();
+            rstring.append("Method of ").append(methodName).append(" not found in module ").append(m_moduleName).append
+                    (".");
+            throw new IrisMethodNotFoundException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                    IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                    rstring.toString());
+        }
+    }
+
+    public void SetClassMethodAuthority(String methodName, IrisMethod.MethodAuthority authority) throws IrisExceptionBase {
+        IrisMethod method = m_moduleObject.GetInstanceMethod(methodName);
+        if(method != null) {
+            method.setAuthority(authority);
+        }
+        else {
+            m_moduleObject.getObjectClass().SetInstanceMethodAuthority(methodName, authority);
+        }
+    }
+
+    private void AddInstanceMethod(IrisMethod method) {
 		m_instanceMethods.put(method.getMethodName(), method);
 	}
 

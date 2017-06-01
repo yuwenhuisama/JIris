@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import com.irisine.jiris.compiler.assistpart.IrisBlock;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import org.irislang.jiris.core.IrisClass;
 import org.irislang.jiris.core.IrisModule;
@@ -703,8 +704,41 @@ public abstract class IrisNativeJavaClass {
         }
     }
 
-    protected static void AddInterface(IrisContextEnvironment context, IrisThreadInfo
-            threadInfo) {
+    protected static void AddInterface(IrisContextEnvironment context, IrisThreadInfo threadInfo) {
 
+    }
+
+    protected static void SetClassMethodAuthority(String methodName, IrisMethod.MethodAuthority authority,
+                                                  IrisContextEnvironment environment, IrisThreadInfo threadInfo)
+            throws IrisExceptionBase{
+        switch (environment.getRunTimeType()) {
+            case ClassDefineTime:
+                ((IrisClass)environment.getRunningType()).SetClassMethodAuthority(methodName, authority);
+                break;
+            case ModuleDefineTime:
+                ((IrisModule)environment.getRunningType()).SetClassMethodAuthority(methodName, authority);
+                break;
+            case InterfaceDefineTime:
+                break;
+            case RunTime:
+                break;
+        }
+    }
+
+    protected static void SetInstanceMethodAuthority(String methodName, IrisMethod.MethodAuthority authority,
+                                                     IrisContextEnvironment environment, IrisThreadInfo threadInfo)
+            throws IrisExceptionBase {
+        switch (environment.getRunTimeType()) {
+            case ClassDefineTime:
+                ((IrisClass)environment.getRunningType()).SetInstanceMethodAuthority(methodName, authority);
+                break;
+            case ModuleDefineTime:
+                ((IrisModule)environment.getRunningType()).SetInstanceMethodAuthority(methodName, authority);
+                break;
+            case InterfaceDefineTime:
+                break;
+            case RunTime:
+                break;
+        }
     }
 }

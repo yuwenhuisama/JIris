@@ -12,6 +12,8 @@ import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.core.exceptions.fatal.IrisInvalidAuthorityException;
 import org.irislang.jiris.dev.IrisDevUtil;
 
+import javax.swing.undo.AbstractUndoableEdit;
+
 public class IrisObject implements IrisRunningObject {
 	private IrisClass m_class = null;
 	private HashMap<String, IrisMethod> m_methods = new HashMap<String, IrisMethod>();
@@ -29,32 +31,47 @@ public class IrisObject implements IrisRunningObject {
 	}
 	
 	public IrisValue CallInstanceMethod(String methodName, ArrayList<IrisValue> parameterList,
-                                        IrisContextEnvironment context, IrisThreadInfo threadInfo, IrisMethod.CallSide callSide) throws IrisExceptionBase {
+                                        IrisContextEnvironment context, IrisThreadInfo threadInfo, IrisMethod
+                                                .CallSide callSide) throws IrisExceptionBase {
 		IrisMethod method = null;
 		boolean isCurrentMethod = false;
-		
+
+		MethodAuthority authority = null;
+
 		// Object's instance method
 		if(m_methods.containsKey(methodName)) {
 			method = m_methods.get(methodName);
 			isCurrentMethod = true;
+            authority = method.getAuthority();
 		// instance method in class
 		} else {
  			IrisClass.SearchResult result = new IrisClass.SearchResult();
 			m_class.GetMethod(methodName, result);
  			method = result.getMethod();
-			isCurrentMethod = result.isCurrentClassMethod();
-		}
-		
-		if(method == null) {
+
+            if(method == null) {
 			/* Error */
-			IrisValue mName = IrisDevUtil.CreateString(methodName);
-			IrisValue mClsName = IrisDevUtil.CreateString(m_class.getClassName());
-			ArrayList<IrisValue> tmpList = new ArrayList<IrisValue>(2);
-			tmpList.add(mName);
-			tmpList.add(mClsName);
-			return IrisDevUtil.CallMethod(IrisValue.WrapObject(this), "missing_method", tmpList, context, threadInfo);
+                IrisValue mName = IrisDevUtil.CreateString(methodName);
+                IrisValue mClsName = IrisDevUtil.CreateString(m_class.getClassName());
+                ArrayList<IrisValue> tmpList = new ArrayList<IrisValue>(2);
+                tmpList.add(mName);
+                tmpList.add(mClsName);
+                return IrisDevUtil.CallMethod(IrisValue.WrapObject(this), "missing_method", tmpList, context, threadInfo);
+            }
+
+            isCurrentMethod = result.isCurrentClassMethod();
+
+			if(result.isCurrentClassMethodofSelf()) {
+			    authority = method.getAuthority();
+            }
+            else {
+			    authority = m_class.GetMethodAuthorityFromMap(methodName);
+			    if(authority == null) {
+			        authority = method.getAuthority();
+                }
+            }
 		}
-		
+
 		// Inside call
 		IrisValue callResult = null;
 		IrisValue caller = IrisValue.WrapObject(this);
@@ -64,7 +81,7 @@ public class IrisObject implements IrisRunningObject {
 				callResult = method.Call(caller, parameterList, context, threadInfo);
 			}
 			else {
-				if(method.getAuthority() == MethodAuthority.Personal) {
+				if(authority == MethodAuthority.Personal) {
 					/* Error */
                     throw new IrisInvalidAuthorityException(threadInfo.getCurrentFileName(), threadInfo
                             .getCurrentLineNumber(), "Method with personal authority cannot be called here.");
@@ -76,7 +93,7 @@ public class IrisObject implements IrisRunningObject {
 		}
 		// Outside call
 		else {
-			if(method.getAuthority() != MethodAuthority.Everyone) {
+			if(authority != MethodAuthority.Everyone) {
 			    /* Error */
                 throw new IrisInvalidAuthorityException(threadInfo.getCurrentFileName(), threadInfo
                         .getCurrentLineNumber(), "Only method with everyone authority can be called here.");
@@ -127,6 +144,14 @@ public class IrisObject implements IrisRunningObject {
 		}
 	}
 
+	IrisMethod GetInstanceMethod(String methodName) {
+	    if(m_methods.containsKey(methodName)){
+	        return m_methods.get(methodName);
+        }
+        else{
+	        return null;
+        }
+    }
 	
 }
  

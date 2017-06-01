@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
@@ -20,6 +21,7 @@ import org.irislang.jiris.irisclass.*;
 import org.irislang.jiris.irisclass.IrisModuleBase.IrisModuleBaseTag;
 import org.irislang.jiris.irisclass.IrisClassBase.IrisClassBaseTag;
 import org.irislang.jiris.irismodule.IrisKernel;
+import org.apache.logging.log4j.*;
 
 public class IrisInterpreter {
 
@@ -424,17 +426,21 @@ public class IrisInterpreter {
 			Method method = runClass.getMethod("run", IrisContextEnvironment.class, IrisThreadInfo.class);
  			method.invoke(instance, mainEnv, IrisDevUtil.GetCurrentThreadInfo());
 		}
-		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+		catch (IllegalAccessException | IllegalArgumentException |
                 NoSuchMethodException | SecurityException | InstantiationException e) {
             e.printStackTrace();
             return false;
         }
-        catch (Exception e) {
-            if(e instanceof IrisFatalException) {
-                System.out.print(((IrisFatalException)e).GetReportString());
+        catch (InvocationTargetException e) {
+            Throwable t = e.getTargetException();
+            if(t instanceof IrisFatalException) {
+                //System.out.(((IrisFatalException)t).GetReportString());
+                //Logger logger = Logger.getLogger("Iris FatalException");
+                org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger("jiris");
+                logger.error("\n" + ((IrisFatalException)t).GetReportString());
             }
-            else if(e instanceof IrisRuntimeException) {
-                IrisRuntimeException runtimeException = (IrisRuntimeException)e;
+            else if(t instanceof IrisRuntimeException) {
+                IrisRuntimeException runtimeException = (IrisRuntimeException)t;
                 IrisValue irregularObject = runtimeException.getExceptionObject();
                 IrisValue stringResult;
                 try {

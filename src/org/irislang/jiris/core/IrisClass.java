@@ -10,6 +10,7 @@ import org.irislang.jiris.compiler.IrisInterpreter;
 import org.irislang.jiris.core.IrisMethod.IrisUserMethod;
 import org.irislang.jiris.core.IrisMethod.MethodAuthority;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
+import org.irislang.jiris.core.exceptions.fatal.IrisMethodNotFoundException;
 import org.irislang.jiris.dev.IrisClassRoot;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisClassBase;
@@ -19,8 +20,15 @@ public class IrisClass implements IrisRunningObject {
 	public static class SearchResult {
 		private IrisMethod m_method = null;
 		private boolean m_isCurrentClassMethod = false;
-		
-		public IrisMethod getMethod() {
+		private boolean m_isCurrentClassMethodofSelf = false;
+
+        public boolean isCurrentClassMethodofSelf() {
+            return m_isCurrentClassMethodofSelf;
+        }
+        public void setCurrentClassMethodOfSelf(boolean currentClassMethodofSelf) {
+            m_isCurrentClassMethodofSelf = currentClassMethodofSelf;
+        }
+        public IrisMethod getMethod() {
 			return m_method;
 		}
 		public void setMethod(IrisMethod method) {
@@ -46,6 +54,9 @@ public class IrisClass implements IrisRunningObject {
 	private HashMap<String, IrisValue> m_classVariables = new HashMap<String, IrisValue>();
 	private HashMap<String, IrisValue> m_constances = new HashMap<String, IrisValue>();
 	private HashMap<String, IrisMethod> m_instanceMethods = new HashMap<String, IrisMethod>();
+
+	private HashMap<String, MethodAuthority> m_instanceMethodAuthorityMap = new HashMap<String, MethodAuthority>();
+    private HashMap<String, MethodAuthority> m_classMethodAuthorityMap = new HashMap<String, MethodAuthority>();
 	
 	public IrisClass(IrisClassRoot externClass) throws IrisExceptionBase {
 		m_className = externClass.NativeClassNameDefine();
@@ -98,8 +109,9 @@ public class IrisClass implements IrisRunningObject {
 		IrisMethod method = null;
 		result.setCurrentClassMethod(false);
 		result.setMethod(null);
+		result.setCurrentClassMethodOfSelf(false);
 		
-		method = _GetMethod(this, methodName);
+		method = _GetMethod(this, methodName, result);
 		
 		if(method != null) {
 			result.setCurrentClassMethod(true);
@@ -110,7 +122,7 @@ public class IrisClass implements IrisRunningObject {
 		IrisClass curClass = m_superClass;
 		
 		while(curClass != null) {
-			method = _GetMethod(curClass, methodName);
+			method = _GetMethod(curClass, methodName, null);
 			if(method != null) {
 				result.setCurrentClassMethod(false);
 				result.setMethod(method);
@@ -132,13 +144,18 @@ public class IrisClass implements IrisRunningObject {
 		return method;
 	}
 	
-	private IrisMethod _GetMethod(IrisClass searchClass, String methodName){
+	private IrisMethod _GetMethod(IrisClass searchClass, String methodName, SearchResult result){
 		IrisMethod method = null;
 		method = searchClass.m_instanceMethods.get(methodName);
 		if(method == null) {
 			// involved module
 			method = _SearchClassModuleMethod(searchClass, methodName);
 		}
+		else {
+		    if(result != null) {
+                result.setCurrentClassMethodOfSelf(true);
+            }
+        }
 		
 		return method;
 	}
@@ -195,7 +212,10 @@ public class IrisClass implements IrisRunningObject {
 	}
 	
 	public void AddInstanceMethod(IrisMethod method) {
-		m_instanceMethods.put(method.getMethodName(), method);
+		if(m_instanceMethodAuthorityMap.containsKey(method.getMethodName())) {
+		    m_instanceMethodAuthorityMap.remove(method.getMethodName());
+        }
+	    m_instanceMethods.put(method.getMethodName(), method);
 	}
 	
 	public void AddInvolvedModule(IrisModule moduleObj) {
@@ -291,6 +311,49 @@ public class IrisClass implements IrisRunningObject {
 		}
 		return result;
 	}
+
+	public void SetInstanceMethodAuthority(String methodName, MethodAuthority authority) throws IrisExceptionBase {
+        IrisMethod method = null;
+        if(m_instanceMethods.containsKey(methodName)) {
+            method = m_instanceMethods.get(methodName);
+            method.setAuthority(authority);
+        }
+        else {
+            SearchResult result = new SearchResult();
+            GetMethod(methodName, result);
+            if(result.getMethod() != null) {
+                m_instanceMethodAuthorityMap.put(methodName, authority);
+            }
+            else {
+                StringBuilder rstring = new StringBuilder();
+                rstring.append("Method of ").append(methodName).append(" not found in class ").append(m_className).append
+                        (".");
+                throw new IrisMethodNotFoundException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                        IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
+                        rstring.toString());
+            }
+        }
+    }
+
+    public void SetClassMethodAuthority(String methodName, MethodAuthority authority) throws IrisExceptionBase {
+        //if(m_classObject)
+        IrisMethod method = m_classObject.GetInstanceMethod(methodName);
+        if(method != null) {
+            method.setAuthority(authority);
+        }
+        else {
+            m_classObject.getObjectClass().SetInstanceMethodAuthority(methodName, authority);
+        }
+    }
+
+    public MethodAuthority GetMethodAuthorityFromMap(String methodName) {
+	    if(m_instanceMethodAuthorityMap.containsKey(methodName)) {
+	        return m_instanceMethodAuthorityMap.get(methodName);
+        }
+        else {
+	        return null;
+        }
+    }
 	
 	public IrisClass getSuperClass() {
 		return m_superClass;
