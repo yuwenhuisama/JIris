@@ -83,7 +83,7 @@ public final class IrisGenerateHelper {
         visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setRecord", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
     }
 
-    private static void LoadInteger(MethodVisitor visitor, int parameterCount) {
+    public static void LoadInteger(MethodVisitor visitor, int parameterCount) {
         switch (parameterCount){
             case 0:
                 visitor.visitInsn(Opcodes.ICONST_0);

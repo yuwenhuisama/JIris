@@ -11,15 +11,37 @@ public class IrisClosureBlockLiteral extends IrisSyntaxUnit {
 	@SuppressWarnings("unused")
 	private IrisIdentifier m_variableParameter = null;
 	@SuppressWarnings("unused")
-	private LinkedList<IrisStatement> m_statements = null;
-	
-	public boolean Generate() {
-		return false;
-	}
-	
-	public IrisClosureBlockLiteral(LinkedList<IrisIdentifier> parameters, IrisIdentifier variableParameter, LinkedList<IrisStatement> statements){
+	//private LinkedList<IrisStatement> m_statements = null;
+    private IrisBlock m_block = null;
+
+    public IrisBlock getBlock() {
+        return m_block;
+    }
+
+    public void setBlock(IrisBlock block) {
+        m_block = block;
+    }
+
+    public IrisClosureBlockLiteral(LinkedList<IrisIdentifier> parameters, IrisIdentifier variableParameter, IrisBlock block){
 		m_parameters = parameters;
 		m_variableParameter = variableParameter;
-		m_statements = statements;
+		//m_statements = statements;
+        m_block = block;
 	}
+
+    public LinkedList<IrisIdentifier> getParameters() {
+        return m_parameters;
+    }
+
+    public void setParameters(LinkedList<IrisIdentifier> parameters) {
+        m_parameters = parameters;
+    }
+
+    public IrisIdentifier getVariableParameter() {
+        return m_variableParameter;
+    }
+
+    public void setVariableParameter(IrisIdentifier variableParameter) {
+        m_variableParameter = variableParameter;
+    }
 }

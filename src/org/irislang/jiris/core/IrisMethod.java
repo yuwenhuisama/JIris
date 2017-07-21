@@ -159,7 +159,7 @@ public class IrisMethod {
             /* Error */
             throw new IrisParameterNotFitException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
                     IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(),
-                    "Parameter not fit:" + parameterList == null ? " 0" : " " + Integer.toString(parameterList.size())
+                    "Parameter not fit:" + ((parameterList == null || parameterList.size() == 0 )? " 0" : " " + Integer.toString(parameterList.size()))
                             + " " +
                             "for " +
                             Integer.toString(m_parameterCount) + ".");
@@ -181,7 +181,7 @@ public class IrisMethod {
             IrisValue setValue = parameterList.get(0);
 
             if(value == null) {
-                value = IrisValue.CloneValue(IrisDevUtil.Nil());
+                value = IrisValue.CloneValue(setValue);
                 object.AddInstanceVariable(m_targetVariable, value);
             }
             else {
@@ -220,7 +220,10 @@ public class IrisMethod {
             if(e instanceof IrisExceptionBase) {
                 throw (IrisExceptionBase)e;
             }
-            return IrisDevUtil.Nil();
+            else {
+                e.printStackTrace();
+                throw new IrisUnkownFatalException("Unkown irregular happend.", threadInfo.getCurrentLineNumber(), threadInfo.getCurrentFileName());
+            }
         }
 
         return result;

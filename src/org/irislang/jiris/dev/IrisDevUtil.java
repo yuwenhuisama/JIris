@@ -197,6 +197,17 @@ final public class IrisDevUtil {
 		return methodHandle;
 	}
 
+	public static MethodHandle GetIrisClosureBlockHandle(Class<?> classObj, String methodName) {
+		MethodHandle methodHandle = null;
+		try {
+			methodHandle = INDY_BootstrapMethod(classObj, methodName, IrisContextEnvironment.class, IrisThreadInfo.class);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return methodHandle;
+	}
+
 	public static IrisThreadInfo GetCurrentThreadInfo() {
 		return IrisThreadInfo.GetCurrentThreadInfo();
 	}

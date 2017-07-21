@@ -8,23 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import com.irisine.jiris.compiler.assistpart.IrisBlock;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import org.irislang.jiris.core.IrisClass;
-import org.irislang.jiris.core.IrisModule;
-import org.irislang.jiris.core.IrisObject;
-import org.irislang.jiris.core.IrisContextEnvironment;
-import org.irislang.jiris.core.IrisMethod;
+import org.irislang.jiris.core.*;
 import org.irislang.jiris.core.IrisMethod.IrisUserMethod;
-import org.irislang.jiris.core.IrisThreadInfo;
-import org.irislang.jiris.core.IrisValue;
 import org.irislang.jiris.core.IrisContextEnvironment.RunTimeType;
 import org.irislang.jiris.core.exceptions.IrisExceptionBase;
 import org.irislang.jiris.core.exceptions.fatal.*;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisClassBase;
-import org.irislang.jiris.irisclass.IrisInteger.IrisIntegerTag;
 import org.irislang.jiris.irisclass.IrisModuleBase;
+
+import javax.naming.Name;
 
 public abstract class IrisNativeJavaClass {
 
@@ -110,10 +103,17 @@ public abstract class IrisNativeJavaClass {
 	}
 
 	protected static IrisValue GetLocalVariable(String variableName, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
-		IrisValue value = context.GetLocalVariable(variableName);
+		IrisValue value = context.getClosureBlockObj() != null ?
+                ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetLocalVariable(variableName)
+                : context.GetLocalVariable(variableName);
 		if(value == null) {
 			value = IrisValue.CloneValue(IrisDevUtil.Nil());
-			context.AddLocalVariable(variableName, value);
+            if(context.getClosureBlockObj() != null){
+                ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, value);
+            }
+            else {
+                context.AddLocalVariable(variableName, value);
+            }
 		}
 		else {
 			value = IrisValue.CloneValue(value);
@@ -122,9 +122,16 @@ public abstract class IrisNativeJavaClass {
 	}
 
 	protected static IrisValue SetLocalVariable(String variableName, IrisValue value, IrisThreadInfo threadInfo, IrisContextEnvironment context) {
-		IrisValue testValue = context.GetLocalVariable(variableName);
+		IrisValue testValue = context.getClosureBlockObj() != null ?
+                        ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetLocalVariable(variableName)
+                        : context.GetLocalVariable(variableName);
 		if(testValue == null) {
-			context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+		    if(context.getClosureBlockObj() != null) {
+                ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+            }
+            else {
+                context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+            }
 		} else {
 			testValue.setObject(value.getObject());
 		}
@@ -136,10 +143,17 @@ public abstract class IrisNativeJavaClass {
 		IrisValue value = null;
 		// Main context
 		if(context.getRunningType() == null) {
-			value = context.GetLocalVariable(variableName);
+			value = context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetClassVariable(variableName)
+                    : context.GetLocalVariable(variableName);
 			if(value == null) {
 				value = IrisValue.CloneValue(IrisDevUtil.Nil());
-				context.AddLocalVariable(variableName, value);
+				if(context.getClosureBlockObj() != null) {
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+                else {
+                    context.AddLocalVariable(variableName, value);
+                }
 			}
 			else {
 				value = IrisValue.CloneValue(value);
@@ -193,10 +207,19 @@ public abstract class IrisNativeJavaClass {
 		IrisValue testValue = null;
 		// Main context
 		if(context.getRunningType() == null) {
-			testValue = context.GetLocalVariable(variableName);
+			//testValue = context.GetLocalVariable(variableName);
+            testValue = context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetClassVariable(variableName)
+                    : context.GetLocalVariable(variableName);
 			if(testValue == null) {
-				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
-			} else {
+			    //context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                if(context.getClosureBlockObj() != null) {
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+                else {
+                    context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+            } else {
 				testValue.setObject(value.getObject());
 			}
 		}
@@ -241,11 +264,22 @@ public abstract class IrisNativeJavaClass {
             context) throws  IrisExceptionBase {
 		IrisValue value = null;
 		if(context.getRunningType() == null) {
-			value = IrisInterpreter.INSTANCE.GetConstance(variableName);
-			if(value == null) {
+			//value = IrisInterpreter.INSTANCE.GetConstance(variableName);
+            value = context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetConstance(variableName)
+                    : IrisInterpreter.INSTANCE.GetConstance(variableName);
+            if(value == null) {
 				value = IrisValue.CloneValue(IrisDevUtil.Nil());
-				IrisInterpreter.INSTANCE.AddConstance(variableName, value);
-			}
+				//IrisInterpreter.INSTANCE.AddConstance(variableName, value);
+                if(context.getClosureBlockObj() != null) {
+                    //((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                    throw new IrisVariableImpossiblyExistsException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                            IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance won't be declared in Block.");
+                }
+                else {
+                    IrisInterpreter.INSTANCE.AddConstance(variableName, IrisValue.CloneValue(value));
+                }
+            }
 			else {
 				value = IrisValue.CloneValue(value);
 			}
@@ -254,7 +288,11 @@ public abstract class IrisNativeJavaClass {
 			switch(context.getRunTimeType()) {
 				case ClassDefineTime :
 					value = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
-					if(value == null) {
+                    if(value == null) {
+                        value = IrisInterpreter.INSTANCE.GetConstance(variableName);
+                    }
+
+                    if(value == null) {
                         value = IrisValue.CloneValue(IrisDevUtil.Nil());
 						((IrisClass)context.getRunningType()).AddConstance(variableName, value);
 					}
@@ -264,7 +302,11 @@ public abstract class IrisNativeJavaClass {
 					break;
 				case ModuleDefineTime :
 					value = ((IrisModule)context.getRunningType()).SearchConstance(variableName);
-					if(value == null) {
+                    if(value == null) {
+                        value = IrisInterpreter.INSTANCE.GetConstance(variableName);
+                    }
+
+                    if(value == null) {
 						value = IrisValue.CloneValue(IrisDevUtil.Nil());
 						((IrisModule)context.getRunningType()).AddConstance(variableName, value);
 					}
@@ -275,10 +317,14 @@ public abstract class IrisNativeJavaClass {
 				case InterfaceDefineTime :
 				    /* Error */
                     throw new IrisVariableImpossiblyExistsException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
-                            IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance won't exist in interface");
+                            IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance won't exist in interface.");
 				case RunTime :
 					value = ((IrisObject)context.getRunningType()).getObjectClass().SearchConstance(variableName);
-					if(value == null) {
+                    if(value == null) {
+                        value = IrisInterpreter.INSTANCE.GetConstance(variableName);
+                    }
+
+                    if(value == null) {
 						value = IrisValue.CloneValue(IrisDevUtil.Nil());
 						((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, value);
 					}
@@ -295,10 +341,21 @@ public abstract class IrisNativeJavaClass {
                                             IrisContextEnvironment context) throws IrisExceptionBase {
 		IrisValue testValue = null;
 		if(context.getRunningType() == null) {
-			testValue = IrisInterpreter.INSTANCE.GetConstance(variableName);
+			//testValue = IrisInterpreter.INSTANCE.GetConstance(variableName);
+            testValue = context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetConstance(variableName)
+                    : IrisInterpreter.INSTANCE.GetConstance(variableName);
 			if(testValue == null) {
-				IrisInterpreter.INSTANCE.AddConstance(variableName, IrisValue.CloneValue(value));
-			} else {
+				//IrisInterpreter.INSTANCE.AddConstance(variableName, IrisValue.CloneValue(value));
+                if(context.getClosureBlockObj() != null) {
+                    //((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                    throw new IrisVariableImpossiblyExistsException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+                            IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance won't be declared in Block.");
+                }
+                else {
+                    IrisInterpreter.INSTANCE.AddConstance(variableName, IrisValue.CloneValue(value));
+                }
+            } else {
 				/* Error */
 				throw new IrisConstanceReassignedException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
                         IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance of" + variableName +
@@ -308,7 +365,7 @@ public abstract class IrisNativeJavaClass {
 		else {
 			switch(context.getRunTimeType()) {
 			case ClassDefineTime :
-				testValue = ((IrisClass)context.getRunningType()).SearchConstance(variableName);
+				testValue = ((IrisClass)context.getRunningType()).GetConstance(variableName);
 				if(testValue == null) {
 					((IrisClass)context.getRunningType()).AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
@@ -319,7 +376,7 @@ public abstract class IrisNativeJavaClass {
 				}
 				break;
 			case ModuleDefineTime :
-				testValue = ((IrisModule)context.getRunningType()).SearchConstance(variableName);
+				testValue = ((IrisModule)context.getRunningType()).GetConstance(variableName);
 				if(testValue == null) {
 					((IrisModule)context.getRunningType()).AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
@@ -335,7 +392,7 @@ public abstract class IrisNativeJavaClass {
                         IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Constance can not be defined in " +
                         "interface");
 			case RunTime :
-				testValue = ((IrisObject)context.getRunningType()).getObjectClass().SearchConstance(variableName);
+				testValue = ((IrisObject)context.getRunningType()).getObjectClass().GetConstance(variableName);
 				if(testValue == null) {
 					((IrisObject)context.getRunningType()).getObjectClass().AddConstance(variableName, IrisValue.CloneValue(value));
 				} else {
@@ -384,10 +441,19 @@ public abstract class IrisNativeJavaClass {
 				value = IrisValue.CloneValue(value);
 			}
 		} else {
-			value = context.GetLocalVariable(variableName);
+			//value = context.GetLocalVariable(variableName);
+            value= context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetInstanceVariable(variableName)
+                    : context.GetLocalVariable(variableName);
 			if(value == null) {
 				value = IrisValue.CloneValue(IrisDevUtil.Nil());
-				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+				//context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                if(context.getClosureBlockObj() != null) {
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+                else {
+                    context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
 			}
 			else {
 				value = IrisValue.CloneValue(value);
@@ -410,10 +476,19 @@ public abstract class IrisNativeJavaClass {
 				testValue.setObject(value.getObject());
 			}
 		} else {
-			testValue = context.GetLocalVariable(variableName);
+			//testValue = context.GetLocalVariable(variableName);
+            testValue = context.getClosureBlockObj() != null ?
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).GetInstanceVariable(variableName)
+                    : context.GetLocalVariable(variableName);
 			if(testValue == null) {
-				context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
-			} else {
+				//context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                if(context.getClosureBlockObj() != null) {
+                    ((IrisClosureBlock)(IrisDevUtil.GetNativeObjectRef(context.getClosureBlockObj()))).AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+                else {
+                    context.AddLocalVariable(variableName, IrisValue.CloneValue(value));
+                }
+            } else {
 				testValue.setObject(value.getObject());
 			}
 		}
@@ -442,7 +517,7 @@ public abstract class IrisNativeJavaClass {
         }
         else {
             // Error
-            throw new IrisAccessorDefinedError(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+            throw new IrisAccessorDefinedException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
                     IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Getter can only be defined in class " +
                             "or module");
         }
@@ -460,7 +535,7 @@ public abstract class IrisNativeJavaClass {
         }
         else {
             // Error
-            throw new IrisAccessorDefinedError(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
+            throw new IrisAccessorDefinedException(IrisDevUtil.GetCurrentThreadInfo().getCurrentFileName(),
                     IrisDevUtil.GetCurrentThreadInfo().getCurrentLineNumber(), "Setter can only be defined in class " +
                     "or module");
         }
@@ -739,6 +814,41 @@ public abstract class IrisNativeJavaClass {
                 break;
             case RunTime:
                 break;
+        }
+    }
+
+    protected static IrisValue CreateClosureBlock(IrisContextEnvironment upperEnvironment, String[] parameters,
+                                   String variableParameter, Class nativeMethodClass, String nativeMethodName,
+                                   IrisThreadInfo threadInfo) {
+        threadInfo.PushClosureBlock(
+                new IrisClosureBlock(upperEnvironment, parameters != null ? new ArrayList<String>(Arrays.asList(parameters)) : null, variableParameter,
+                        IrisDevUtil.GetIrisClosureBlockHandle(nativeMethodClass, nativeMethodName)
+                )
+        );
+        return IrisValue.WrapObject(threadInfo.GetTopClosureBlock().getNativeObject());
+    }
+
+    protected static void ClearClosureBlock(IrisThreadInfo threadInfo) {
+	    threadInfo.PopClosureBlock();
+    }
+
+    protected static IrisValue GetCastObject(IrisThreadInfo threadInfo) {
+	    return threadInfo.GetTopClosureBlock() == null ? IrisDevUtil.Nil() : IrisValue.WrapObject(threadInfo.GetTopClosureBlock().getNativeObject());
+    }
+
+    protected static IrisValue GetSelfObject(IrisContextEnvironment context, IrisThreadInfo info) throws IrisExceptionBase {
+        if(context.getClosureBlockObj() != null) {
+            IrisContextEnvironment tmpEnv = context;
+            while(tmpEnv != null) {
+                if(tmpEnv.getRunningType() != null && tmpEnv.getRunTimeType() == RunTimeType.RunTime) {
+                    return IrisValue.WrapObject((IrisObject)(context.getRunningType()));
+                }
+                tmpEnv = tmpEnv.getUpperContext();
+            }
+            throw new IrisWrongSelfException(info.getCurrentFileName(), info.getCurrentLineNumber(), "No object can be found with self.");
+        }
+        else {
+            return IrisValue.WrapObject((IrisObject)(context.getRunningType()));
         }
     }
 }

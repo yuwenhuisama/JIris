@@ -18,8 +18,18 @@ public class IrisContextEnvironment {
 	private IrisContextEnvironment m_upperContext = null;
 	
 	private IrisMethod m_currentMethod = null;
-	
-	public IrisMethod getCurrentMethod() {
+
+	private IrisObject m_closureBlockObj = null;
+
+    public IrisObject getClosureBlockObj() {
+        return m_closureBlockObj;
+    }
+    
+    public void setClosureBlockObj(IrisObject closureBlockObj) {
+        this.m_closureBlockObj = closureBlockObj;
+    }
+
+    public IrisMethod getCurrentMethod() {
 		return m_currentMethod;
 	}
 	

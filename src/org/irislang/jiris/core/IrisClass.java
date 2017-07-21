@@ -246,6 +246,7 @@ public class IrisClass implements IrisRunningObject {
 			}
 			curClass = curClass.getSuperClass();
 		}
+
 		return result;
 	}
 	

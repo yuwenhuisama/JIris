@@ -3,8 +3,8 @@ package org.irislang.jiris.core.exceptions.fatal;
 /**
  * Created by Huisama on 2017/5/26 0026.
  */
-public class IrisAccessorDefinedError extends IrisFatalException {
-    public IrisAccessorDefinedError(String fileName, int lineNumber, String message) {
+public class IrisAccessorDefinedException extends IrisFatalException {
+    public IrisAccessorDefinedException(String fileName, int lineNumber, String message) {
         super(fileName, lineNumber, message);
     }
 

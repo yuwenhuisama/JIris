@@ -1,11 +1,15 @@
 package org.irislang.jiris.core;
 
+import com.irisine.jiris.compiler.statement.IrisClassStatement;
+import com.sun.deploy.panel.UpdatePanelFactory;
 import jdk.nashorn.internal.runtime.Debug;
 import org.irislang.jiris.dev.IrisDevUtil;
 import org.irislang.jiris.irisclass.IrisInteger;
 import org.omg.CORBA.PRIVATE_MEMBER;
 import sun.misc.Cleaner;
 
+import javax.print.attribute.standard.MediaSize;
+import java.lang.invoke.MethodHandle;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
@@ -45,6 +49,7 @@ public class IrisThreadInfo {
 	private Stack<IrisValue> m_vesselStack = new Stack<IrisValue>();
 	private Stack<IrisValue> m_iteratorStack = new Stack<IrisValue>();
 	private Stack<IrisContextEnvironment> m_environmentStack = new Stack<IrisContextEnvironment>();
+	private Stack<IrisClosureBlock> m_closureBlockStack = new Stack<IrisClosureBlock>();
 
 	private IrisValue m_tempSuperClass = null;
 	private LinkedList<IrisValue> m_tempModules = new LinkedList<IrisValue>();
@@ -52,6 +57,28 @@ public class IrisThreadInfo {
 
 	private int m_currentLineNumber = -1;
 	private String m_currentFileName = null;
+
+//	private IrisClosureBlock m_closureBlock = null;
+//
+//    public IrisClosureBlock getClosureBlock() {
+//        return m_closureBlock;
+//    }
+//
+//    public void setClosureBlock(IrisClosureBlock closureBlock) {
+//        m_closureBlock = closureBlock;
+//    }
+
+    public IrisClosureBlock GetTopClosureBlock() {
+        return m_closureBlockStack.lastElement();
+    }
+
+    public void PushClosureBlock(IrisClosureBlock block) {
+        m_closureBlockStack.push(block);
+    }
+
+    public void PopClosureBlock() {
+        m_closureBlockStack.pop();
+    }
 
     public int getCurrentLineNumber() {
         return m_currentLineNumber;

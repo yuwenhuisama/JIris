@@ -553,7 +553,7 @@ IrisStatement gsetter_statement() :
   Token tmpToken = null;
 }
 {
-  < SEMICOLON > < GSET > < LB > tmpIdentifier = identifier()  < RB >
+  < SEMICOLON > tmpToken = < GSET > < LB > tmpIdentifier = identifier()  < RB >
   {
     tmpStmt = new IrisGSetterStatement(tmpIdentifier);
 	tmpStmt.setLineNumber(tmpToken.beginLine);
@@ -1381,6 +1381,7 @@ IrisTopExpressionApostrophe top_expression_apostrophe() :
    IrisTopExpressionApostrophe tmpExpression2 = null;
    IrisTopExpressionApostropheBase tmpFore = null;
    boolean tmpIsNormalCallExpr = false;
+   IrisClosureBlockLiteral tmpClosureBlock = null;
 }
 {
   (
@@ -1389,10 +1390,11 @@ IrisTopExpressionApostrophe top_expression_apostrophe() :
   	[
   	   < LP > [ expressions = expression_list() ] < RP >
   	   { tmpIsNormalCallExpr = true; }
+  	   [ tmpClosureBlock = closure_block() ]
   	]
   	{
   	  if(tmpIsNormalCallExpr) {
-  	    tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, null);
+  	    tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, tmpClosureBlock);
   	  }
   	  else {
   	    tmpFore = new IrisTopExpressionApostropheForeMember(tmpIdentifier);
@@ -1406,6 +1408,29 @@ IrisTopExpressionApostrophe top_expression_apostrophe() :
   { return new IrisTopExpressionApostrophe(tmpFore, tmpExpression2); }
 |
   { return null; }
+}
+
+IrisClosureBlockLiteral closure_block() :
+{
+  IrisIdentifier tmpVariableParameter = null;
+  LinkedList<IrisIdentifier> tmpParameters = null;
+  LinkedList<IrisStatement> tmpStatements = null;
+}
+{
+	< LC >
+	[ < ITERATOR > < ITER >
+	  < LB >
+	  ( 
+	    < MUL > tmpVariableParameter = identifier()
+	  |
+	    [tmpParameters = identifier_list()] [ < COMMA > < MUL > tmpVariableParameter = identifier() ] 
+	  )
+	  < RB >
+	  < CONLON >
+	]
+	[ tmpStatements = block_statement_list() ] 
+	< RC >
+	{ return new IrisClosureBlockLiteral(tmpParameters, tmpVariableParameter, new IrisBlock(tmpStatements)); }
 }
 
 /*
@@ -1431,12 +1456,14 @@ IrisExpression hide_function_call():
    IrisIdentifier tmpIdentifier = null;
    LinkedList<IrisExpression> expressions = null;
    IrisExpression tmpExpression = null;
+   IrisClosureBlockLiteral tmpClosureBlock = null;
 }
 {
   tmpIdentifier = identifier()
   < LP > [ expressions = expression_list() ] < RP >
+  [ tmpClosureBlock = closure_block() ]
   {
-    tmpExpression = new IrisFunctionCallExpression(tmpCaller, tmpIdentifier, expressions, null);
+    tmpExpression = new IrisFunctionCallExpression(tmpCaller, tmpIdentifier, expressions, tmpClosureBlock);
     tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
     return tmpExpression;
   }
@@ -1521,6 +1548,20 @@ IrisExpression primary_expression() :
   {
     tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.InstantValueType.Nil);
     tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < CAST >
+  {
+	tmpExpression = new IrisCastExpression();
+	tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < SELF >
+  {
+	tmpExpression = new IrisSelfExpression();
+	tmpExpression.setLineNumber(tmpToken.beginLine);
     return tmpExpression;
   }
 |
