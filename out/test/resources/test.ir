@@ -1,0 +1,18 @@
+class A {
+	;gset [@msg]
+	
+	fun __format(msg) {
+		;self.msg = msg
+	}
+	
+	fun print_msg() {
+		;print(self.msg)
+	}
+	
+	fun call_print() {
+		;self.print_msg()
+	}
+}
+
+;obj = A.new("Hello,World!")
+;obj.call_print()
