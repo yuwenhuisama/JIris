@@ -1,13 +1,12 @@
 package com.irisine.jiris.compiler.expression;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
-import net.bytebuddy.jar.asm.Opcodes;
 
 public class IrisUnaryExpression extends IrisExpression {
 

@@ -5,14 +5,11 @@ import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisBlock;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
 import com.irisine.jiris.compiler.expression.IrisExpression;
-import com.sun.org.apache.xpath.internal.compiler.OpCodes;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
-import org.irislang.jiris.irisclass.IrisInteger;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 /**
  * Created by Huisama on 2017/4/8 0008.

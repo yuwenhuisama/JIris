@@ -2,10 +2,9 @@ package com.irisine.jiris.compiler.statement;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisWhen;
-import net.bytebuddy.dynamic.Nexus;
 import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.Opcodes;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.assistpart.IrisSwitchBlock;
@@ -14,7 +13,6 @@ import com.irisine.jiris.compiler.expression.IrisExpression;
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.LinkedList;
 
 public class IrisSwitchStatement extends IrisStatement {

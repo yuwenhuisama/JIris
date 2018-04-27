@@ -13,9 +13,9 @@ import net.bytebuddy.description.field.FieldDescription;
 import net.bytebuddy.description.field.FieldList;
 import net.bytebuddy.description.method.MethodList;
 import net.bytebuddy.pool.TypePool;
-import org.irislang.jiris.compiler.IrisInterpreter;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
-import org.irislang.jiris.compiler.IrisRunnable;
+import org.irislang.jiris.IrisInterpreter;
+import org.irislang.jiris.IrisNativeJavaClass;
+import org.irislang.jiris.IrisRunnable;
 import org.irislang.jiris.core.IrisContextEnvironment;
 import org.irislang.jiris.core.IrisThreadInfo;
 import org.irislang.jiris.core.IrisValue;
@@ -244,7 +244,7 @@ public enum IrisCompiler {
 
 		int index = m_currentFile.lastIndexOf(".");
 		int index2 = m_currentFile.lastIndexOf("/");
-		IrisInterpreter.INSTANCE.InceamJavaClassFileNumber();
+		IrisInterpreter.Companion.getINSTANCE().InceamJavaClassFileNumber();
         String filePath = m_currentFile.substring(0, index2 + 1);
 		m_currentClassName = m_currentFile.substring(index2 + 1, index) + "$" + "ir";
 
@@ -302,7 +302,7 @@ public enum IrisCompiler {
 				return new Size(0, 0);
 			}
 		});
-		
+
 		ReceiverTypeDefinition<IrisNativeJavaClass> mainDefininition = GenerateIrisNativeJavaMethod("run", new Implementation() {
 			@Override
 			public InstrumentedType prepare(InstrumentedType arg0) {
@@ -314,13 +314,13 @@ public enum IrisCompiler {
 				return RunMethodAppender();
 			}
 		});
-		
+
 		while(!IsDeferredStatementQueueEmpty()) {
 			IrisDeferredBlock deferredStatement = PopDeferredStatement();
-			
+
 			mainDefininition = mainDefininition.defineMethod(deferredStatement.getGenerateName(),
-					IrisValue.class, 
-					Visibility.PUBLIC, 
+					IrisValue.class,
+					Visibility.PUBLIC,
 					Ownership.STATIC)
 					.withParameters(IrisContextEnvironment.class, IrisThreadInfo.class)
 					.throwing(IrisExceptionBase.class)
@@ -336,14 +336,14 @@ public enum IrisCompiler {
 						}
 					});
 		}
-		
+
 		Unloaded<IrisNativeJavaClass> classObj = mainDefininition.make();
-		
+
 		m_javaClass = classObj.load(getClass().getClassLoader()).getLoaded();
 		InitUniqueStringList(m_javaClass);
-		
+
 		byte[] jvmcode = classObj.getBytes();
-		
+
 		File file = new File(filePath + m_currentClassName + ".class");
 		if(file.exists()) {
 			file.delete();
@@ -360,10 +360,10 @@ public enum IrisCompiler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return true;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void InitUniqueStringList(Class<?> javaClass) {
 		ArrayList<IrisValue> values = null;
@@ -373,28 +373,28 @@ public enum IrisCompiler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		for(String uString : m_uniqueStrings) {
 			values.add(IrisDevUtil.CreateUniqueString(uString));
 		}
 	}
-	
+
 	private ByteCodeAppender RunMethodAppender() {
 		return new RunMethodAppender(this);
 	}
-	
+
 	private ByteCodeAppender UserMethodAppender(IrisBlock block) {
 		return new UserMethodAppender(this, block);
 	}
-	
+
 	private ReceiverTypeDefinition<IrisNativeJavaClass> GenerateIrisNativeJavaMethod(String methodName, Implementation impl) {
-		
+
 		return m_currentBuilder.defineMethod(methodName, IrisValue.class, Visibility.PUBLIC)
 						.withParameters(IrisContextEnvironment.class, IrisThreadInfo.class)
 						.throwing(IrisExceptionBase.class)
 						.intercept(impl);
 	}
-	
+
 	public boolean LoadScriptFromPath(String path) {
 		m_currentFile = path;
 		IrisParser parser = new IrisParser(path);
@@ -411,10 +411,10 @@ public enum IrisCompiler {
 			System.out.println(e.getMessage());
 			return false;
 		}
-		
+
 		return Generate();
 	}
-	
+
 	public boolean TestLoad(String path) {
 		IrisParser parser = new IrisParser(path);
 		try {
@@ -425,19 +425,19 @@ public enum IrisCompiler {
 		}
 		return true;
 	}
-	
+
 	public Class<?> getJavaClass() {
 		return m_javaClass;
 	}
-	
+
 	private static class RunMethodAppender implements ByteCodeAppender {
-		
+
 		IrisCompiler m_compiler = null;
-		
+
 		public RunMethodAppender(IrisCompiler compiler) {
 			m_compiler = compiler;
 		}
-		
+
 		@Override
 		public Size apply(MethodVisitor mv, Context arg1, MethodDescription arg2) {
 
@@ -453,20 +453,20 @@ public enum IrisCompiler {
 
 			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/dev/IrisDevUtil", "Nil", "()Lorg/irislang/jiris/core/IrisValue;", false);
 			mv.visitVarInsn(Opcodes.ASTORE, 3);
-			
+
 			mv.visitLabel(lableFrom);
 			for(IrisStatement statement : m_compiler.getStatements()) {
 				statement.Generate(m_compiler, m_compiler.getCurrentBuilder(), mv);
 			}
-			
+
 			mv.visitLabel(m_compiler.getCurrentEndLable());
-			
+
 			mv.visitVarInsn(Opcodes.ALOAD, 3);
 			mv.visitInsn(Opcodes.ARETURN);
-			
+
 			mv.visitLabel(lableEnd);
 			m_compiler.setCurrentEndLable(null);
-			
+
 			mv.visitLocalVariable("this", "L" + m_compiler.getCurrentClassName() + ";", null, lableFrom, lableEnd, 0);
 			mv.visitLocalVariable("context", "Lorg/irislang/jiris/core/IrisContextEnvironment;", null, lableFrom, lableEnd, 1);
 			mv.visitLocalVariable("threadInfo", "Lorg/irislang/jiris/core/IrisThreadInfo;", null, lableFrom, lableEnd, 2);
@@ -480,14 +480,14 @@ public enum IrisCompiler {
 
 			return new Size(0, 0);
 		}
-		
+
 	}
-	
+
 	private static class UserMethodAppender implements ByteCodeAppender {
-		
+
 		IrisCompiler m_compiler = null;
 		IrisBlock m_block = null;
-		
+
 		public UserMethodAppender(IrisCompiler compiler, IrisBlock block) {
 			m_compiler = compiler;
 			m_block = block;
@@ -513,12 +513,12 @@ public enum IrisCompiler {
 
 			mv.visitLabel(m_compiler.getCurrentEndLable());
 			m_compiler.setCurrentEndLable(null);
-			
+
 			mv.visitVarInsn(Opcodes.ALOAD, 2);
 			mv.visitInsn(Opcodes.ARETURN);
-			
+
 			mv.visitLabel(lableEnd);
-			
+
 			mv.visitLocalVariable("context", "Lorg/irislang/jiris/core/IrisContextEnvironment;", null, lableFrom, lableEnd, 0);
 			mv.visitLocalVariable("threadInfo", "Lorg/irislang/jiris/core/IrisThreadInfo;", null, lableFrom, lableEnd, 1);
 			mv.visitLocalVariable("resultValue", "Lorg/irislang/jiris/core/IrisValue;", null, lableFrom, lableEnd, 2);
@@ -533,6 +533,6 @@ public enum IrisCompiler {
 
             return new Size(0, 0);
 		}
-		
+
 	}
 }

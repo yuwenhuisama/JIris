@@ -1,5 +1,5 @@
 package com.irisine.jiris.compiler.statement;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.IrisSyntaxUnit;

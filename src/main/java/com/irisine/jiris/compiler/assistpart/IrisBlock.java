@@ -2,7 +2,7 @@ package com.irisine.jiris.compiler.assistpart;
 
 import java.util.LinkedList;
 
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.IrisSyntaxUnit;

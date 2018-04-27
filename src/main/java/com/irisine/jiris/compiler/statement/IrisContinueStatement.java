@@ -6,7 +6,7 @@ import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 /**
  * Created by Huisama on 2017/4/8 0008.

@@ -1,14 +1,12 @@
 package com.irisine.jiris.compiler.expression;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
-import net.bytebuddy.jar.asm.Opcodes;
-import sun.security.krb5.internal.CredentialsUtil;
 
 public class IrisIndexExpression extends IrisExpression {
 	

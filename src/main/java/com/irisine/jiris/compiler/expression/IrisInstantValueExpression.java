@@ -1,7 +1,7 @@
 package com.irisine.jiris.compiler.expression;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 

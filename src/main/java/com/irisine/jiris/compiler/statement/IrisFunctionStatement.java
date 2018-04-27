@@ -1,11 +1,10 @@
 package com.irisine.jiris.compiler.statement;
 
 import java.util.LinkedList;
-import java.util.Stack;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.parser.IrisParserDefineType;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.assistpart.IrisBlock;

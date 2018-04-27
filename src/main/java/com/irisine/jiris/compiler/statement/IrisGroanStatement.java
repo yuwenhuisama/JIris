@@ -3,12 +3,10 @@ package com.irisine.jiris.compiler.statement;
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.expression.IrisExpression;
-import com.irisine.jiris.compiler.statement.IrisStatement;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 /**
  * Created by Huisama on 2017/5/3 0003.

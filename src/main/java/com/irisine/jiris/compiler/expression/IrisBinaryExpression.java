@@ -1,15 +1,13 @@
 package com.irisine.jiris.compiler.expression;
 
 import com.irisine.jiris.compiler.IrisGenerateHelper;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 
 import net.bytebuddy.dynamic.DynamicType.Builder;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-
-import java.util.Vector;
 
 public class IrisBinaryExpression extends IrisExpression {
 
@@ -75,29 +73,13 @@ public class IrisBinaryExpression extends IrisExpression {
 			return false;
 		}
 
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
-
 		IrisGenerateHelper.AddParameter(visitor, currentCompiler);
 
 		if(!m_leftExpression.Generate(currentCompiler, currentBuilder, visitor)) {
 			return false;
 		}
 
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-//		visitor.visitLdcInsn(operator);
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());
-//		visitor.visitInsn(Opcodes.ICONST_1);
-//		visitor.visitMethodInsn(Opcodes.INVOKESTATIC, currentCompiler.getCurrentClassName(), "CallMethod",  "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;I)Lorg/irislang/jiris/core/IrisValue;", false);
-//		visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
-
         IrisGenerateHelper.CallMethod(visitor, currentCompiler, operator, 1, false);
-
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitInsn(Opcodes.ICONST_1);
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopParameter", "(I)V", false);
 
         IrisGenerateHelper.PopParameter(visitor, currentCompiler, 1);
 
@@ -115,18 +97,9 @@ public class IrisBinaryExpression extends IrisExpression {
 		if(!result.getResult()) {
 			return false;
 		}
-		
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setRecord", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
         IrisGenerateHelper.SetRecord(visitor, currentCompiler);
 		LoadLeftValue(currentCompiler, visitor, result);
-		//visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
-		
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitInsn(Opcodes.ACONST_NULL);
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setRecord", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
         IrisGenerateHelper.ClearRecord(visitor, currentCompiler);
 		AfterLoad(currentCompiler, visitor, result);
@@ -136,14 +109,8 @@ public class IrisBinaryExpression extends IrisExpression {
 
 	private void AfterLoad(IrisCompiler currentCompiler, MethodVisitor visitor, LeftValueResult result) {
 		if(result.getType() == LeftValueType.MemberVariable) {
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//			visitor.visitInsn(Opcodes.ICONST_1);
-//			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopParameter", "(I)V", false);
             IrisGenerateHelper.PopParameter(visitor, currentCompiler, 1);
 		} else if(result.getType() == LeftValueType.IndexVariable) {
-			//visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-			//visitor.visitInsn(Opcodes.ICONST_2);
-			//visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "PopParameter", "(I)V", false);
             IrisGenerateHelper.PopParameter(visitor, currentCompiler, 2);
 		}
 	}
@@ -151,10 +118,6 @@ public class IrisBinaryExpression extends IrisExpression {
 	private void LoadLeftValue(IrisCompiler currentCompiler, MethodVisitor visitor, LeftValueResult result) {
 		if(result.getType() != LeftValueType.MemberVariable && result.getType() != LeftValueType.IndexVariable) {
 			visitor.visitLdcInsn(result.getIdentifier());
-
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getRecord", "()Lorg/irislang/jiris/core/IrisValue;", false);
-
             IrisGenerateHelper.GetRecord(visitor, currentCompiler);
 
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
@@ -191,19 +154,11 @@ public class IrisBinaryExpression extends IrisExpression {
 		}
 		else if(result.getType() == LeftValueType.IndexVariable) {
 			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "getRecord", "()Lorg/irislang/jiris/core/IrisValue;", false);
             IrisGenerateHelper.GetRecord(visitor, currentCompiler);
 
 			visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "AddParameter", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
 			IrisGenerateHelper.CallMethod(visitor, currentCompiler, "[]=", 2, false);
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-//			visitor.visitLdcInsn("[]=");
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//			visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());
-//			visitor.visitInsn(Opcodes.ICONST_2);
-//			visitor.visitMethodInsn(Opcodes.INVOKESTATIC, "org/irislang/jiris/compiler/IrisNativeJavaClass", "CallMethod", "(Lorg/irislang/jiris/core/IrisValue;Ljava/lang/String;Lorg/irislang/jiris/core/IrisThreadInfo;Lorg/irislang/jiris/core/IrisContextEnvironment;I)Lorg/irislang/jiris/core/IrisValue;", false);
 		}
     }
 
@@ -213,10 +168,6 @@ public class IrisBinaryExpression extends IrisExpression {
 		if(!m_rightExpression.Generate(currentCompiler, currentBuilder, visitor)) {
 			return false;
 		}
-		
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setRecord", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
         IrisGenerateHelper.SetRecord(visitor, currentCompiler);
 
@@ -226,12 +177,6 @@ public class IrisBinaryExpression extends IrisExpression {
 		}
 
 		LoadLeftValue(currentCompiler, visitor, result);
-
-		//visitor.visitVarInsn(Opcodes.ASTORE, currentCompiler.GetIndexOfResultValue());
-		
-//		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
-//		visitor.visitInsn(Opcodes.ACONST_NULL);
-//		visitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "org/irislang/jiris/core/IrisThreadInfo", "setRecord", "(Lorg/irislang/jiris/core/IrisValue;)V", false);
 
         IrisGenerateHelper.ClearRecord(visitor, currentCompiler);
 

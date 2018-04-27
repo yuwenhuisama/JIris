@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisDeferredBlock;
 import net.bytebuddy.jar.asm.Type;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.assistpart.IrisClosureBlockLiteral;
@@ -85,7 +85,7 @@ public class IrisFunctionCallExpression extends IrisExpression {
         }
 
 		int pushedCount = 0;
-		
+
 		if(m_parameters != null) {
 			for(IrisExpression expression : m_parameters) {
 				if(!expression.Generate(currentCompiler, currentBuilder, visitor)) {
@@ -98,7 +98,7 @@ public class IrisFunctionCallExpression extends IrisExpression {
 			}
 			pushedCount = m_parameters.size();
 		}
-		
+
 		if(m_object == null) {
 			//visitor.visitInsn(Opcodes.ACONST_NULL);
 			IrisGenerateHelper.CallMethod(visitor, currentCompiler, m_functionName.getIdentifier(), pushedCount, true);
@@ -109,7 +109,7 @@ public class IrisFunctionCallExpression extends IrisExpression {
 			//visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfResultValue());
 			IrisGenerateHelper.CallMethod(visitor, currentCompiler, m_functionName.getIdentifier(), pushedCount, false);
 		}
-		
+
 //		visitor.visitLdcInsn(m_functionName.getIdentifier());
 //		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfThreadInfoVar());
 //		visitor.visitVarInsn(Opcodes.ALOAD, currentCompiler.GetIndexOfContextVar());

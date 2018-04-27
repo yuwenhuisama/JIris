@@ -4,13 +4,11 @@ import com.irisine.jiris.compiler.IrisCompiler;
 import com.irisine.jiris.compiler.IrisGenerateHelper;
 import com.irisine.jiris.compiler.assistpart.IrisBlock;
 import com.irisine.jiris.compiler.assistpart.IrisIdentifier;
-import com.sun.deploy.xml.XMLable;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 /**
  * Created by Huisama on 2017/5/3 0003.

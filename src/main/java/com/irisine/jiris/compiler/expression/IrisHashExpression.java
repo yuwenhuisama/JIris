@@ -6,7 +6,7 @@ import com.irisine.jiris.compiler.assistpart.IrisHashPair;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import org.irislang.jiris.compiler.IrisNativeJavaClass;
+import org.irislang.jiris.IrisNativeJavaClass;
 
 import java.util.LinkedList;
 
