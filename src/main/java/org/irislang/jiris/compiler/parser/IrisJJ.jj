@@ -1,0 +1,1711 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.6.0+
+ */
+options
+{
+  static = false;
+  token_factory = "IrisToken";
+}
+
+PARSER_BEGIN(IrisParser)
+
+package org.irislang.jiris.compiler.parser;
+
+import org.irislang.jiris.compiler.*;
+import org.irislang.jiris.compiler.assistpart.*;
+import org.irislang.jiris.compiler.expression.*;
+import org.irislang.jiris.compiler.statement.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import java.util.LinkedList;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.util.Stack;
+
+public class IrisParser {
+
+   private Stack<IrisParserDefineType> m_defineStack = new Stack<IrisParserDefineType>();
+
+   public IrisParser(String fileName)
+   {     
+      this(System.in);
+      m_defineStack.push(IrisParserDefineType.Normal);
+      try { ReInit(new FileInputStream(new File(fileName))); }
+      catch(Exception e) { e.printStackTrace(); }
+   }
+}
+
+PARSER_END(IrisParser)
+
+< DEFAULT >
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+TOKEN_MGR_DECLS :
+{
+   String m_subStr = null;
+   IrisIdentifier m_tmpIdentifier = null;
+   IrisExpression m_tmpExpression = null;
+}
+
+/* COMMENTS */
+< DEFAULT >
+MORE :
+{
+	"/*" : MULTIPLE_LINE_COMMENT_STATE
+//| 
+	//"//" : SINGLE_LINE_COMMENT_STATE
+}
+
+< MULTIPLE_LINE_COMMENT_STATE >
+SKIP :
+{
+	"*/" : DEFAULT
+}
+
+//< SINGLE_LINE_COMMENT_STATE >
+//SPECIAL_TOKEN :
+//{
+//< SINGLE_LINE_COMMENT: "\n"|"\r"|"\r\n" > : DEFAULT
+//}
+
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "//" (~["\n", "\r"])* ("\n" | "\r" | "\r\n")?>
+}
+
+< MULTIPLE_LINE_COMMENT_STATE, SINGLE_LINE_COMMENT_STATE >
+MORE :
+{
+  < ~[] >
+}
+
+// Reserved word
+TOKEN :
+{
+  < FUNCTION  : "fun">
+| < CLASS     : "class" >
+| < MODULE    : "module" >
+| < INTERFACE : "interface" >
+| < EXTENDS   : "extends" >
+| < INVOLVES  : "involves" >
+| < JOINTS    : "joints" >
+| < PERSONAL  : "personal" >
+| < RELATIVE  : "relative" >
+| < EVERYONE  : "everyone" >
+| < GET       : "get" >
+| < SET       : "set" >
+| < GSET      : "gset" >
+| < IF        : "if" >
+| < ELSE      : "else" >
+| < ELSEIF    : "elseif" >
+| < FOR       : "for" >
+| < IN        : "in" >
+| < SWITCH    : "switch" >
+| < WHEN      : "when" >
+| < CAST      : "cast" >
+| < ITERATOR  : "iterator" >
+| < SUPER     : "super" >
+| < BREAK     : "break" >
+| < CONTINUE  : "continue" >
+| < RETURN    : "return" >
+| < BLOCK     : "block" >
+| < SELF      : "self" >
+| < WITH      : "with" >
+| < WITHOUT   : "without" >
+| < ORDER     : "order" >
+| < SERVE     : "serve" >
+| < IGNORE    : "ignore" >
+| < GROAN     : "groan" >
+| < TRUE      : "true" >
+| < FALSE     : "false" >
+| < NIL       : "nil" >
+
+| < ALIAS     : "alias" >
+| < RETRY     : "retry" >
+| < REDO      : "redo" >
+| < GOTO      : "goto" >
+}
+
+// Symbols
+TOKEN :
+{
+  < DOT : "." >
+| < LP  : "(" >
+| < RP  : ")" >
+| < LC  : "{" >
+| < RC  : "}" >
+| < LB  : "[" >
+| < RB  : "]" >
+| < SEMICOLON : ";" >
+| < COMMA : "," >
+| < LOGICAL_AND : "&&" >
+| < LOGICAL_OR : "||" >
+| < LOGICAL_NOT : "!" >
+| < ASSIGN : "=" >
+| < EQ : "==" >
+| < NE : "!=" >
+| < GT : ">" >
+| < GE : ">=" >
+| < LT : "<" >
+| < LE : "<=">
+| < ADD : "+" >
+| < SUB : "-" >
+| < MUL : "*" >
+| < DIV : "/" >
+| < MOD : "%" >
+| < POWER : "**" >
+| < BIT_AND : "&" >
+| < BIT_OR  : "|" >
+| < BIT_XOR : "^" >
+| < BIT_NOT : "~" >
+| < ASSIGN_ADD : "+=" >
+| < ASSIGN_SUB : "-=" >
+| < ASSIGN_MUL : "*=" >
+| < ASSIGN_DIV : "/=" >
+| < ASSIGN_MOD : "%=" >
+| < ASSIGN_BIT_AND : "&=" >
+| < ASSIGN_BIT_OR : "~=" >
+| < ASSIGN_BIT_XOR : "^=" >
+| < BIT_SHR : ">>" >
+| < BIT_SHL : "<<" >
+| < BIT_SAR : ">>>" >
+| < BIT_SAL : "<<<" >
+| < ASSIGN_BIT_SHR : ">>=" >
+| < ASSIGN_BIT_SHL : "<<=" >
+| < ASSIGN_BIT_SAR : ">>>=" >
+| < ASSIGN_BIT_SAL : "<<<=" >
+| < ITER : "=>" >
+| < FIELD : "::" >
+| < SHARP : "#" >
+| < CONLON : ":" >   
+}
+
+// IDENTIFIER
+TOKEN :
+{
+	< CONSTANCE : < UPPERLETTER > (< LEAGLELETTER >)* >
+	{
+	  m_tmpIdentifier = new IrisIdentifier(IrisIdentifier.IdentifierType.Constance, matchedToken.image);
+	  m_tmpIdentifier.setLineNumber(matchedToken.beginLine);
+	  ((IrisToken)matchedToken).setSyntaxUnit(m_tmpIdentifier);
+	}
+|
+	< LOCALVARIABLE : ("_" | < DOWNERLETTER >) (< LEAGLELETTER >)* >
+	{
+	  m_tmpIdentifier = new IrisIdentifier(IrisIdentifier.IdentifierType.LocalVariable, matchedToken.image);
+	  m_tmpIdentifier.setLineNumber(matchedToken.beginLine);
+	  ((IrisToken)matchedToken).setSyntaxUnit(m_tmpIdentifier);
+	}
+|
+	< GLOBALVARIABLE : "$" (< LEAGLELETTER >)+ >
+	{
+	  m_tmpIdentifier = new IrisIdentifier(IrisIdentifier.IdentifierType.GlobalVariable, matchedToken.image);
+	  m_tmpIdentifier.setLineNumber(matchedToken.beginLine);
+	  ((IrisToken)matchedToken).setSyntaxUnit(m_tmpIdentifier);
+    }
+|
+	< INSTANCEVARIABLE : "@" (< LEAGLELETTER >)+ >
+	{
+	  m_tmpIdentifier = new IrisIdentifier(IrisIdentifier.IdentifierType.InstanceVariable, matchedToken.image);
+	  m_tmpIdentifier.setLineNumber(matchedToken.beginLine);
+	  ((IrisToken)matchedToken).setSyntaxUnit(m_tmpIdentifier);
+	}
+|
+	< CLASSVARIABLE : "@@" (< LEAGLELETTER >)+ >
+	{
+	  m_tmpIdentifier = new IrisIdentifier(IrisIdentifier.IdentifierType.ClassVariable, matchedToken.image);
+	  m_tmpIdentifier.setLineNumber(matchedToken.beginLine);
+	  ((IrisToken)matchedToken).setSyntaxUnit(m_tmpIdentifier);
+	}
+|     
+	< #UPPERLETTER : ["A"-"Z"] >
+|
+	< #DOWNERLETTER : ["a"-"z"] >
+| 
+	< #LETTER : ["A"-"Z", "a"-"z"] >
+|
+	< #DIGIT : ["0"-"9"] >
+|
+	< #LEAGLELETTER : ("_"|< LETTER >|< DIGIT >) >
+}
+
+TOKEN :
+{
+  < INTEGER:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+  { m_tmpExpression = new IrisNativeObjectExpression(Integer.parseInt(matchedToken.image));
+    m_tmpExpression.setLineNumber(matchedToken.beginLine);
+    ((IrisToken)matchedToken).setSyntaxUnit(m_tmpExpression); }
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+| 
+  < FLOAT:
+        <DECIMAL_FLOATING_POINT_LITERAL>
+      | <HEXADECIMAL_FLOATING_POINT_LITERAL>
+  >
+  {
+    m_tmpExpression = new IrisNativeObjectExpression(Double.parseDouble(matchedToken.image));
+    m_tmpExpression.setLineNumber(matchedToken.beginLine);
+    ((IrisToken)matchedToken).setSyntaxUnit(m_tmpExpression); }
+|
+  < #DECIMAL_FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<DECIMAL_EXPONENT>)?
+      | "." (["0"-"9"])+ (<DECIMAL_EXPONENT>)?
+      | (["0"-"9"])+ <DECIMAL_EXPONENT>
+      | (["0"-"9"])+ (<DECIMAL_EXPONENT>)?
+  >
+|
+  < #DECIMAL_EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < #HEXADECIMAL_FLOATING_POINT_LITERAL:
+        "0" ["x", "X"] (["0"-"9","a"-"f","A"-"F"])+ (".")? <HEXADECIMAL_EXPONENT>
+      | "0" ["x", "X"] (["0"-"9","a"-"f","A"-"F"])* "." (["0"-"9","a"-"f","A"-"F"])+ <HEXADECIMAL_EXPONENT>
+  >
+|
+  < #HEXADECIMAL_EXPONENT: ["p","P"] (["+","-"])? (["0"-"9"])+ >
+|
+  < STRING :
+  	  "\""
+      (   (~["\"","\\","\n","\r"]) 
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+  {
+    m_subStr = StringEscapeUtils.unescapeJava(matchedToken.image.substring(1, matchedToken.image.length() - 1));
+    m_tmpExpression = new IrisNativeObjectExpression(IrisNativeObjectExpression.NativeObjectType.String, m_subStr);
+    m_tmpExpression.setLineNumber(matchedToken.beginLine);
+    ((IrisToken)matchedToken).setSyntaxUnit(m_tmpExpression);
+  }
+|
+  < UNIQUE_STRING :
+      "'"
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "'"
+  >
+  {
+    m_subStr = StringEscapeUtils.unescapeJava(matchedToken.image.substring(1, matchedToken.image.length() - 1));
+    m_tmpExpression = new IrisNativeObjectExpression(IrisNativeObjectExpression.NativeObjectType.UniqueString, m_subStr);
+    m_tmpExpression.setLineNumber(matchedToken.beginLine);
+    ((IrisToken)matchedToken).setSyntaxUnit(m_tmpExpression);
+  }
+}
+
+// raw string
+< DEFAULT >
+MORE :
+{
+	"@\"" { image.deleteCharAt(0); image.deleteCharAt(0); } : RAW_STRING_STATE
+}
+
+< RAW_STRING_STATE >
+MORE :
+{
+	"\"\"" { image.deleteCharAt(image.length() - 1); }
+|
+	"\n"
+| 
+	< ~["\""] >
+}
+
+< RAW_STRING_STATE >
+TOKEN :
+{
+	< RAW_STRING : "\"" > {
+	  image.deleteCharAt(image.length() - 1);
+	  matchedToken.image = image.toString();
+      m_tmpExpression = new IrisNativeObjectExpression(IrisNativeObjectExpression.NativeObjectType.String, matchedToken.image);
+      m_tmpExpression.setLineNumber(matchedToken.beginLine);
+      ((IrisToken)matchedToken).setSyntaxUnit(m_tmpExpression);
+    } : DEFAULT
+}
+
+void translation_unit() :
+{ IrisStatement tmpStatement = null; }
+{
+  (
+    tmpStatement = statement()
+    { IrisCompiler.INSTANCE.AddStatement(tmpStatement); }
+  )*
+  < EOF >
+}
+
+IrisStatement statement() :
+{
+  IrisExpression tmpExpression = null;
+  IrisStatement tmpStatement = null;
+  Token tmpToken = null;
+}
+{
+   LOOKAHEAD(2) 
+   < SEMICOLON > tmpExpression = expression()
+   {
+     tmpStatement = new IrisNormalStatement(tmpExpression);
+     tmpStatement.setLineNumber(tmpExpression.getLineNumber());
+     return tmpStatement;
+   } 
+ | 
+   LOOKAHEAD(2) tmpStatement = return_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(2) tmpStatement = break_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(continue_statement())
+   tmpStatement = continue_statement()
+   { return tmpStatement; }   
+ |
+   tmpStatement = function_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = if_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = switch_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = for_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = class_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = module_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(getter_statement())
+   tmpStatement = getter_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(setter_statement())
+   tmpStatement = setter_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(gsetter_statement())
+   tmpStatement = gsetter_statement()
+   { return tmpStatement; }
+ |
+   LOOKAHEAD(groan_statement())
+   tmpStatement = groan_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = order_statement()
+   { return tmpStatement; }
+ |
+   tmpStatement = authority_statement()
+   { return tmpStatement; }  
+}
+
+IrisStatement authority_statement() :
+{
+  IrisIdentifier methodName = null;
+  IrisAuthorityStatement.Target tar = IrisAuthorityStatement.Target.InstanceMethod;
+  IrisAuthorityStatement.Authority auth = IrisAuthorityStatement.Authority.Everyone;
+}
+{
+	< SEMICOLON >
+	auth = authority()
+	< LB >
+	[
+	< SELF > < DOT >
+	{ tar = IrisAuthorityStatement.Target.ClassMethod; }
+	]
+	methodName = identifier()
+	< RB >
+	{ return new IrisAuthorityStatement(methodName, tar, auth); }
+}
+
+IrisAuthorityStatement.Authority authority() :
+{ }
+{
+  < EVERYONE >
+  { return IrisAuthorityStatement.Authority.Everyone; }
+| < RELATIVE >
+  { return IrisAuthorityStatement.Authority.Relative; }
+| < PERSONAL >
+  { return IrisAuthorityStatement.Authority.Personal; }
+}
+
+IrisStatement groan_statement() :
+{
+  IrisExpression tmpExpr = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+	< SEMICOLON > tmpToken = < GROAN > [ tmpExpr = expression() ]
+	{
+	  tmpStmt = new IrisGroanStatement(tmpExpr);
+	  tmpStmt.setLineNumber(tmpToken.beginLine);
+	  return tmpStmt;
+    }
+}
+
+IrisStatement order_statement() :
+{
+  IrisBlock tmpOrderBlock = null;
+  IrisBlock tmpServeBlock = null;
+  IrisBlock tmpIgnoreBlock = null;
+  IrisIdentifier tmpIrregularObject = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+	tmpToken = < ORDER > tmpOrderBlock = block()
+	< SERVE > < LP > tmpIrregularObject = identifier() < RP >
+	tmpServeBlock = block()
+	[ < IGNORE > tmpIgnoreBlock = block() ]
+	{
+	  tmpStmt = new IrisOrderStatement(tmpOrderBlock, tmpIrregularObject, tmpServeBlock, tmpIgnoreBlock);
+	  tmpStmt.setLineNumber(tmpToken.beginLine);
+	  return tmpStmt;
+    } 
+}
+
+
+IrisStatement getter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+  IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+  < SEMICOLON > tmpToken = < GET > < LB > tmpIdentifier = identifier()  < RB >
+  {
+    tmpStmt = new IrisGetterStatement(tmpIdentifier, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
+|
+  tmpToken = < GET >
+  < LB > tmpIdentifier = identifier() < RB >
+  < LP > < RP >
+  tmpBlock = block()
+  {
+    tmpStmt = new IrisGetterStatement(tmpIdentifier, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
+}
+
+IrisStatement setter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+  IrisIdentifier tmpParam = null;
+  IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+  < SEMICOLON > tmpToken =< SET > < LB > tmpIdentifier = identifier()  < RB >
+  {
+    tmpStmt = new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
+|
+  tmpToken = < SET >
+  < LB > tmpIdentifier = identifier() < RB >
+  < LP > tmpParam = identifier() < RP >
+  tmpBlock = block()
+  {
+    tmpStmt = new IrisSetterStatement(tmpIdentifier, tmpParam, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+	return tmpStmt;
+  }
+}
+
+
+IrisStatement gsetter_statement() :
+{
+  IrisIdentifier tmpIdentifier = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+  < SEMICOLON > tmpToken = < GSET > < LB > tmpIdentifier = identifier()  < RB >
+  {
+    tmpStmt = new IrisGSetterStatement(tmpIdentifier);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+    return tmpStmt;
+  }
+}
+
+IrisStatement module_statement() :
+{
+  IrisIdentifier tmpModuleName = null;
+  LinkedList<IrisExpression> tmpModules = null;
+  IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+   { m_defineStack.push(IrisParserDefineType.Module); }
+   tmpToken = < MODULE >
+   tmpModuleName = identifier()
+   tmpModules = module_field()
+   tmpBlock = block()
+   {
+     m_defineStack.pop();
+     tmpStmt = new IrisModuleStatement(tmpModuleName, tmpModules, tmpBlock);
+	 tmpStmt.setLineNumber(tmpToken.beginLine);
+     return tmpStmt;
+   }
+}
+
+IrisStatement class_statement() :
+{
+  IrisIdentifier tmpClassName = null;
+  IrisExpression tmpSuperClassName = null;
+  LinkedList<IrisExpression> tmpModules = null;
+  LinkedList<IrisExpression> tmpInterfaces = null;
+  IrisBlock tmpBlock = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+  { m_defineStack.push(IrisParserDefineType.Class); }
+  tmpToken = < CLASS >
+  tmpClassName = identifier()
+  tmpSuperClassName = extends_field()
+  tmpModules = module_field()
+  tmpInterfaces = interface_field()
+  tmpBlock = block()
+  {
+    m_defineStack.pop();
+    tmpStmt = new IrisClassStatement(tmpClassName, tmpSuperClassName, tmpModules, tmpInterfaces, tmpBlock);
+	tmpStmt.setLineNumber(tmpToken.beginLine);
+    return tmpStmt;
+  }
+}
+
+IrisExpression extends_field() :
+{
+  IrisExpression tmpExpression = null;
+  IrisIdentifier tmpIdentifier = null;
+  IrisStatement tmpStmt = null;
+  Token tmpToken = null;
+}
+{
+  < EXTENDS >
+  (
+    LOOKAHEAD(2)
+    tmpExpression = field_expression()
+  |
+    tmpIdentifier = identifier()
+    {
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+    }
+  )
+  { return tmpExpression; }
+|
+  { return tmpExpression; }
+}
+
+LinkedList<IrisExpression> module_field() :
+{ LinkedList<IrisExpression> tmpList = null; }
+{
+  < INVOLVES > tmpList = field_identifier_list()
+  { return tmpList; }
+| 
+  { return tmpList; }
+}
+
+LinkedList<IrisExpression> interface_field() :
+{ LinkedList<IrisExpression> tmpList = null; }
+{
+  < JOINTS > tmpList = field_identifier_list()
+  { return tmpList; }
+|
+  { return tmpList; }
+}
+
+LinkedList<IrisExpression> field_identifier_list() :
+{
+   IrisIdentifier tmpIdentifier = null;
+   IrisExpression tmpExpression = null;
+   LinkedList<IrisExpression> tmpList = null;
+}
+{
+   { tmpList = new LinkedList<IrisExpression>(); }
+   (
+     LOOKAHEAD(field_expression())
+     tmpExpression = field_expression()
+     { tmpList.add(tmpExpression); }
+   | 
+     tmpIdentifier = identifier()
+     {
+       tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+       tmpExpression.setLineNumber(tmpIdentifier.getLineNumber()); 
+       tmpList.add(tmpExpression);
+     }
+   )
+   (
+     < COMMA >
+     (
+       LOOKAHEAD(field_expression())
+       tmpExpression = field_expression()
+       { tmpList.add(tmpExpression); }
+     |
+       tmpIdentifier = identifier()
+       {
+       	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+       	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber()); 
+         tmpList.add(tmpExpression);
+       }
+     )
+   )*
+   { return tmpList; }
+ |
+   { return tmpList; }
+}
+
+IrisStatement function_statement() :
+{
+  IrisFunctionHeader tmpHeader = null;
+  IrisBlock tmpBlock = null;
+  IrisBlock tmpWithBlock = null;
+  IrisBlock tmpWithoutBlock = null;
+  IrisStatement tmpStat = null;
+}
+{
+  tmpHeader = function_header()
+  tmpBlock = block()
+  [
+  < WITH >
+  tmpWithBlock = block()
+  < WITHOUT >
+  tmpWithoutBlock = block()
+  ]
+  {
+    tmpStat = new IrisFunctionStatement(tmpHeader, tmpWithBlock, tmpWithoutBlock, tmpBlock, m_defineStack.lastElement());
+    tmpStat.setLineNumber(tmpHeader.getLineNumber());
+    return tmpStat;
+  }
+}
+
+IrisFunctionHeader function_header() :
+{
+	IrisIdentifier tmpIdentifier = null;
+	LinkedList<IrisIdentifier> tmpParameters = null;
+	IrisIdentifier tmpVariableParameter = null;
+	boolean isClassMethod = false;
+	Token tmpToken = null;
+	IrisFunctionHeader tmpHeader = null;
+}
+{
+  tmpToken = < FUNCTION >
+  [< SELF > < DOT > { isClassMethod = true; }]
+  tmpIdentifier = identifier()
+  < LP >
+  (
+    < MUL > tmpVariableParameter = identifier()
+  |
+    [tmpParameters = identifier_list()] [ < COMMA > < MUL > tmpVariableParameter = identifier() ] 
+  )
+  < RP >
+  {
+    tmpHeader = new IrisFunctionHeader(tmpIdentifier, tmpParameters, tmpVariableParameter, isClassMethod);
+    tmpHeader.setLineNumber(tmpToken.beginLine);
+    return tmpHeader;
+  }
+}
+
+LinkedList<IrisIdentifier> identifier_list() :
+{
+  LinkedList<IrisIdentifier> identifiers = null;
+  IrisIdentifier tmpIdentifier = null;
+}
+{
+	{ identifiers = new LinkedList<IrisIdentifier>(); }
+	tmpIdentifier = identifier()
+	{ identifiers.add(tmpIdentifier);  }
+	(
+	  LOOKAHEAD(2) < COMMA >
+	  tmpIdentifier = identifier()
+	  { identifiers.add(tmpIdentifier);  }
+	)*
+	{ return identifiers; } 
+}
+
+IrisStatement for_statement() :
+{
+  IrisIdentifier tmpIter1 = null;
+  IrisIdentifier tmpIter2 = null;
+  IrisExpression tmpSource = null;
+  IrisBlock tmpBlock = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
+}
+{
+	tmpToken = < FOR > < LP >
+	(
+		tmpIter1 = identifier()
+	|
+		< LP >
+		tmpIter1 = identifier()
+		< COMMA >
+		tmpIter2 = identifier()
+		< RP >
+	)
+	< IN >
+		tmpSource = expression()
+	< RP >
+	tmpBlock = block()
+	{
+	  tmpStat = new IrisForStatement(tmpIter1, tmpIter2, tmpSource, tmpBlock);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+    }
+}
+
+IrisStatement break_statement() :
+{
+    Token tmpToken = null;
+    IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < BREAK >
+	{
+	  tmpStat = new IrisBreakStatement(null);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
+}
+
+IrisStatement continue_statement() :
+{
+    Token tmpToken = null;
+    IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < CONTINUE >
+	{
+	  tmpStat = new IrisContinueStatement(null);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
+}
+
+IrisStatement return_statement() :
+{
+  IrisExpression tmpExpression = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
+}
+{
+	< SEMICOLON > tmpToken = < RETURN > [ tmpExpression = expression() ]
+	{
+	  tmpStat = new IrisReturnStatement(tmpExpression);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
+}
+
+IrisStatement if_statement() :
+{ IrisStatement tmpStatement = null; }
+{
+	LOOKAHEAD(condition_if()) tmpStatement = condition_if()
+	{ return tmpStatement; }
+|
+	tmpStatement = loop_if()
+	{ return tmpStatement; }
+}
+
+IrisStatement condition_if() :
+{
+  IrisExpression conditionExpr = null;
+  IrisBlock block = null;
+  LinkedList<IrisElseIf> elseIfList = null;
+  IrisBlock elseBlock = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
+}
+{
+  tmpToken = < IF > < LP > conditionExpr = expression() < RP >
+  block = block()
+  [ elseIfList = elseif_list() ]
+  [ < ELSE > elseBlock = block() ]
+  {
+    tmpStat = new IrisConditionIfStatement(conditionExpr, block, elseIfList, elseBlock);
+    tmpStat.setLineNumber(tmpToken.beginLine);
+	return tmpStat;
+  }
+}
+
+IrisStatement loop_if() :
+{
+  IrisExpression conditionExpr = null;
+  IrisExpression timeExpr = null;
+  IrisIdentifier logVariable = null;
+  IrisBlock block = null;
+  Token tmpToken = null;
+  IrisStatement tmpStat = null;
+}
+{
+  tmpToken = < IF > < LP > conditionExpr = expression()
+  < COMMA > timeExpr = expression()
+  [ < COMMA > logVariable = identifier() ] < RP >
+  block = block()
+  {
+    tmpStat = new IrisLoopIfStatement(conditionExpr, timeExpr, logVariable, block);
+    tmpStat.setLineNumber(tmpToken.beginLine);
+    return tmpStat;
+  }
+}
+
+LinkedList<IrisElseIf> elseif_list() :
+{
+  LinkedList<IrisElseIf> elseIfList = null;
+  IrisElseIf elseIfTmp = null;
+}
+{
+  { elseIfList = new LinkedList<IrisElseIf>(); }
+  (
+	elseIfTmp = elseif()
+	{ elseIfList.add(elseIfTmp); }
+  )+
+  { return elseIfList; }
+}
+
+IrisElseIf elseif() :
+{
+  IrisElseIf result = null;
+  IrisExpression tmpExpression = null;
+  IrisBlock tmpBlock = null;
+}
+{
+  < ELSEIF > < LP > tmpExpression = expression() < RP > tmpBlock = block()
+  { return new IrisElseIf(tmpExpression, tmpBlock); }
+}
+
+IrisBlock block() :
+{ LinkedList<IrisStatement> statementList = null; }
+{
+  < LC >
+  [ statementList = block_statement_list() ] 
+  < RC >
+  { return new IrisBlock(statementList); }
+}
+
+LinkedList<IrisStatement> block_statement_list() :
+{
+  LinkedList<IrisStatement> statementList = null;
+  IrisStatement tmpStatement = null;
+}
+{
+  { statementList = new LinkedList<IrisStatement>(); }
+  (
+	tmpStatement = statement()
+	{ statementList.add(tmpStatement); }
+  )+
+  { return statementList; }
+}
+
+IrisStatement switch_statement() :
+{
+	IrisExpression conditionExpression = null;
+	IrisSwitchBlock tmpSwitchBody = null;
+  	Token tmpToken = null;
+  	IrisStatement tmpStat = null;
+}
+{
+	tmpToken = < SWITCH >  < LP > conditionExpression = expression() < RP >
+	tmpSwitchBody = switch_block()
+	{
+	  tmpStat = new IrisSwitchStatement(conditionExpression, tmpSwitchBody);
+	  tmpStat.setLineNumber(tmpToken.beginLine);
+	  return tmpStat;
+	}
+}
+
+IrisSwitchBlock switch_block() :
+{
+  LinkedList<IrisWhen> whens = null;
+  IrisWhen tmpWhen = null;
+  IrisBlock elseBlock = null;
+}
+{
+  	< LC >
+    { whens = new LinkedList<IrisWhen>(); }
+	(
+	  tmpWhen = when()
+	  { whens.add(tmpWhen); } 
+	)+
+	[ < ELSE > elseBlock = block()  ]
+	< RC >
+	{ return new IrisSwitchBlock(whens, elseBlock); }
+}
+
+IrisWhen when() :
+{
+	IrisWhen tmpWhen = null;
+	LinkedList<IrisExpression> tmpExpressionList = null;
+	IrisBlock tmpBlock = null;
+}
+{
+	< WHEN > < LP > tmpExpressionList = expression_list() < RP >
+	tmpBlock = block()
+	{ return new IrisWhen(tmpExpressionList, tmpBlock); }
+}
+
+IrisExpression expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+  LOOKAHEAD(assign_oper_expression()) tmpLeftExpression = assign_oper_expression()
+  { return tmpLeftExpression; }
+| 
+  tmpLeftExpression = logic_or_expression()
+  { return tmpLeftExpression; }
+}
+
+IrisExpression assign_oper_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+  int lineNumber = 0;
+}
+{
+  tmpLeftExpression = top_expression()
+  type = assign_symbol()
+  tmpRightExpression = expression()
+  {
+      lineNumber = tmpRightExpression.getLineNumber();
+      tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+      tmpLeftExpression.setLineNumber(lineNumber);
+      return tmpLeftExpression;
+  }
+}
+
+IrisBinaryExpression.BinaryExpressionType assign_symbol() :
+{ }
+{
+	  < ASSIGN >
+	  { return IrisBinaryExpression.BinaryExpressionType.Assign; }
+	| < ASSIGN_ADD >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignAdd; }
+	| < ASSIGN_SUB >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignSub; }
+	| < ASSIGN_MUL >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignMul; }
+	| < ASSIGN_DIV >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignDiv; }
+	| < ASSIGN_MOD >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignMod; }
+	| < ASSIGN_BIT_AND >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitAnd; }
+	| < ASSIGN_BIT_OR >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitOr; }
+	| < ASSIGN_BIT_XOR >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitXor; }
+	| < ASSIGN_BIT_SHR >
+	  {	return IrisBinaryExpression.BinaryExpressionType.AssignBitShr; }
+	| < ASSIGN_BIT_SHL >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitShl; }
+	| < ASSIGN_BIT_SAR >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitSar; }
+	| < ASSIGN_BIT_SAL >
+	  { return IrisBinaryExpression.BinaryExpressionType.AssignBitSal; }
+}
+
+IrisExpression logic_or_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+}
+{
+	tmpLeftExpression = logic_and_expression()
+	[ LOOKAHEAD(2) < LOGICAL_OR > tmpRightExpression = logic_or_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.LogicOr, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }   
+}
+
+IrisExpression logic_and_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+}
+{
+	tmpLeftExpression = logic_bit_or_expression()
+	[ LOOKAHEAD(2) < LOGICAL_AND > tmpRightExpression = logic_and_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.LogicAnd, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisExpression logic_bit_or_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+}
+{
+	tmpLeftExpression = logic_bit_xor_expression()
+	[ LOOKAHEAD(2) < BIT_OR > tmpRightExpression = logic_bit_or_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.LogicBitOr, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    } 
+}
+
+IrisExpression logic_bit_xor_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+}
+{
+	tmpLeftExpression = logic_bit_and_expression()
+	[ LOOKAHEAD(2) < BIT_XOR > tmpRightExpression = logic_bit_xor_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.LogicBitXor, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    } 
+}
+
+IrisExpression logic_bit_and_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+}
+{
+	tmpLeftExpression = logic_equal_compare_expression()
+	[ LOOKAHEAD(2) < BIT_AND > tmpRightExpression = logic_bit_and_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.LogicBitAnd, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisExpression logic_equal_compare_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+	tmpLeftExpression = logic_not_equal_expression()
+	[ LOOKAHEAD(2) type = eq_ne() tmpRightExpression = logic_equal_compare_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisBinaryExpression.BinaryExpressionType eq_ne() :
+{ }
+{
+  < EQ > { return IrisBinaryExpression.BinaryExpressionType.Equal; }
+  |
+  < NE > { return IrisBinaryExpression.BinaryExpressionType.NotEqual; }
+}
+
+IrisExpression logic_not_equal_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+	tmpLeftExpression = logic_shift_expression()
+	[ LOOKAHEAD(2) type = gt_ge_lt_le() tmpRightExpression = logic_not_equal_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisBinaryExpression.BinaryExpressionType gt_ge_lt_le() :
+{ }
+{
+  < GT > { return IrisBinaryExpression.BinaryExpressionType.GreatThan; }
+  |
+  < GE > { return IrisBinaryExpression.BinaryExpressionType.GreatThanOrEqual; }
+  |
+  < LT > { return IrisBinaryExpression.BinaryExpressionType.LessThan; }
+  |
+  < LE > { return IrisBinaryExpression.BinaryExpressionType.LessThanOrEqual; }
+}
+
+IrisExpression logic_shift_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+	tmpLeftExpression = add_sub_expression()
+	[ LOOKAHEAD(2) type = bitshr_bitshl_bitsar_bitshl() tmpRightExpression = logic_shift_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisBinaryExpression.BinaryExpressionType bitshr_bitshl_bitsar_bitshl() :
+{ }
+{
+  < BIT_SHR > { return IrisBinaryExpression.BinaryExpressionType.BitShr; }
+  |
+  < BIT_SHL > { return IrisBinaryExpression.BinaryExpressionType.BitShl; }
+  |
+  < BIT_SAR > { return IrisBinaryExpression.BinaryExpressionType.BitSar; }
+  |
+  < BIT_SAL > { return IrisBinaryExpression.BinaryExpressionType.BitSal; }
+}
+
+IrisExpression add_sub_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+	tmpLeftExpression = mul_div_mod_expression()
+	[ LOOKAHEAD(2) type = add_sub() tmpRightExpression = add_sub_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+ 
+}
+
+IrisBinaryExpression.BinaryExpressionType add_sub() :
+{ }
+{
+  < ADD > { return IrisBinaryExpression.BinaryExpressionType.Add; }
+  |
+  < SUB > { return IrisBinaryExpression.BinaryExpressionType.Sub; }
+}
+
+IrisExpression mul_div_mod_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  IrisBinaryExpression.BinaryExpressionType type = null;
+}
+{
+	tmpLeftExpression = power_expression()
+	[ LOOKAHEAD(2) type = mul_div_mod() tmpRightExpression = mul_div_mod_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(type, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisBinaryExpression.BinaryExpressionType mul_div_mod() :
+{ }
+{
+  < MUL > { return IrisBinaryExpression.BinaryExpressionType.Mul; }
+  |
+  < DIV > { return IrisBinaryExpression.BinaryExpressionType.Div; }
+  |
+  < MOD > { return IrisBinaryExpression.BinaryExpressionType.Mod; }
+}
+
+IrisExpression power_expression() :
+{
+  IrisExpression tmpLeftExpression = null;
+  IrisExpression tmpRightExpression = null;
+  int lineNumber = 0;
+}
+{
+	tmpLeftExpression = unary_expression()
+	[ LOOKAHEAD(2) < POWER > tmpRightExpression = power_expression() ]
+	{
+	  if(tmpRightExpression == null) {
+	    return tmpLeftExpression;
+	  } else { 
+	    tmpLeftExpression = new IrisBinaryExpression(IrisBinaryExpression.BinaryExpressionType.Power, tmpLeftExpression, tmpRightExpression);
+	    tmpLeftExpression.setLineNumber(tmpRightExpression.getLineNumber());
+	    return tmpLeftExpression;
+	  }
+    }
+}
+
+IrisExpression unary_expression() :
+{
+   IrisExpression tmpExpression = null;
+   int lineNumber = 0;
+}
+{
+  tmpExpression = top_expression()
+  { return tmpExpression; }
+|
+  < LOGICAL_NOT > tmpExpression = unary_expression()
+  {
+    lineNumber = tmpExpression.getLineNumber();
+    tmpExpression = new IrisUnaryExpression(IrisUnaryExpression.UnaryExpressionType.LogicNot, tmpExpression);
+    tmpExpression.setLineNumber(lineNumber);
+    return tmpExpression;
+  }
+|
+  < BIT_NOT > tmpExpression = unary_expression()
+  {
+    lineNumber = tmpExpression.getLineNumber();
+    tmpExpression = new IrisUnaryExpression(IrisUnaryExpression.UnaryExpressionType.BitNot, tmpExpression);
+    tmpExpression.setLineNumber(lineNumber);
+    return tmpExpression;
+  }
+|
+  < SUB > tmpExpression = unary_expression()
+  {
+    lineNumber = tmpExpression.getLineNumber();
+    tmpExpression = new IrisUnaryExpression(IrisUnaryExpression.UnaryExpressionType.Minus, tmpExpression);
+    tmpExpression.setLineNumber(lineNumber);
+    return tmpExpression;
+  }
+|
+  < ADD > tmpExpression = unary_expression()
+  {
+    lineNumber = tmpExpression.getLineNumber();
+    tmpExpression = new IrisUnaryExpression(IrisUnaryExpression.UnaryExpressionType.Plus, tmpExpression);
+    tmpExpression.setLineNumber(lineNumber);
+    return tmpExpression;
+  }
+}
+
+IrisExpression top_expression() :
+{
+  IrisExpression tmpExpression = null;
+  IrisTopExpressionApostrophe tmpExpression2 = null;
+  IrisExpression tmpExprResult = null;
+}
+{
+  (
+    LOOKAHEAD(hide_function_call())
+    tmpExpression = hide_function_call()
+  |
+  	tmpExpression = primary_expression()
+  )
+  tmpExpression2 = top_expression_apostrophe()
+  {
+    tmpExprResult = new IrisTopExpression(tmpExpression, tmpExpression2).ToDirectExpression();
+    tmpExprResult.setLineNumber(tmpExpression.getLineNumber());
+    return tmpExprResult;
+  }
+}
+
+IrisTopExpressionApostrophe top_expression_apostrophe() :
+{
+   IrisIdentifier tmpIdentifier = null;
+   LinkedList<IrisExpression> expressions = null;
+   IrisExpression tmpExpression = null;
+   IrisTopExpressionApostrophe tmpExpression2 = null;
+   IrisTopExpressionApostropheBase tmpFore = null;
+   boolean tmpIsNormalCallExpr = false;
+   IrisClosureBlockLiteral tmpClosureBlock = null;
+}
+{
+  (
+    < DOT >
+   	tmpIdentifier = identifier()
+  	[
+  	   < LP > [ expressions = expression_list() ] < RP >
+  	   { tmpIsNormalCallExpr = true; }
+  	   [ tmpClosureBlock = closure_block() ]
+  	]
+  	{
+  	  if(tmpIsNormalCallExpr) {
+  	    tmpFore = new IrisTopExpressionApostropheForeNormalCall(tmpIdentifier, expressions, tmpClosureBlock);
+  	  }
+  	  else {
+  	    tmpFore = new IrisTopExpressionApostropheForeMember(tmpIdentifier);
+  	  }
+  	}     
+  | 
+  	< LB > tmpExpression = expression() < RB >
+  	{ tmpFore = new IrisTopExpressionApostropheForeIndex(tmpExpression);  }
+  )
+  tmpExpression2 = top_expression_apostrophe()
+  { return new IrisTopExpressionApostrophe(tmpFore, tmpExpression2); }
+|
+  { return null; }
+}
+
+IrisClosureBlockLiteral closure_block() :
+{
+  IrisIdentifier tmpVariableParameter = null;
+  LinkedList<IrisIdentifier> tmpParameters = null;
+  LinkedList<IrisStatement> tmpStatements = null;
+}
+{
+	< LC >
+	[ < ITERATOR > < ITER >
+	  < LB >
+	  ( 
+	    < MUL > tmpVariableParameter = identifier()
+	  |
+	    [tmpParameters = identifier_list()] [ < COMMA > < MUL > tmpVariableParameter = identifier() ] 
+	  )
+	  < RB >
+	  < CONLON >
+	]
+	[ tmpStatements = block_statement_list() ] 
+	< RC >
+	{ return new IrisClosureBlockLiteral(tmpParameters, tmpVariableParameter, new IrisBlock(tmpStatements)); }
+}
+
+/*
+IrisExpression top_expression() :
+{
+  IrisExpression tmpExpression = null;
+}
+{
+  LOOKAHEAD(hide_function_call()) tmpExpression = hide_function_call()
+  { return tmpExpression; }
+|
+  LOOKAHEAD(index_expression()) tmpExpression = index_expression()
+  { return tmpExpression; }
+| 
+  tmpExpression = primary_expression()
+  { return tmpExpression; }
+}
+*/
+
+IrisExpression hide_function_call():
+{
+   IrisExpression tmpCaller = null;
+   IrisIdentifier tmpIdentifier = null;
+   LinkedList<IrisExpression> expressions = null;
+   IrisExpression tmpExpression = null;
+   IrisClosureBlockLiteral tmpClosureBlock = null;
+}
+{
+  tmpIdentifier = identifier()
+  < LP > [ expressions = expression_list() ] < RP >
+  [ tmpClosureBlock = closure_block() ]
+  {
+    tmpExpression = new IrisFunctionCallExpression(tmpCaller, tmpIdentifier, expressions, tmpClosureBlock);
+    tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+    return tmpExpression;
+  }
+} 
+
+LinkedList<IrisExpression> expression_list() :
+{
+  LinkedList<IrisExpression> expressions = null;
+  IrisExpression tmpExpression = null;
+}
+{
+  { expressions = new LinkedList<IrisExpression>(); }
+  tmpExpression = expression()
+  { expressions.add(tmpExpression); }
+  (
+    LOOKAHEAD(2)
+    < COMMA >
+    tmpExpression = expression()
+    { expressions.add(tmpExpression); }
+  )*
+  { return expressions; }
+}
+
+/*
+IrisExpression index_expression() :
+{
+  IrisExpression target = null;
+  IrisExpression indexer = null;
+}
+{
+  target = top_expression()
+  < LB > indexer = expression() < RB >
+  { return new IrisIndexExpression(target, indexer); }
+}
+*/
+
+IrisExpression primary_expression() :
+{
+  IrisExpression tmpExpression = null;
+  Token tmpToken = null;
+  IrisIdentifier tmpIdentifier = null;
+}
+{
+  < LP > tmpExpression = expression() < RP >
+  { return tmpExpression; }
+|
+   LOOKAHEAD(2)
+   tmpExpression = field_expression()
+   { return tmpExpression;  }
+| 
+  tmpIdentifier = identifier()
+  {
+    tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+    tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+    return tmpExpression;
+  }
+|
+  tmpToken = < INTEGER >
+  { return (IrisNativeObjectExpression)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < FLOAT >
+  { return (IrisNativeObjectExpression)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpExpression = string()
+  { return tmpExpression; }
+|
+  tmpToken = < TRUE >
+  {
+    tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.InstantValueType.True);
+    tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < FALSE >
+  {
+    tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.InstantValueType.False);
+    tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < NIL >
+  {
+    tmpExpression = new IrisInstantValueExpression(IrisInstantValueExpression.InstantValueType.Nil);
+    tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < CAST >
+  {
+	tmpExpression = new IrisCastExpression();
+	tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+  tmpToken = < SELF >
+  {
+	tmpExpression = new IrisSelfExpression();
+	tmpExpression.setLineNumber(tmpToken.beginLine);
+    return tmpExpression;
+  }
+|
+   tmpExpression = array_literal()
+   { return tmpExpression; }
+|
+   tmpExpression = hash_literal()
+   { return tmpExpression; }
+}
+
+IrisIdentifier identifier() :
+{ Token tmpToken = null; }
+{
+  tmpToken = < CONSTANCE >
+  { return (IrisIdentifier)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < CLASSVARIABLE >
+  { return (IrisIdentifier)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < LOCALVARIABLE >
+  { return (IrisIdentifier)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < INSTANCEVARIABLE >
+  { return (IrisIdentifier)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < GLOBALVARIABLE >
+  { return (IrisIdentifier)(((IrisToken)tmpToken).getSyntaxUnit()); }
+}
+
+IrisNativeObjectExpression string() :
+{ Token tmpToken = null;}
+{
+  tmpToken = < STRING >
+  { return (IrisNativeObjectExpression)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < UNIQUE_STRING >
+  { return (IrisNativeObjectExpression)(((IrisToken)tmpToken).getSyntaxUnit()); }
+|
+  tmpToken = < RAW_STRING >
+  { return (IrisNativeObjectExpression)(((IrisToken)tmpToken).getSyntaxUnit()); }
+}
+
+IrisExpression array_literal() :
+{
+  LinkedList<IrisExpression> expressions = null;
+  Token tmpToken = null;
+  IrisExpression tmpExpr = null;
+}
+{
+  tmpToken = < LB > [ expressions = expression_list() [ <COMMA > ] ] < RB >
+  {
+    tmpExpr = new IrisArrayExpression(expressions);
+    tmpExpr.setLineNumber(tmpToken.beginLine);
+    return tmpExpr;
+  }
+}
+
+IrisExpression hash_literal() :
+{
+  LinkedList<IrisHashPair> hashPairs = null;
+  Token tmpToken = null;
+  IrisExpression tmpExpr = null;
+}
+{
+  tmpToken = < LC > [ hashPairs = hash_pair_list() [ <COMMA> ] ] < RC >
+  {
+    tmpExpr = new IrisHashExpression(hashPairs);
+    tmpExpr.setLineNumber(tmpToken.beginLine);
+    return tmpExpr;
+  }
+}
+
+LinkedList<IrisHashPair> hash_pair_list() :
+{
+  IrisExpression tmpKey = null;
+  IrisExpression tmpValue = null;
+  LinkedList<IrisHashPair> hashPairs = null;
+}
+{
+  { hashPairs = new LinkedList<IrisHashPair>(); }
+  tmpKey = expression()
+  < ITER >
+  tmpValue = expression()
+  { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }  
+  (
+    LOOKAHEAD(2)
+    < COMMA >
+    tmpKey = expression()
+    < ITER >
+    tmpValue = expression()
+    { hashPairs.add(new IrisHashPair(tmpKey, tmpValue)); }
+  )*
+  { return hashPairs; }
+}
+
+IrisExpression field_expression() :
+{
+   LinkedList<IrisIdentifierExpression> tmpList = null;
+   IrisIdentifier tmpIdentifier = null;
+   boolean tmpIsTopField = false;
+   IrisExpression tmpExpr = null;
+   IrisIdentifierExpression tmpExpression = null;
+}
+{
+  	< FIELD >
+  	{ tmpIsTopField = true; }
+    (
+       LOOKAHEAD(2)
+       { if(tmpList == null) tmpList = new LinkedList<IrisIdentifierExpression>(); }
+       tmpIdentifier = identifier() < FIELD >
+       {
+    	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+    	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+         tmpList.add(tmpExpression);
+       }
+    )*
+	tmpIdentifier = identifier()
+	{
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+	  
+	  tmpExpr = new IrisFieldExpression(tmpList, tmpExpression, tmpIsTopField);
+	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
+	  return tmpExpr;
+    }
+| 
+    { tmpList = new LinkedList<IrisIdentifierExpression>(); }
+    (
+       LOOKAHEAD(2)
+       tmpIdentifier = identifier() < FIELD >
+       {
+      	 tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      	 tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+         
+         tmpList.add(tmpExpression);
+       }
+    )+
+	tmpIdentifier = identifier()
+	{
+      tmpExpression = new IrisIdentifierExpression(tmpIdentifier);
+      tmpExpression.setLineNumber(tmpIdentifier.getLineNumber());
+	  
+	  tmpExpr = new IrisFieldExpression(tmpList, tmpExpression, tmpIsTopField);
+	  tmpExpr.setLineNumber(tmpIdentifier.getLineNumber());
+	  return tmpExpr;
+	}
+}

@@ -1,6 +1,6 @@
 package org.irislang.jiris.irisclass
 
-import com.irisine.jiris.compiler.assistpart.IrisElseIf
+import org.irislang.jiris.compiler.assistpart.IrisElseIf
 import org.irislang.jiris.core.*
 import org.irislang.jiris.core.exceptions.IrisExceptionBase
 import org.irislang.jiris.dev.IrisClassRoot

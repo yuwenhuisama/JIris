@@ -5,7 +5,7 @@ import java.util.Arrays
 import java.util.HashMap
 import java.util.LinkedList
 
-import com.irisine.jiris.compiler.IrisCompiler
+import org.irislang.jiris.compiler.IrisCompiler
 
 import org.irislang.jiris.core.*
 import org.irislang.jiris.core.exceptions.IrisExceptionBase

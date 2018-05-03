@@ -1,6 +1,6 @@
 import org.irislang.jiris.IrisInterpreter
 
-import com.irisine.jiris.compiler.IrisCompiler
+import org.irislang.jiris.compiler.IrisCompiler
 
 
 object Main {

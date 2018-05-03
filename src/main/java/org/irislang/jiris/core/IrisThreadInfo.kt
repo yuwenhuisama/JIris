@@ -1,6 +1,6 @@
 package org.irislang.jiris.core
 
-import com.irisine.jiris.compiler.statement.IrisClassStatement
+import org.irislang.jiris.compiler.statement.IrisClassStatement
 import com.sun.deploy.panel.UpdatePanelFactory
 import jdk.nashorn.internal.runtime.Debug
 import org.irislang.jiris.dev.IrisDevUtil
