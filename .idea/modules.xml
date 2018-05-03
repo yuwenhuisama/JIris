@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jiris.iml" filepath="$PROJECT_DIR$/.idea/modules/jiris.iml" />
       <module fileurl="file://$PROJECT_DIR$//jiris_kt.iml" filepath="$PROJECT_DIR$//jiris_kt.iml" group="jiris" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jiris_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jiris_main.iml" group="jiris" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jiris_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jiris_test.iml" group="jiris" />

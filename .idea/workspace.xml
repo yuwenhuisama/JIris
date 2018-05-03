@@ -2,95 +2,120 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da50c530-ce67-49ea-b440-4df304bd443c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jiris_kt.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jiris_kt/jiris_kt.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClass.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClosureBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisContextEnvironment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisInterface.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisMethod.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisModule.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisObject.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisRunningObject.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisThreadInfo.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisValue.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/IrisExceptionBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/IrisRuntimeException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisAccessorDefinedException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisClassExistsException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisConstanceNotFoundException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisConstanceReassignedException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisFatalException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisInvalidAuthorityException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisInvalidFieldException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisIrregularNotHandledException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisMethodDefinedException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisMethodNotFoundException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisModuleExistsException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisParameterNotFitException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisTypeNotCorretException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisUnkownFatalException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisVariableImpossiblyExistsException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisWrongSelfException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisClassRoot.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisInterfaceRoot.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisModuleRoot.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArray.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArrayIterator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisBlock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisClassBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFalseClass.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFloat.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHash.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHashIterator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInteger.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInterfaceBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisMethodBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisModuleBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisNilClass.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisObjectBase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisString.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisTrueClass.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisUniqueString.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irismodule/IrisKernel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisGenerateHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisSyntaxUnit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisElseIf.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisHashPair.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisIdentifier.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisWhen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisStatement.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_2_40.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_2_41.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_2_40.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk7_1_2_41.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_2_40.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk8_1_2_41.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/jiris.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/jiris.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/jiris_main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/jiris_main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/jiris_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/jiris_test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$CurrentDefineType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$CurrentDefineType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$IrregularVariableLabelPair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$IrregularVariableLabelPair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$RunMethodAppender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$RunMethodAppender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$UserMethodAppender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler$UserMethodAppender.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisCompiler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisGenerateHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisGenerateHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisSyntaxUnit.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/IrisSyntaxUnit.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisElseIf.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisElseIf.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisHashPair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisHashPair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisIdentifier$IdentifierType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisIdentifier$IdentifierType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisIdentifier.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisIdentifier.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisWhen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/assistpart/IrisWhen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisArrayExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisArrayExpression.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression$BinaryExpressionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression$BinaryExpressionType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisBinaryExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisCastExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisCastExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression$LeftValueResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression$LeftValueResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression$LeftValueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression$LeftValueType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisFieldExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisFieldExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisHashExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisHashExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisIdentifierExpression$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisIndexExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisIndexExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisInstantValueExpression$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisInstantValueExpression$InstantValueType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisInstantValueExpression$InstantValueType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisMemberExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisMemberExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression$NativeObjectType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression$NativeObjectType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisSelfExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisSelfExpression.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisTopExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisTopExpression.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression$UnaryExpressionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression$UnaryExpressionType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/expression/IrisUnaryExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement$Authority.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement$Authority.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement$Target.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement$Target.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisBlockStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisBlockStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisBreakStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisBreakStatement.class" afterDir="false" />
@@ -98,7 +123,7 @@
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisContinueStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisContinueStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisForStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisForStatement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisFunctionStatement$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisFunctionStatement$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisFunctionStatement$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisFunctionStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisFunctionStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisGSetterStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisGSetterStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisGetterStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisGetterStatement.class" afterDir="false" />
@@ -111,178 +136,64 @@
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisSetterStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisSetterStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisStatement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisSwitchStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/irisine/jiris/compiler/statement/IrisSwitchStatement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/compiler/IrisInterpreter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/compiler/IrisNativeJavaClass$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/compiler/IrisNativeJavaClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/compiler/IrisRunnable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClass$SearchResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClass$SearchResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClosureBlock$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClosureBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisClosureBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisContextEnvironment$RunTimeType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisContextEnvironment$RunTimeType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisContextEnvironment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisContextEnvironment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$CallSide.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$CallSide.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$GetterSetter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$GetterSetter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$IrisUserMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$IrisUserMethod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$MethodAuthority.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod$MethodAuthority.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisMethod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisModule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisModule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisRunningObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisRunningObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisThreadInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisThreadInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/IrisValue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/IrisExceptionBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/IrisExceptionBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/IrisRuntimeException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/IrisRuntimeException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisAccessorDefinedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisAccessorDefinedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisClassExistsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisClassExistsException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisConstanceNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisConstanceNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisConstanceReassignedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisConstanceReassignedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisFatalException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisFatalException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisInvalidAuthorityException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisInvalidAuthorityException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisInvalidFieldException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisInvalidFieldException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisIrregularNotHandledException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisIrregularNotHandledException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisMethodDefinedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisMethodDefinedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisMethodNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisMethodNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisModuleExistsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisModuleExistsException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisParameterNotFitException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisParameterNotFitException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisTypeNotCorretException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisTypeNotCorretException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisUnkownFatalException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisUnkownFatalException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisVariableImpossiblyExistsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisVariableImpossiblyExistsException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisWrongSelfException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/core/exceptions/fatal/IrisWrongSelfException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisClassRoot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisClassRoot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisDevUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisDevUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisInterfaceRoot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisInterfaceRoot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisModuleRoot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisModuleRoot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArray.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArrayIterator$IrisArrayIteratorTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArrayIterator$IrisArrayIteratorTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArrayIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisArrayIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisClassBase$IrisClassBaseTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisClassBase$IrisClassBaseTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisClassBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisClassBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFalseClass$IrisFalseClassTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFalseClass$IrisFalseClassTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFalseClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFalseClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat$IrisFloatTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat$IrisFloatTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat$Operation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat$Operation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisFloat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHash.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHash.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHashIterator$IrisHashIteratorTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHashIterator$IrisHashIteratorTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHashIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisHashIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger$IrisIntegerTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger$IrisIntegerTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger$Operation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger$Operation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInteger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInterfaceBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisInterfaceBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisMethodBase$IrisMethodBaseTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisMethodBase$IrisMethodBaseTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisMethodBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisMethodBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisModuleBase$IrisModuleBaseTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisModuleBase$IrisModuleBaseTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisModuleBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisModuleBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisNilClass$IrisNilClassTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisNilClass$IrisNilClassTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisNilClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisNilClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisObjectBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisObjectBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisString$IrisStringTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisString$IrisStringTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisString.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisString.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisTrueClass$IrisTrueClassTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisTrueClass$IrisTrueClassTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisTrueClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisTrueClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisUniqueString$IrisUniqueStringTag.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisUniqueString$IrisUniqueStringTag.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisUniqueString.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irisclass/IrisUniqueString.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irismodule/IrisKernel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/irismodule/IrisKernel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/compiler/IrisInterpreter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/compiler/IrisNativeJavaClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/compiler/IrisRunnable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClosureBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisContextEnvironment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisMethod.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisModule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisRunningObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisThreadInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisValue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/IrisExceptionBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/IrisRuntimeException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisAccessorDefinedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisClassExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisConstanceNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisConstanceReassignedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisFatalException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisInvalidAuthorityException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisInvalidFieldException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisIrregularNotHandledException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisMethodDefinedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisMethodNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisModuleExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisParameterNotFitException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisTypeNotCorretException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisUnkownFatalException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisVariableImpossiblyExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/exceptions/fatal/IrisWrongSelfException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisClassRoot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisInterfaceRoot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisModuleRoot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArray.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArrayIterator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisClassBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFalseClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFloat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHash.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHashIterator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInteger.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInterfaceBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisMethodBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisModuleBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisNilClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisObjectBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisString.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisTrueClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisUniqueString.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irismodule/IrisKernel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/test$ir.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/test$ir.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisInterpreter$Companion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisInterpreter$Companion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisInterpreter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisInterpreter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisNativeJavaClass$Companion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisNativeJavaClass$Companion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisDevUtil$Companion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/org/irislang/jiris/dev/IrisDevUtil$Companion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisGenerateHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisSyntaxUnit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisElseIf.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisHashPair.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisIdentifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisWhen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisInterpreter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisInterpreter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisNativeJavaClass.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisNativeJavaClass.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -325,24 +236,93 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Main.kt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Main.kt">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="IrisIdentifierExpression.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="27" column="47" lean-forward="true" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+            <state relative-caret-position="-110">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IrisInterpreter.kt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IrisTopExpressionApostrophe.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisTopExpressionApostropheBase.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="9" column="112" selection-start-line="9" selection-start-column="112" selection-end-line="9" selection-end-column="112" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisTopExpressionApostropheForeIndex.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="11" column="65" lean-forward="true" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisTopExpressionApostropheForeMember.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisTopExpressionApostropheForeNormalCall.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="11" column="91" selection-start-line="11" selection-start-column="91" selection-end-line="11" selection-end-column="91" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisInterpreter.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisInterpreter.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="431" column="22" selection-start-line="431" selection-start-column="22" selection-end-line="431" selection-end-column="22" />
-              <folding>
-                <element signature="e#28#795#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="164">
+              <caret line="351" column="46" lean-forward="true" selection-start-line="351" selection-start-column="46" selection-end-line="351" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisGetterStatement.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="502">
+              <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisMemberExpression.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IrisIndexExpression.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -571,9 +551,9 @@
     <option name="modificationStamps">
       <map>
         <entry key="$USER_HOME$/.gradle/gradle.properties" value="2992171769" />
-        <entry key="$PROJECT_DIR$" value="7614778008000" />
+        <entry key="$PROJECT_DIR$" value="7615209524000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="2067973904" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="1329567160" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="615277776" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="1200745169" />
       </map>
@@ -590,28 +570,28 @@
                       <ExternalModuleBuildClasspathPojo>
                         <option name="entries">
                           <list>
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.40/12f05ce3b1b1fbc47b8d674a722956653c565f/kotlin-gradle-plugin-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.40/a5f1b6d72834cd21e402bf61f1303c8d705d49e/kotlin-gradle-plugin-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.40/caa566a72827e08c8a4c1bf03257a55b5c2e7e/kotlin-gradle-plugin-api-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.40/c0a04f1bb34364d657d4256e810de8fb7b4ab78/kotlin-gradle-plugin-api-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.40/f30f4d822ac6c4ef7a72c86a11896aab1cdf3a2a/kotlin-stdlib-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.40/d39920020ab3e74f406a8e142fb94b360f3f80f8/kotlin-stdlib-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.40/134afc6d18cb0afd6f6e97f3c1848e7dddf7e01d/kotlin-compiler-embeddable-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.40/94ec38ee25d34165f97f9d0feccd6573aecdf8a2/kotlin-compiler-embeddable-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.40/bd73c208c20c1c4d57b7e66d66e139c7d58c880a/kotlin-annotation-processing-gradle-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.40/e5c56f911827d8bad91d1dda7e1adf00960a2e5d/kotlin-annotation-processing-gradle-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.40/fe5d07cd68ef9b062faf9b615a9678dd673c1638/kotlin-android-extensions-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.40/5f124db1c11af4500eee2313ab4092f1c3f3f304/kotlin-android-extensions-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.40/4af6ba4a935c0535c58ee9acf521f353acaf42fe/kotlin-compiler-runner-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.40/17efd1fbc5f90f3daca96bf1036c07c856d930b8/kotlin-compiler-runner-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.40/77d7d852f9539604e6a575893504983c726d76f2/kotlin-reflect-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.40/d984261ef3ff59acfa4e8c0480c6e01df40853a4/kotlin-reflect-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.40/abfffc59c33e5d2b451d5825dc0ba0b87a8a4b21/kotlin-script-runtime-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.40/f9f881f1db66ba70870ab1cddc409142401b6cf0/kotlin-script-runtime-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.40/aa4eb8c73b2704db2aa327d1e187d54bed31c5e7/kotlin-build-common-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.40/f3a293f56ad831f570eb423add89ed80f3403774/kotlin-build-common-1.2.40.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.40/7a84b47921e6a82471432c0db6a37dbd93f8188d/kotlin-daemon-client-1.2.40-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.40/287b0d6bca848618f241f4868bcab5562c038c5b/kotlin-daemon-client-1.2.40.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.41/b4b0b8422809558b6f8be302d36ad223c9d715f5/kotlin-gradle-plugin-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.41/18587320bcaffacd1fca5bda7fe0e3e63acc4d30/kotlin-gradle-plugin-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.41/ad3c6987e041c37983dbf798d11fb30ccbbd2b6f/kotlin-gradle-plugin-api-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.41/b02a60e83beaa777c13562fd3e9612ea1963091d/kotlin-gradle-plugin-api-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.41/dc11619be6c45157a142d3753017544896da8e69/kotlin-stdlib-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.41/7e34f009642702250bccd9e5255866f408962a05/kotlin-stdlib-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.41/7da15dbc72cdae97ed4760bc70693393b134dc78/kotlin-compiler-embeddable-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.41/e439cfdc216b070ebd454da892447f5dca96a934/kotlin-compiler-embeddable-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.41/8ac5ef3be550378c36c419606f075f5007297f52/kotlin-annotation-processing-gradle-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.41/870d8f3b110200303a07d4bbfc7bf9066669203b/kotlin-annotation-processing-gradle-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.41/6926ea357237058db2823f8f388009ccb8f11035/kotlin-android-extensions-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.41/10100eedfe2e26b9cf18b850d997b42d02af7500/kotlin-android-extensions-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.41/b0e604633bacf585fd493d37138918853ad1eecc/kotlin-compiler-runner-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.41/c2bd43e2bf7d6f26e47fbdca79502b62fe130696/kotlin-compiler-runner-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.41/2b440a2b5eb92330251e22fb7b097613796160e3/kotlin-reflect-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.41/e4d6728a4fa55dbfb510aeea25c072c7c51d94/kotlin-reflect-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.41/f60225c5404573dcb8434ad509b98bacfb13bea3/kotlin-script-runtime-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.41/e291b12913910c260ce878f9a76c84203cf710a1/kotlin-script-runtime-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.41/dcf158bd432f0b0bf7e92c670646e1bafd5d934c/kotlin-build-common-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.41/3ca2f7f659163dfdb9f180b64e9964c7c176c171/kotlin-build-common-1.2.41.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.41/6b269dda00ff49a17c7f3223be6c8e64a9a4a606/kotlin-daemon-client-1.2.41-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.41/b9cb88843eeba0f43542daa00c7949e40e9e2852/kotlin-daemon-client-1.2.41.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/5991ca87ef1fb5544943d9abc5a9a37583fabe03/annotations-13.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
                           </list>
@@ -779,57 +759,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/ThreadInfo.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisThreadInfo.java" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/Value.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/dev/BridgeNativeClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/Object.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClass.java" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/Method.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/Class.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClosureBlock.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisContextEnvironment.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisObject.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisInterfaceRoot.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisClassRoot.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisModuleRoot.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irismodule/IrisKernel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArray.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisArrayIterator.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisBlock.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFalseClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisFloat.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHash.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHashIterator.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisMethodBase.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisNilClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisString.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisTrueClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisUniqueString.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisNativeJavaClass.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInteger.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.java" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/Main.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisClassBase.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisThreadInfo.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisModuleBase.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisModule.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irismodule/IrisKernel.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisObjectBase.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisValue.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisNativeJavaClass.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisMethod.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/Main.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisElseIf.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisHashPair.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisIdentifier.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisWhen.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisGenerateHelper.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.kt" />
         <option value="$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisInterpreter.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.kt" />
       </list>
     </option>
   </component>
@@ -849,9 +829,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1680" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -859,7 +838,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -899,18 +877,68 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="assistpart" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="expression" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="parser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="statement" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="jiris" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="jiris" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIris" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="gradle&#9;ACTION&#9;ActivateGradleToolWindow" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/huisama/Projects/JIris/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.kt&#10;gradle&#9;ACTION&#9;ActivateGradleToolWindow" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -1035,12 +1063,14 @@
       <updated>1500717998530</updated>
       <workItem from="1500718001895" duration="3936000" />
       <workItem from="1524812784166" duration="4834000" />
-      <workItem from="1524820725271" duration="22501000" />
+      <workItem from="1524820725271" duration="24241000" />
+      <workItem from="1524882499867" duration="2056000" />
+      <workItem from="1525250033013" duration="7883000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31271000" />
+    <option name="totallyTimeSpent" value="42950000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1052,7 +1082,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="6" />
@@ -1061,28 +1091,28 @@
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
       <window_info id="Capture Tool" order="0" />
       <window_info id="Designer" order="1" />
-      <window_info anchor="bottom" id="Build" order="0" sideWeight="0.49940476" weight="0.3283582" />
+      <window_info anchor="bottom" id="Build" order="0" sideWeight="0.49940476" weight="0.33846155" />
       <window_info anchor="right" id="Database" order="2" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.39900497" />
+      <window_info anchor="bottom" id="Debug" order="9" visible="true" weight="0.39897436" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.32935324" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.3273632" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.3271795" />
       <window_info anchor="right" id="Palette&#9;" order="1" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.3124378" />
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.32935324" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.3124378" />
       <window_info anchor="bottom" id="Terminal" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.18849841" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.30945274" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.1953602" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.30871794" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.18742369" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="right" id="Commander" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
     </layout>
@@ -1095,386 +1125,367 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisHash.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="74" column="18" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInterfaceBase.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisMethodBase.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="45" column="18" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisNilClass.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisString.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisTrueClass.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisUniqueString.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisInteger.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="n#!!block;n#CastOperation#0;n#!!block;n#Companion#0;n#!!block;n#IrisInteger#0" />
-            <element signature="n#!!block;n#CmpOperation#0;n#!!block;n#Companion#0;n#!!block;n#IrisInteger#0" />
-            <element signature="n#!!block;n#BitOperation#0;n#!!block;n#Companion#0;n#!!block;n#IrisInteger#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/org/irislang/jiris/kt/core/Object.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-          <folding>
-            <element signature="e#36#169#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.40/f30f4d822ac6c4ef7a72c86a11896aab1cdf3a2a/kotlin-stdlib-1.2.40-sources.jar!/kotlin/String.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-348">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisHashPair.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="8" column="89" selection-start-line="8" selection-start-column="89" selection-end-line="8" selection-end-column="89" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/Main.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisClassBase.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="29" column="48" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisThreadInfo.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisClass.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-          <folding>
-            <element signature="e#33#539#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisModuleBase.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisModule.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="160" column="22" selection-start-line="160" selection-start-column="22" selection-end-line="160" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="1785" selection-start-line="1785" selection-end-line="1785" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisNativeJavaClass$Companion.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/dev/IrisDevUtil.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="55" column="18" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="18" />
-          <folding>
-            <element signature="e#32#758#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irismodule/IrisKernel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/irisclass/IrisObjectBase.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="379" column="5" lean-forward="true" selection-start-line="379" selection-start-column="5" selection-end-line="379" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisIdentifier.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <caret line="4" column="91" selection-start-line="4" selection-start-column="91" selection-end-line="4" selection-end-column="91" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisElseIf.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisWhen.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="285">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisSwitchBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisClosureBlockLiteral.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="75">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1380">
+          <caret line="105" column="9" lean-forward="true" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisSelfExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisTopExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisNativeObjectExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-20">
+          <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisUnaryExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="34" column="19" lean-forward="true" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisAuthorityStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="53" column="9" lean-forward="true" selection-start-line="53" selection-start-column="9" selection-end-line="53" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBlockStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisBreakStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="240">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/classes/org/irislang/jiris/IrisNativeJavaClass.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="37" column="128" selection-start-line="37" selection-start-column="128" selection-end-line="37" selection-end-column="128" />
+        <state relative-caret-position="145">
+          <caret line="107" column="79" selection-start-line="107" selection-start-column="79" selection-end-line="107" selection-end-column="79" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/test$ir.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisConditionIfStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="25" column="56" lean-forward="true" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
+        <state relative-caret-position="1035">
+          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisContinueStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        <state relative-caret-position="240">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisForStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254">
-          <caret line="179" column="8" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="8" />
+        <state relative-caret-position="333">
+          <caret line="48" column="41" lean-forward="true" selection-start-line="48" selection-start-column="41" selection-end-line="48" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisCastExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisFunctionHeader.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="90">
+          <caret line="8" column="63" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGroanStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        <state relative-caret-position="495">
+          <caret line="39" column="1" lean-forward="true" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFunctionCallExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisLoopIfStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        <state relative-caret-position="-1550">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisFieldExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisModuleStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="38" column="68" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="68" />
+        <state relative-caret-position="-24">
+          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisNormalStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="210">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisMethod.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisOrderStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="215" column="32" lean-forward="true" selection-start-line="215" selection-start-column="32" selection-end-line="215" selection-end-column="32" />
+        <state relative-caret-position="1031">
+          <caret line="107" column="9" lean-forward="true" selection-start-line="107" selection-start-column="9" selection-end-line="107" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisHashExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
           <folding>
-            <element signature="e#33#466#0" expanded="true" />
+            <element signature="e#47#358#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisNativeJavaClass.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisArrayExpression.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="552" column="41" selection-start-line="552" selection-start-column="41" selection-end-line="552" selection-end-column="41" />
-          <folding>
-            <element signature="e#28#663#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="360">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisClassStatement.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisBinaryExpression.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="87" column="86" lean-forward="true" selection-start-line="87" selection-start-column="86" selection-end-line="87" selection-end-column="86" />
+        <state relative-caret-position="-404">
+          <caret line="136" lean-forward="true" selection-start-line="136" selection-end-line="136" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisGenerateHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="105" column="15" selection-start-line="105" selection-start-column="15" selection-end-line="105" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/core/IrisValue.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisInstantValueExpression.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <caret line="25" column="114" selection-start-line="25" selection-start-column="114" selection-end-line="25" selection-end-column="114" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisReturnStatement.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="27" column="47" lean-forward="true" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+        <state relative-caret-position="330">
+          <caret line="30" column="1" lean-forward="true" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSetterStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisSwitchStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-184">
+          <caret line="35" column="41" lean-forward="true" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="1032" column="19" selection-start-line="1032" selection-start-column="19" selection-end-line="1032" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisSyntaxUnit.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisGenerateHelper.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGSetterStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="47" column="110" lean-forward="true" selection-start-line="47" selection-start-column="110" selection-end-line="47" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisFunctionStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="88" column="22" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisDeferredBlock.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/IrisCompiler.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5490">
+          <caret line="408" lean-forward="true" selection-start-line="408" selection-end-line="408" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/irislang/jiris/IrisInterpreter.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="431" column="22" selection-start-line="431" selection-start-column="22" selection-end-line="431" selection-end-column="22" />
-          <folding>
-            <element signature="e#28#795#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="164">
+          <caret line="351" column="46" lean-forward="true" selection-start-line="351" selection-start-column="46" selection-end-line="351" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/statement/IrisGetterStatement.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="47" column="32" lean-forward="true" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisMemberExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIndexExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/expression/IrisIdentifierExpression.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-110">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostrophe.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheBase.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="9" column="112" selection-start-line="9" selection-start-column="112" selection-end-line="9" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeIndex.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" column="65" lean-forward="true" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeMember.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/irisine/jiris/compiler/assistpart/IrisTopExpressionApostropheForeNormalCall.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="91" selection-start-line="11" selection-start-column="91" selection-end-line="11" selection-end-column="91" />
         </state>
       </provider>
     </entry>

@@ -21,6 +21,7 @@ import org.irislang.jiris.irismodule.IrisKernel
 
 class IrisInterpreter private constructor() {
 
+    // Buffers
     var classClass: IrisClass? = null
     var moduleClass: IrisClass? = null
     var interfaceClass: IrisClass? = null
@@ -272,28 +273,6 @@ class IrisInterpreter private constructor() {
         return true
     }
 
-    /*	public boolean RegistClass(IrisClass classObj) {
-            if(classObj.getUpperModule() == null) {
-                if(GetConstance(classObj.getClassName()) != null) {
-                    return false;
-                } else {
-                    AddConstance(classObj.getClassName(), IrisValue.WrapObject(classObj.getClassObject()));
-                }
-            } else {
-                IrisModule upperModule = classObj.getUpperModule();
-                if(upperModule.GetConstance(classObj.getClassName()) != null) {
-                    return false;
-                } else {
-                    upperModule.AddConstance(classObj.getClassName(), IrisValue.WrapObject(classObj.getClassObject()));
-                }
-            }
-            return true;
-        }
-
-        public boolean RegistInterface(IrisInterface interfaceObj) {
-            return true;
-        }
-    */
     fun AddConstance(name: String, value: IrisValue) {
         m_constances[name] = value
     }
@@ -369,7 +348,7 @@ class IrisInterpreter private constructor() {
             return false
         }
 
-        val runClass = currentCompiler!!.javaClass
+        val runClass = currentCompiler!!.nativeJavaClass!!
         val mainEnv = IrisContextEnvironment()
 
         try {

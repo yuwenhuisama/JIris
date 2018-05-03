@@ -155,25 +155,28 @@ class IrisDevUtil {
         // Todo: Compare object's class directly to obejct
         @JvmStatic
         fun IsClassObject(value: IrisValue): Boolean {
-            return value.`object`?.objectClass?.className == "Class"
+                    // Special when initializing
+            return if (IrisInterpreter.INSTANCE.classClass != null) value.`object`?.objectClass === IrisInterpreter.INSTANCE.classClass
+                    else value.`object`?.objectClass?.className == "Class"
         }
 
         // Todo: Compare object's class directly to obejct
         @JvmStatic
         fun IsModuleObject(value: IrisValue): Boolean {
-            return value.`object`?.objectClass?.className == "Module"
+            return value.`object`?.objectClass === IrisInterpreter.INSTANCE.moduleClass
         }
 
         // Todo: Compare object's class directly to obejct
         @JvmStatic
         fun IsInterfaceObject(value: IrisValue): Boolean {
-            return value.`object`?.objectClass?.className == "Interface"
+            return value.`object`?.objectClass === IrisInterpreter.INSTANCE.interfaceClass
         }
 
         // TODO: Implement checkclass as infix
         @JvmStatic
         fun CheckClass(obj: IrisValue, className: String): Boolean {
-            return obj.`object`?.objectClass?.className == className
+            val cls = GetClass(className);
+            return obj.`object`?.objectClass === cls;
         }
 
         @JvmStatic

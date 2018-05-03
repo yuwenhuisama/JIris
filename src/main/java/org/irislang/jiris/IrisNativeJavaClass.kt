@@ -20,8 +20,6 @@ import org.irislang.jiris.irisclass.IrisModuleBase
 open class IrisNativeJavaClass {
 
     companion object {
-
-
         @Throws(Throwable::class)
         @JvmStatic
         fun BootstrapMethod(classObj: Class<*>, lookup: MethodHandles.Lookup, name: String, mt: MethodType): CallSite {
